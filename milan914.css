@@ -1,0 +1,10 @@
+table th{
+  text-align: left;
+  border: 4px solid;
+  height: 30px;
+}
+
+table{
+  border-collapse: collapse;
+  width: 100%;
+}
