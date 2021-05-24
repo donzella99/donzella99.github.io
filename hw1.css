@@ -1,0 +1,178 @@
+hr {
+  border-color: grey;
+  height: 0.5px;
+  width: 1250px;
+}
+
+h3{
+   display: inline;
+}
+
+.img1{
+  width: 1400px;
+  height: 700px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: top center;
+}
+
+.img2_left{
+  width: 60%;
+  padding-top: 120px;
+}
+
+.top_left{
+/*  background-color: blue;*/
+  flex:1; /* same width if u do 3 its twice as long as box below*/
+  order:1;/* not necessary but this is the first item from left*/
+  height: 1175px;
+
+}
+
+.top_right{
+/*  background-color: red;*/
+  flex:1;
+  order:2;
+  align-items: center; /* stretch is default*/
+  padding-top: 27px;
+  padding-right: 30px;
+
+  height: 1160px;
+}
+
+.Cursive_Text{
+  font-family: cursive;
+  font-size: 32px;
+  letter-spacing: 0.5px;
+  color: #BD9C58;
+
+}
+
+.Our_Restaurant{
+  font-size: 10px;
+}
+
+.container{
+  display: flex;
+  padding-top: 30px;
+  padding-bottom: 200px;
+  padding-left: 50px;
+  padding-right: 50px;
+  min-width: 950px;
+  min-height: 950px;
+  max-width: 950px;
+  max-height: 950px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.img2_left{
+
+  height: 500px;
+  width: 400px;
+  padding-bottom: 30px;
+}
+
+.img3_left{
+
+  height: 100%;
+  width: 400px;
+  padding-bottom: 70px;
+}
+
+.img2_right{
+  float: left;
+  width: 400px;
+  height: 325px;
+  padding-bottom: 30px;
+  padding-top: 75px;
+}
+
+.img3_right{
+  float: left;
+  width: 400px;
+  height: 450px;
+}
+
+.container-2{
+  display: flex;
+  padding-top: 60px;
+  padding-left: 50px;
+  padding-right: 50px;
+  min-width: 900px;
+  min-height: 900px;
+  max-width: 900px;
+  max-height: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  flex-direction: column;
+  text-align: center;
+}
+
+.text_box{
+  position: absolute;
+ top: 300px;
+ left: 430px;
+ background-color: white;
+ color: grey;
+ padding-top: : 20px;
+ padding-right: 60px;
+ padding-bottom: 20px;
+ padding-left: 60px;
+ text-align: center;
+}
+
+.img1_bottom{
+  width: 900px;
+  height: 600px;
+}
+
+.bottom_middle2{
+  /*background-color: purple;*/
+  flex:1;
+  order: 1;
+}
+
+.bottom_middle3{
+/*  background-color: green;*/
+  flex:1;
+  order: 2;
+}
+
+
+.container div, .container-3 div{
+  padding: 10px;
+}
+
+.cursive_quote{
+  font-family: cursive;
+  font-size: 32px;
+  letter-spacing: 0.5px;
+  color: #BD9C58;
+}
+
+.img2_bottom{
+  width: 1400px;
+  height: 550px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: top center;
+}
+
+.footer{
+  text-align: right;
+  background-color: #BD9C58;
+  padding-bottom: 100px;
+  width: 1400px;
+  height: 100px;
+}
+
+.footer_text{
+ position: absolute;
+ top: 5px;
+ right: 5px;
+  background-color: white;
+  color: grey;
+  text-align: center;
+}
