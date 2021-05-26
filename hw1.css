@@ -1,19 +1,72 @@
 hr {
-  border-color: grey;
-  height: 0.5px;
-  width: 1250px;
+  width: 1400px;
+  height: 1px;
+  background-color: #cdd;
+  border: none;
+  /* https://www.tutorialrepublic.com/codelab.php?topic=faq&file=css-change-the-color-of-an-hr-element (last three lines)*/
 }
 
 h3{
    display: inline;
 }
 
+.topnav{
+  overflow: hidden;
+}
+
+.text2{ left: 20%; position: relative;
+        font-family: sans-serif;}
+.text3{ left: 30%; position: relative;
+        font-family: sans-serif;
+        font-weight: normal;}
+.text4{ left: 40%; position: relative;
+        font-family: sans-serif;
+        font-weight: normal;}
+.text5{ left: 50%; position: relative;
+        font-family: sans-serif;
+        font-weight: normal;}
+.text6{ left: 60%; position: relative;
+        font-family: sans-serif;
+        font-weight: normal;}
+
+.text8{
+  font-family: sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: #444555;
+}
+
+.topnav a {
+  float: left;
+  color: grey;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.title{
+  font-size: 60px;
+  color: #BD9C58;
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: normal;
+  letter-spacing: 8px;
+
+}
+
+.text-1{
+  color: #444555;
+  font-family: sans-serif;
+  font-weight: normal;
+
+}
+
 .img1{
   width: 1400px;
-  height: 700px;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: top center;
+  height: 570px;
+  display: inline-block; /* change the default display type to inline-block */
+   overflow: hidden;
 }
 
 .img2_left{
@@ -22,7 +75,7 @@ h3{
 }
 
 .top_left{
-/*  background-color: blue;*/
+/*background-color: blue;*/
   flex:1; /* same width if u do 3 its twice as long as box below*/
   order:1;/* not necessary but this is the first item from left*/
   height: 1175px;
@@ -30,14 +83,23 @@ h3{
 }
 
 .top_right{
-/*  background-color: red;*/
+ /*background-color: red;*/
   flex:1;
   order:2;
   align-items: center; /* stretch is default*/
-  padding-top: 27px;
+  padding-top: 50px;
   padding-right: 30px;
 
-  height: 1160px;
+  height: 1175px;
+}
+
+.text_box1{
+/*  background-color: yellow;*/
+  height: 400px;
+  width: 400px;
+  text-align: left;
+  margin-left: 4%;
+
 }
 
 .Cursive_Text{
@@ -48,23 +110,44 @@ h3{
 
 }
 
-.Our_Restaurant{
-  font-size: 10px;
+.text7{
+  font-size: 10.5px;
+  font-family: sans-serif;
+  font-weight: normal;
+  letter-spacing: 1px;
+  color: grey;
+}
+
+.top_container{
+/*  background-color: green;*/
+  display: flex;
+  padding-top: 60px;
+  padding-right: 90px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  flex-direction: column;
+  min-width: 1400px;
+  max-width: 1400px;
+
 }
 
 .container{
+  /*background-color: purple;*/
   display: flex;
-  padding-top: 30px;
+  padding-top: 90px;
   padding-bottom: 200px;
-  padding-left: 50px;
-  padding-right: 50px;
   min-width: 950px;
   min-height: 950px;
   max-width: 950px;
   max-height: 950px;
   margin-left: auto;
   margin-right: auto;
+  align-items: center;
+ justify-content: center;
 }
+
+
 
 .img2_left{
 
@@ -94,15 +177,16 @@ h3{
   height: 450px;
 }
 
-.container-2{
+.container-2 {
+  /*background-color: green;*/
   display: flex;
   padding-top: 60px;
-  padding-left: 50px;
-  padding-right: 50px;
-  min-width: 900px;
-  min-height: 900px;
-  max-width: 900px;
-  max-height: 900px;
+  padding-left: 60px;
+  padding-right: 80px;
+  min-width: 830px;
+  min-height: 840px;
+  max-width: 830px;
+  max-height: 840px;
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -112,30 +196,30 @@ h3{
 
 .text_box{
   position: absolute;
- top: 300px;
- left: 430px;
+ top: 280px;
+ left: 310px;
  background-color: white;
  color: grey;
- padding-top: : 20px;
- padding-right: 60px;
- padding-bottom: 20px;
- padding-left: 60px;
+ padding-top: 50px;
+ padding-right: 130px;
+ padding-bottom: 50px;
+ padding-left: 130px;
  text-align: center;
 }
 
 .img1_bottom{
-  width: 900px;
-  height: 600px;
+  width: 100%;
+  height: 570px;
 }
 
 .bottom_middle2{
-  /*background-color: purple;*/
+/*  background-color: red;*/
   flex:1;
   order: 1;
 }
 
 .bottom_middle3{
-/*  background-color: green;*/
+/*background-color: blue;*/
   flex:1;
   order: 2;
 }
@@ -158,13 +242,15 @@ h3{
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: top center;
+  object-fit: cover;
+  object-position: 100%;
 }
 
 .footer{
   text-align: right;
   background-color: #BD9C58;
   padding-bottom: 100px;
-  width: 1400px;
+  width: 1380px;
   height: 100px;
   position: relative;
 }
@@ -175,4 +261,38 @@ h3{
  right: 100px;
   color: white;
   text-align: left;
+}
+.container-3{
+  width: 1400px;
+  height: 570px;
+}
+.container-1{
+  width: 1400px;
+  height: 570px;
+  padding-bottom: 50px;
+
+}
+
+.top-container-1{
+  display: flex;
+  padding-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  flex-direction: column;
+  text-align: left;
+
+}
+
+.header{
+  /*background-color: red;*/
+  width: 1400px;
+}
+
+.header-textbox{
+/*  background-color: blue;*/
+   width: 150px;
+   left: 260px;
+   top: 50px;
+   position: absolute;
 }
