@@ -264,14 +264,15 @@ li{
         flex:1;
         order: 2;
         position: relative;
-        top: -35px;
-        padding-bottom: -80px
+        top: 0px;
+        padding-top: 25px;
     }
 
 /* FOOTER */
 
 .top_container-3{
 /*  background-color: green;*/
+padding-top: 55px;
 }
     .container-3{
         background-attachment: fixed;
@@ -285,6 +286,7 @@ li{
         width: 1200px;
         height: 475px;
         opacity: 0.83;
+        padding-top: 100px;
         background-position: 50% 195px;
     }
         .footer{
