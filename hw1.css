@@ -1,5 +1,5 @@
 hr {
-  width: 1400px;
+  width: 1200px;
   height: 1px;
   background-color: #cdd;
   border: none;
@@ -14,92 +14,27 @@ h3{
   overflow: hidden;
 }
 
-.text2{ left: 20%; position: relative;
+.text2{ left: 17%; position: relative;
         font-family: sans-serif;}
-.text3{ left: 30%; position: relative;
+.text3{ left: 27%; position: relative;
         font-family: sans-serif;
         font-weight: normal;}
-.text4{ left: 40%; position: relative;
+.text4{ left: 37%; position: relative;
         font-family: sans-serif;
         font-weight: normal;}
-.text5{ left: 50%; position: relative;
+.text5{ left: 47%; position: relative;
         font-family: sans-serif;
         font-weight: normal;}
-.text6{ left: 60%; position: relative;
+.text6{ left: 57%; position: relative;
         font-family: sans-serif;
         font-weight: normal;}
 
-.text8{
+.text7{
+  font-size: 10.5px;
   font-family: sans-serif;
   font-weight: normal;
-  font-size: 14px;
-  color: #444555;
-}
-
-.topnav a {
-  float: left;
-  color: grey;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 16px;
-}
-
-.title{
-  font-size: 60px;
-  color: #BD9C58;
-  text-align: center;
-  font-family: sans-serif;
-  font-weight: normal;
-  letter-spacing: 8px;
-
-}
-
-.text-1{
-  color: #444555;
-  font-family: sans-serif;
-  font-weight: normal;
-
-}
-
-.img1{
-  width: 1400px;
-  height: 570px;
-  display: inline-block; /* change the default display type to inline-block */
-   overflow: hidden;
-}
-
-.img2_left{
-  width: 60%;
-  padding-top: 120px;
-}
-
-.top_left{
-/*background-color: blue;*/
-  flex:1; /* same width if u do 3 its twice as long as box below*/
-  order:1;/* not necessary but this is the first item from left*/
-  height: 1175px;
-
-}
-
-.top_right{
- /*background-color: red;*/
-  flex:1;
-  order:2;
-  align-items: center; /* stretch is default*/
-  padding-top: 50px;
-  padding-right: 30px;
-
-  height: 1175px;
-}
-
-.text_box1{
-/*  background-color: yellow;*/
-  height: 400px;
-  width: 400px;
-  text-align: left;
-  margin-left: 4%;
-
+  letter-spacing: 1px;
+  color: #696969;
 }
 
 .Cursive_Text{
@@ -107,47 +42,261 @@ h3{
   font-size: 32px;
   letter-spacing: 0.5px;
   color: #BD9C58;
-
+  line-height: 1.2;
 }
 
-.text7{
-  font-size: 10.5px;
-  font-family: sans-serif;
-  font-weight: normal;
-  letter-spacing: 1px;
-  color: grey;
+.text_box1{
+/*  background-color: yellow;*/
+  height: 400px;
+  width: 400px;
+  text-align: left;
+  margin-left: 7%;
 }
 
-.top_container{
-/*  background-color: green;*/
+    .text8{
+    font-family: sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+    color: #444555;
+    }
+
+    .text9{
+    font-family: sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+    color: #111111;
+    letter-spacing: -0.5px;
+    }
+
+.text_box{ /* For Text 10and11*/
+  position: absolute;
+  top: 280px;
+  left: 310px;
+  background-color: white;
+  padding-top: 40px;
+  padding-right: 100px;
+  padding-bottom: 40px;
+  padding-left: 100px;
+  text-align: center;
+}
+
+    .text10{
+        color: grey;
+        font-family: sans-serif;
+        font-weight: bold;
+        font-size: 10.5px;
+        letter-spacing: 0.5px;
+    }
+
+    .text11{
+        color: #666666;
+        font-weight: normal;
+        font-size: 28px;
+    }
+.text12{
+    font-size: 10.5px;
+    font-family: sans-serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #696969;
+    line-height: 4;
+}
+
+.cursive_quote{
+    font-family: cursive;
+    font-size: 32px;
+    letter-spacing: 0.5px;
+    color: #BD9C58;
+    line-height: 1.2;
+}
+
+/* HEADER */
+
+.header{
+  width: 1200px;
+}
+
+    .header-textbox{
+         width: 150px;
+         left: 150px;
+         top: 20px;
+         position: absolute;
+         font-size: 13px;
+     }
+
+    .topnav a {
+        float: left;
+        color: grey;
+        text-align: center;
+        padding: 3px 3px;
+        text-decoration: none;
+        font-size: 14px;
+        letter-spacing: -1px;
+    }
+
+    .title{
+        font-size: 50px;
+        color: #BD9C58;
+        text-align: center;
+        font-family: sans-serif;
+        font-weight: 400;
+        letter-spacing: 8px;
+    }
+
+    .header-address-text{
+        color: #444555;
+        font-family: sans-serif;
+        font-weight: normal;
+    }
+
+
+/* HEader End */
+
+
+/*Container Divs*/
+
+.top-container-1{
   display: flex;
-  padding-top: 60px;
-  padding-right: 90px;
+  padding-top: 10px;
   margin-left: auto;
   margin-right: auto;
   position: relative;
   flex-direction: column;
-  min-width: 1400px;
-  max-width: 1400px;
-
+  text-align: left;
 }
 
-.container{
-  /*background-color: purple;*/
-  display: flex;
-  padding-top: 90px;
-  padding-bottom: 200px;
-  min-width: 950px;
-  min-height: 950px;
-  max-width: 950px;
-  max-height: 950px;
-  margin-left: auto;
-  margin-right: auto;
-  align-items: center;
- justify-content: center;
+    .container-1{ /* https://www.educative.io/edpresso/how-to-add-a-parallax-scrolling-effect-using-css parallax code borrowed from */
+
+    	background-attachment: fixed;
+    	background-position: center;
+    	background-repeat: no-repeat;
+    	background-size: cover;
+    }
+
+    .image1{
+        background-image: url("image6.jpg");
+        width: 1200px;
+        height: 620px;
+        background-size: 150% 100%;
+        background-position: top;
+        object-fit: fill;
+    }
+
+    .container-2{
+    /*background-color: purple;*/
+        display: flex;
+        padding-top: 90px;
+        padding-bottom: 70px;
+        min-width: 950px;
+        min-height: 950px;
+        max-width: 950px;
+        max-height: 950px;
+        margin-left: auto;
+        margin-right: auto;
+        align-items: center;
+        justify-content: center;
+        padding-top: 150px;
+    }
+
+    .top_left{
+    /*background-color: blue;*/
+        flex:1; /* same width if u do 3 its twice as long as box below*/
+        order:1;/* not necessary but this is the first item from left*/
+        height: 1175px;
+        padding-top: 160px;
+
+    }
+
+    .top_right{
+     /*background-color: red;*/
+      flex:1;
+      order:2;
+      align-items: center; /* stretch is default*/
+      padding-top: 7px;
+      padding-right: 30px;
+      height: 1175px;
+    }
+
+.top-container-2 {
+  /*background-color: green;*/
+    display: flex;
+    padding-left: 50px;
+    padding-right: 110px;
+    min-width: 830px;
+    min-height: 840px;
+    max-width: 830px;
+    max-height: 840px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    flex-direction: column;
+    text-align: center;
 }
 
+    .bottom_middle2{
+    /*  background-color: red;*/
+        flex:1;
+        order: 1;
+    }
 
+    .bottom_middle3{
+    /*background-color: blue;*/
+        flex:1;
+        order: 2;
+        position: relative;
+        top: -35px;
+    }
+
+/* FOOTER */
+
+.top_container-3{
+/*  background-color: green;*/
+    display: flex;
+    padding-right: 90px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    flex-direction: column;
+    min-width: 1200px;
+    max-width: 1200px;
+    top: -10px;
+}
+    .container-3{
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .bottomimage{
+        background-image: url("image5.jpg");
+        width: 1200px;
+        height: 475px;
+        opacity: 0.83;
+        background-position: 50% 326px;
+    }
+        .footer{
+          text-align: right;
+          background-color: #BD9C58;
+          padding-bottom: 100px;
+          width: 1200px;
+          height: 70px;
+          position: relative;
+        }
+
+        .footer_text{
+         position: absolute;
+         top: 45px;
+         right: 100px;
+          color: white;
+          text-align: left;
+          font-family: sans-serif;
+          font-weight: normal;
+          font-size: 11px;
+
+        }
+
+/* IMAGES */
 
 .img2_left{
 
@@ -177,67 +326,14 @@ h3{
   height: 450px;
 }
 
-.container-2 {
-  /*background-color: green;*/
-  display: flex;
-  padding-top: 60px;
-  padding-left: 60px;
-  padding-right: 80px;
-  min-width: 830px;
-  min-height: 840px;
-  max-width: 830px;
-  max-height: 840px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  flex-direction: column;
-  text-align: center;
-}
-
-.text_box{
-  position: absolute;
- top: 280px;
- left: 310px;
- background-color: white;
- color: grey;
- padding-top: 50px;
- padding-right: 130px;
- padding-bottom: 50px;
- padding-left: 130px;
- text-align: center;
-}
 
 .img1_bottom{
   width: 100%;
   height: 570px;
 }
 
-.bottom_middle2{
-/*  background-color: red;*/
-  flex:1;
-  order: 1;
-}
-
-.bottom_middle3{
-/*background-color: blue;*/
-  flex:1;
-  order: 2;
-}
-
-
-.container div, .container-3 div{
-  padding: 10px;
-}
-
-.cursive_quote{
-  font-family: cursive;
-  font-size: 32px;
-  letter-spacing: 0.5px;
-  color: #BD9C58;
-}
-
 .img2_bottom{
-  width: 1400px;
+  width: 1200px;
   height: 550px;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -246,53 +342,6 @@ h3{
   object-position: 100%;
 }
 
-.footer{
-  text-align: right;
-  background-color: #BD9C58;
-  padding-bottom: 100px;
-  width: 1380px;
-  height: 100px;
-  position: relative;
-}
-
-.footer_text{
- position: absolute;
- top: 40px;
- right: 100px;
-  color: white;
-  text-align: left;
-}
-.container-3{
-  width: 1400px;
-  height: 570px;
-}
-.container-1{
-  width: 1400px;
-  height: 570px;
-  padding-bottom: 50px;
-
-}
-
-.top-container-1{
-  display: flex;
-  padding-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  flex-direction: column;
-  text-align: left;
-
-}
-
-.header{
-  /*background-color: red;*/
-  width: 1400px;
-}
-
-.header-textbox{
-/*  background-color: blue;*/
-   width: 150px;
-   left: 260px;
-   top: 50px;
-   position: absolute;
+.container-1 div, .container-3 div{
+  padding: 10px;
 }
