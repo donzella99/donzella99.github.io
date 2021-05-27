@@ -12,22 +12,29 @@ h3{
 
 .topnav{
   overflow: hidden;
+  position: relative;
+  padding-left: 135px !important;
 }
 
-.text2{ left: 17%; position: relative;
-        font-family: sans-serif;}
-.text3{ left: 27%; position: relative;
-        font-family: sans-serif;
-        font-weight: normal;}
-.text4{ left: 37%; position: relative;
-        font-family: sans-serif;
-        font-weight: normal;}
-.text5{ left: 47%; position: relative;
-        font-family: sans-serif;
-        font-weight: normal;}
-.text6{ left: 57%; position: relative;
-        font-family: sans-serif;
-        font-weight: normal;}
+ul{
+    padding-left: 70px
+}
+
+li{
+     float: left;
+     display: inline-block;
+     text-align: center;
+     list-style-type: none;
+     line-height: 1.5;
+     padding-left: 60px;
+     padding-right: 80px;
+     font-size: 10.5px;
+     font-family: sans-serif;
+     font-weight: bold;
+     color: #696969;
+     letter-spacing: 1px;
+}
+
 
 .text7{
   font-size: 10.5px;
@@ -62,22 +69,28 @@ h3{
 
     .text9{
     font-family: sans-serif;
-    font-weight: normal;
+    font-weight: bold;
     font-size: 14px;
     color: #111111;
     letter-spacing: -0.5px;
     }
 
+    .text9 a{
+        color: black;
+        text-decoration: none;
+    }
+
 .text_box{ /* For Text 10and11*/
   position: absolute;
-  top: 280px;
-  left: 310px;
+  top: 210px;
+  left: 370px;
   background-color: white;
   padding-top: 40px;
   padding-right: 100px;
   padding-bottom: 40px;
   padding-left: 100px;
   text-align: center;
+
 }
 
     .text10{
@@ -93,6 +106,12 @@ h3{
         font-weight: normal;
         font-size: 28px;
     }
+
+    .text11 a{
+        color: #666666;
+        text-decoration: none;
+    }
+
 .text12{
     font-size: 10.5px;
     font-family: sans-serif;
@@ -176,8 +195,8 @@ h3{
     .image1{
         background-image: url("image6.jpg");
         width: 1200px;
-        height: 620px;
-        background-size: 150% 100%;
+        height: 650px;
+        background-size: 150% 105%;
         background-position: top;
         object-fit: fill;
     }
@@ -187,6 +206,7 @@ h3{
         display: flex;
         padding-top: 90px;
         padding-bottom: 70px;
+        padding-left: 72px;
         min-width: 950px;
         min-height: 950px;
         max-width: 950px;
@@ -220,12 +240,12 @@ h3{
 .top-container-2 {
   /*background-color: green;*/
     display: flex;
-    padding-left: 50px;
+    padding-left: 118px;
     padding-right: 110px;
     min-width: 830px;
-    min-height: 840px;
+    min-height: 780px;
     max-width: 830px;
-    max-height: 840px;
+    max-height: 780px;
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -245,21 +265,13 @@ h3{
         order: 2;
         position: relative;
         top: -35px;
+        padding-bottom: -80px
     }
 
 /* FOOTER */
 
 .top_container-3{
 /*  background-color: green;*/
-    display: flex;
-    padding-right: 90px;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    flex-direction: column;
-    min-width: 1200px;
-    max-width: 1200px;
-    top: -10px;
 }
     .container-3{
         background-attachment: fixed;
@@ -273,7 +285,7 @@ h3{
         width: 1200px;
         height: 475px;
         opacity: 0.83;
-        background-position: 50% 326px;
+        background-position: 50% 195px;
     }
         .footer{
           text-align: right;
@@ -323,7 +335,7 @@ h3{
 .img3_right{
   float: left;
   width: 400px;
-  height: 450px;
+  height: 410px;
 }
 
 
