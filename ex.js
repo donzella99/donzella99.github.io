@@ -1,5 +1,9 @@
 /*jshint esversion: 6 */
 
+function init(){
+     document.getElementById("keyword").disabled = true;
+}
+
 function getdata(){
     fetch('https://ipinfo.io/4.16.25.211?token=a8e8eac3e00672')
     .then(response => {
@@ -12,6 +16,7 @@ function getdata(){
             console.log(obj);
             //document.getElementById("here-location").disabled = false;
             document.querySelector("h1").innerHTML = obj;
+            document.getElementById("keyword").disabled = false;
     });
 }
 
@@ -30,8 +35,12 @@ function getData(){
     return false;
 }
 
+
+
+init();
 button_off();
 getdata();
+
 document.getElementById("search").addEventListener("click",function (){
     if(document.getElementById("keyword").value.length == 0){
         document.getElementById("msg").innerHTML = " Please fill out this field.";
@@ -41,13 +50,39 @@ document.getElementById("search").addEventListener("click",function (){
     }
     else{
         document.getElementById("msg").innerHTML = "";
+        //document.getElementById("keyword").value =
     }
 });
 
-document.getElementById("here_button").addEventListener("click",function(){
-
-    var element = document.getElementById('here_button');
-    element.dispatchEvent(event);
-    var event = new Event('change', { bubbles: true });
-
+document.getElementById("clear").addEventListener("click",function (){
+    if(document.getElementById("keyword").value.length != 0){
+        document.getElementById("keyword").value = "";
+    }
+    if(document.getElementById("location").value.length != 0){
+        document.getElementById("location").value = "";
+    }
 });
+
+
+// document.getElementById("here_button").addEventListener("click",function(){
+//     console.log("5");
+//     document.getElementById("here_button").click();
+//     if(document.getElementById("here_button").click()){
+//         console.log("1");
+//         if(document.getElementById("checkbox_location").click()){
+//             console.log("2");
+//             document.getElementById("checkbox_location").click();
+//             console.log("3");
+//         }
+//     }
+// });
+
+// function checkbox1(){
+//     document.getElementById("here_button").click();
+//
+// }
+//
+// function checkbox2(){
+//     document.getElementById("checkbox_location").click();
+//     //document.getElementById("here_button").disabled = true;
+// }
