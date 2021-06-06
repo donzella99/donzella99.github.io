@@ -8,3 +8,36 @@ table{
   border-collapse: collapse;
   width: 100%;
 }
+
+function ip_api(){
+    app.get("/", function(req, res){
+            const url = "https://ipinfo.io/json?token=8a4d780dd347bb";
+            https.get(url,function(response){
+    //        console.log(response);
+
+            response.on("data",function(data){
+                weatherData = JSON.parse(data);
+                console.log(weatherData.city);
+                res.write(weatherData.city);
+                res.write("The city is: " + weatherData.city);
+                res.send();
+            });
+        });
+    });
+
+    app.listen(3001,function(){
+    console.log("Server:");
+    });
+}
+
+
+function change_color(){
+        document.querySelector("h1").style.color = "red";
+}
+
+function change_color2(){
+        document.querySelector("h1").style.color = "green";
+}
+const x = ip_api();
+change_color();``
+doxument.querySelector("h1").style.color = "green";
