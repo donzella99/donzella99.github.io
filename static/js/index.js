@@ -9,13 +9,13 @@ function getdata(){
     .then(response => {
     return response.json();
     })
+
     .then(data => {
          //   console.log(data);
             var obj = data.city;
-            console.log(obj);
-            document.getElementById("here-location").disabled = false;
+          //  console.log(obj);
+            //document.getElementById("here-location").disabled = false;
             document.querySelector("h1").innerHTML = obj;
-            document.querySelector("h1").style.color = "red";
             document.getElementById("keyword").disabled = false;
     });
 }
@@ -36,7 +36,7 @@ function getData(){
 }
 
 function load_generic_headlines() {
-    fetch("/generic")
+    fetch("/generic/")
         .then(function(response) {
    //               console.log(response);
                     console.log("eeeeee");
@@ -47,7 +47,6 @@ function load_generic_headlines() {
 init();
 button_off();
 getdata();
-load_generic_headlines();
 
 document.getElementById("search").addEventListener("click",function (){
     if(document.getElementById("keyword").value.length == 0){

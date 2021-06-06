@@ -9,16 +9,36 @@ function getdata(){
     .then(response => {
     return response.json();
     })
+
     .then(data => {
          //   console.log(data);
             var obj = data.city;
-            console.log(obj);
-            document.getElementById("here-location").disabled = false;
+            //console.log(obj);
+            //document.getElementById("here-location").disabled = false;
+
             document.querySelector("h1").innerHTML = obj;
-            document.querySelector("h1").style.color = "red";
             document.getElementById("keyword").disabled = false;
     });
 }
+
+function receive_events(){
+    fetch("/events").then(function(value) {
+    return value.json();
+    })
+    .then(
+        (value) => {
+            print_events(value._embedded);
+        }
+    );
+}
+
+function print_events(events){
+    for(i = 0; i<20; i++){
+        
+    }
+    return("x");
+}
+
 
 function button_off(){
     document.addEventListener("DOMContentLoaded", function(event) {
@@ -36,18 +56,25 @@ function getData(){
 }
 
 function load_generic_headlines() {
-    fetch("/generic")
-        .then(function(response) {
-   //               console.log(response);
-                    console.log("eeeeee");
-                    return;
-            });
+    fetch("/generic").then(function(value) {
+    return value.json();
+    })
+    .then(
+        (value) => {
+            console.log(value.city);
+        }
+    );
+
 }
+
+
+
 
 init();
 button_off();
 getdata();
 load_generic_headlines();
+receive_events();
 
 document.getElementById("search").addEventListener("click",function (){
     if(document.getElementById("keyword").value.length == 0){
