@@ -39,7 +39,9 @@ function print_events(events_ticketmaster){
     if(document.getElementById("event-table").rows.length > 1){
 
         var table = document.getElementById("event-table");
-        table.deleteRow(0);
+        for(i = 1; i<(events_ticketmaster.events.length-3); i++){
+            table.deleteRow(i+1);
+        }
 
     }
     console.log(document.getElementById("event-table").rows.length);
