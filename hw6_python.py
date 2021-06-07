@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import  jsonify,render_template
+from flask import  jsonify,render_template,request
 import requests
 
 
@@ -7,6 +7,13 @@ import requests
 # called `app` in `main.py`.
 app = Flask(__name__)
 
+class DataStore():
+    a = None
+data = DataStore()
+
+
+
+global url
 @app.route('/')
 def hello():
     return app.send_static_file('index.html')
@@ -20,17 +27,32 @@ def hello123():
     print(json_obj);
     return json_obj
 
-@app.route('/events')
-def event_extraction():
-    req = requests.get('https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhKgPQynndjc1pcDNq0flHYCg2ltMF')
-    json_request = req.json();
+def event_extraction(url):
+    req = requests.get(url)
+    json_request = req.json()
     json_obj = jsonify(json_request)
-    print(json_obj)
     return json_obj
 
-@app.route('/hello')
-def hellq():
-    print("YAYAYA")
+@app.route('/events')
+def big():
+    print(data.a)
+    url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhKgPQynndjc1pcDNq0flHYCg2ltMF"+"&keyword=" + data.a
+    print(url)
+    x = event_extraction(url)
+    data.a = None
+    return x
+
+
+@app.route('/test', methods=['POST','GET'])
+def events():
+    event_data = request.json
+    print("1")
+    print(event_data['keyword'])
+    print("2")
+    data.a = event_data['keyword']
+    #session['keyword'] = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhKgPQynndjc1pcDNq0flHYCg2ltMF'
+    return event_data['keyword']
+
 
 if __name__ == '__main__':
     app.run(debug=True)
