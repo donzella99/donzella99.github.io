@@ -8,7 +8,9 @@ import requests
 app = Flask(__name__)
 
 class DataStore():
-    a = None
+    keyword = None
+    geopoint = None
+    radius = None
 data = DataStore()
 
 
@@ -22,36 +24,37 @@ def hello():
 def hello123():
     req = requests.get('https://ipinfo.io/4.16.25.211?token=a8e8eac3e00672')
     json_request = req.json();
-    #print(va);
     json_obj = jsonify(json_request)
-    print(json_obj);
+    # print(json_obj);
     return json_obj
 
 def event_extraction(url):
     req = requests.get(url)
     json_request = req.json()
     json_obj = jsonify(json_request)
+    #print(json_request)
     return json_obj
 
 @app.route('/events')
 def big():
-    print(data.a)
-    url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhKgPQynndjc1pcDNq0flHYCg2ltMF"+"&keyword=" + data.a
+    url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhKgPQynndjc1pcDNq0flHYCg2ltMF"+"&keyword=" + data.keyword + "&geoPoint="+ data.geopoint + "&radius=" + data.radius
     print(url)
     x = event_extraction(url)
-    data.a = None
+    data.keyword = None
+    data.geopoint = None
+    data.radius = None
     return x
 
 
 @app.route('/test', methods=['POST','GET'])
 def events():
     event_data = request.json
-    print("1")
-    print(event_data['keyword'])
-    print("2")
-    data.a = event_data['keyword']
-    #session['keyword'] = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhKgPQynndjc1pcDNq0flHYCg2ltMF'
-    return event_data['keyword']
+    print(event_data)
+    data.keyword = event_data['keyword']
+    data.geopoint = event_data['geoPoint']
+    data.radius = event_data['radius']
+
+    return "success"
 
 
 if __name__ == '__main__':
