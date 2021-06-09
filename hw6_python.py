@@ -37,7 +37,8 @@ def event_extraction(url):
 
 @app.route('/events')
 def big():
-    url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhKgPQynndjc1pcDNq0flHYCg2ltMF"+"&keyword=" + data.keyword + "&geoPoint="+ data.geopoint + "&radius=" + data.radius
+    #url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhKgPQynndjc1pcDNq0flHYCg2ltMF"+"&keyword=" + data.keyword + "&geoPoint="+ data.geopoint + "&radius=" + data.radius
+    url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhKgPQynndjc1pcDNq0flHYCg2ltMF"
     print(url)
     x = event_extraction(url)
     data.keyword = None
@@ -53,6 +54,7 @@ def events():
     data.keyword = event_data['keyword']
     data.geopoint = event_data['geoPoint']
     data.radius = event_data['radius']
+    print(data.geopoint)
 
     return "success"
 

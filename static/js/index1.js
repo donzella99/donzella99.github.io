@@ -1,10 +1,18 @@
 /*jshint esversion: 8 */
 var obj;
+var search_obj;
+var use_obj;
 var ticketmaster;
 var curr;
+var button_1;
+var button_2;
 
 function init(){
      document.getElementById("keyword").disabled = true;
+     button_1 = 1;
+     button_2 = 0;
+     document.getElementById("here_button").checked= true;
+     document.getElementById("event-table").style.display = "none";
 }
 
 function getdata(){
@@ -25,6 +33,31 @@ function getdata(){
     return 1;
 }
 
+function find_location(){
+    var split_words =  document.getElementById("location").value.split(" ");
+    var combined_words = "";
+    console.log(split_words);
+    combined_words += split_words[0];
+    for(x=1; x<split_words.length; x++){
+        combined_words += '+';
+        combined_words += split_words[x];
+    }
+
+    var new_url = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAjU6cgR6QnwPyH5ICJAbcl7_D4NAxwJ2c&address=' + combined_words;
+    console.log(new_url);
+    fetch(new_url)
+        .then(response => {
+        return response.json();
+        })
+
+        .then(data => {
+            search_obj = data.results[0].geometry.bounds.northeast.lat +  data.results[0].geometry.bounds.northeast.lng;
+            console.log(search_obj);
+            document.getElementById("keyword").disabled = false;
+        });
+    return 1;
+}
+
 
 
 
@@ -42,6 +75,7 @@ function receive_events(){
 }
 
 function extend_event(){
+    events_ticketmaster = ticketmaster;
     var table1 = document.getElementById("expand-table");
     var row = table1.insertRow(0);
     var cell1 = row.insertCell(0);
@@ -81,7 +115,7 @@ function extend_event(){
 }
 
 function add_row(events_ticketmaster){
-
+    document.getElementById("event-table").style.display = "block";
     for(i = 1; i<=events_ticketmaster.page.totalElements; i++){
         curr = i-1;
         var table1 = document.getElementById("event-table");
@@ -113,8 +147,8 @@ function add_row(events_ticketmaster){
 
 
         cell1.appendChild(img);
-        cell2.innerHTML =events_ticketmaster._embedded.events[i-1].name;
-        cell3.innerHTML = '<p2><a src=getdata()>' + events_ticketmaster._embedded.events[i-1].classifications[0].segment.name+ '</a><p2>';
+        cell2.innerHTML ='<a href="#" onclick=extend_event(); return false;>'+events_ticketmaster._embedded.events[i-1].name +'<\a>';
+        cell3.innerHTML = events_ticketmaster._embedded.events[i-1].classifications[0].segment.name;
         cell4.innerHTML = events_ticketmaster._embedded.events[i-1]._embedded.venues[0].name;
     }
     document.getElementById("event-table").style.border = "solid #000000";
@@ -127,6 +161,9 @@ function delete_row(events_ticketmaster){
         document.getElementById("event-table").deleteRow(1);
     }
 }
+
+
+
 
 function print_events(events_ticketmaster){
     console.log((document.getElementById("event-table").rows.length));
@@ -158,11 +195,25 @@ function keyword_result() {
 
 }
 
-function getData(){
-    return false;
+function button1(){
+    console.log("1");
+    button_1 = 1;
+    button_2 = 0;
+}
+function button2(){
+    console.log("2");
+    button_1 = 0;
+    button_2 = 1;
 }
 
 function send_keyword() {
+    var radius = "";
+    if(document.getElementById("radius").value == ""){
+        radius = String(document.getElementById("radius").placeholder);
+    }
+    else{
+        radius = document.getElementById("radius").value;
+    }
     (async () => {
         const rawResponse = await fetch('/test', {
             method: 'POST',
@@ -170,7 +221,7 @@ function send_keyword() {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
         },
-        body: JSON.stringify({"keyword": document.getElementById("keyword").value,"geoPoint":obj,"radius":document.getElementById("radius").value})
+        body: JSON.stringify({"keyword": document.getElementById("keyword").value,"geoPoint":use_obj,"radius":radius})
     });
     const content = await rawResponse.json();
 
@@ -191,8 +242,15 @@ document.getElementById("search").addEventListener("click",function (){
     }
     else{
         document.getElementById("msg").innerHTML = "";
-        send_keyword();
         receive_events();
+        find_location();
+        if(button_1 == 1){
+            use_obj = obj;
+        }
+        else{
+            use_obj = search_obj;
+        }
+        send_keyword();
     }
 });
 
@@ -206,8 +264,18 @@ document.getElementById("clear").addEventListener("click",function (){
     }
 });
 
+document.getElementById("here_button").addEventListener("click",function (){
+    button1();
+});
+
+document.getElementById("checkbox_location").addEventListener("click",function (){
+    button2();
+    console.log(use_obj);
+});
+
 
 console.log(obj);
+
 
 
 // document.getElementById("here_button").addEventListener("click",function(){

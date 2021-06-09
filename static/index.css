@@ -8,9 +8,10 @@
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
-   min-height: 10px;
-   max-height: 20px;
-   border:1px solid black;
+   min-height: 30px;
+   max-height: 30px;
+   border-bottom: 1px;
+   border-collapse: collapse;
 }
 #expand-table{
   min-width: 400px ;
@@ -24,6 +25,20 @@
 }
 
 #title{
-    padding-left: 950px;
+    padding-left: 700px;
     padding-right: 700px;
 }
+
+#headers{
+    border-right: 1px;
+    border-collapse: collapse;
+}
+/*
+#total{
+    background-color: green;
+    max-width: 700px;
+    min-width: 800px;
+    justify-content: center;
+    position: absolute;
+    left: 900px;
+} */

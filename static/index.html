@@ -5,38 +5,42 @@
     </head>
 
     <body>
-        <div id = title>
-        <h1> Events Search </h1>
-        </div>
-        <div id = "form">
-            <form method ="post" onsubmit="return false">
-                 <p>Keyword <input type="text" id="keyword" name="keyword" onchange="keyword_result"><span id = "msg"></span></p>
+        <div id= "total">
+            <div id = title>
+                <h1> Events Search </h1>
+            </div>
+            <div id = "form">
+                <form method ="post" onsubmit="return false">
+                     <p>Keyword <input type="text" id="keyword" name="keyword" onchange="keyword_result"><span id = "msg"></span></p>
 
-                 <p>Category <select id="category" name="category">
-                    <option> Default </option>
-                    <option> Music </option>
-                    <option> Sports </option>
-                    <option> Arts & Theathre </option>
-                    <option> Film </option>
-                    <option> Miscellaneous </option>
-                </select></p>
-                 <p>Distance (miles) <input type="text" id="radius" name="radius" placeholder="10"> from <input type="checkbox" id="here_button"> Here </p>
+                     <p>Category <select id="category" name="category">
+                        <option> Default </option>
+                        <option> Music </option>
+                        <option> Sports </option>
+                        <option> Arts & Theathre </option>
+                        <option> Film </option>
+                        <option> Miscellaneous </option>
+                    </select></p>
+                     <p>Distance (miles) <input type="text" id="radius" name="radius" placeholder="10"> from <input type="radio"  name="select" id="here_button"> Here </p>
 
-                 <p style = "padding-left: 302px" ><input type="checkbox" style= "border-radius: 20px" id="checkbox_location"> <input type="text" id="location" name="location" placeholder="location"></p>
+                     <p style = "padding-left: 302px" ><input type="radio"  style= "border-radius: 20px" id="checkbox_location" name="select"> <input type="text" id="location" name="location" placeholder="location"></p>
 
-                 <br><input type="submit" value="Search" id = "search" >
-                 <br><input type="submit" value="Clear" id = "clear" >
-                <!-- <input type="submit" id = "clear"> -->
+                     <br><input type="submit" value="Search" id = "search" >
+                     <br><input type="submit" value="Clear" id = "clear" >
+                    <!-- <input type="submit" id = "clear"> -->
 
-            </form><br />
+                </form><br />
+            </div>
         </div>
 
         <table class="left" id="event-table" style="width: 400px; height: 300px;">
-            <th>Date</th>
-            <th>Icon</th>
-            <th>Event</th>
-            <th>Genre</th>
-            <th>Venue</th>
+            <tr id="headers">
+                <th>Date</th>
+                <th>Icon</th>
+                <th>Event</th>
+                <th>Genre</th>
+                <th>Venue</th>
+            </tr>
             <tr id="tablerow1">
                 <td id ="cell00"></td>
                 <td id ="cell01"></td>
