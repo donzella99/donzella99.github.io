@@ -11,8 +11,8 @@ document.getElementById("search").addEventListener("click",function (){
     if(document.getElementById("keyword").value.length == 0){
         document.getElementById("msg").innerHTML = " Please fill out this field.";
     }
-    else if(document.getElementById("category").value.length == 0){
-        document.getElementById("msg").innerHTML = "your message";
+    else if(document.getElementById("location").value.length == 0 && button_2 == 1){
+        document.getElementById("msg2").innerHTML = "Please Fill it In";
     }
     else{
         if(document.getElementById("location").value != "location" && document.getElementById("location").value != ""){
@@ -21,19 +21,14 @@ document.getElementById("search").addEventListener("click",function (){
         }
         document.getElementById("msg").innerHTML = "";
         receive_events();
-        receive_events();
-        receive_events();
         console.log("JALAKSLA");
         console.log(search_obj);
         if(button_1 == 1){
             use_obj = obj;
         }
         else{
-            use_obj = search_obj;
+            use_obj = document.getElementById('location').value;
         }
-
-        send_keyword();
-        send_keyword();
         send_keyword();
     }
 });
@@ -41,6 +36,9 @@ document.getElementById("search").addEventListener("click",function (){
 document.getElementById("clear").addEventListener("click",function (){
     if(document.getElementById("keyword").value.length != 0){
         document.getElementById("keyword").value = "";
+        button1();
+        document.getElementById("here_button").checked= true;
+        document.getElementById("checkbox_location").checked= false;
         delete_ext();
         delete_row(ticketmaster);
     }
@@ -63,6 +61,12 @@ function init(){
      button_1 = 1;
      button_2 = 0;
      document.getElementById("here_button").checked= true;
+     use_obj = obj;
+     document.getElementById("head1").style.color = "white";
+     document.getElementById("head2").style.color = "white";
+     document.getElementById("head3").style.color = "white";
+     document.getElementById("head4").style.color = "white";
+     document.getElementById("head5").style.color = "white";
 }
 
 function getdata(){
@@ -74,42 +78,12 @@ function getdata(){
     .then(data => {
          //   console.log(data);
             obj = data.loc;
-            console.log("LOL");
-            console.log(obj);
             //document.getElementById("here-location").disabled = false;
 
             //document.querySelector("h1").innerHTML = obj;
             document.getElementById("keyword").disabled = false;
     });
     return 1;
-}
-
-function find_location(){
-    var split_words =  document.getElementById("location").value.split(" ");
-    var combined_words = "";
-    console.log(split_words);
-    combined_words += split_words[0];
-    for(x=1; x<split_words.length; x++){
-        combined_words += '+';
-        combined_words += split_words[x];
-    }
-
-    var new_url = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAjU6cgR6QnwPyH5ICJAbcl7_D4NAxwJ2c&address=' + combined_words;
-    console.log(new_url);
-    fetch(new_url)
-        .then(response => {
-        return response.json();
-        })
-
-        .then(data => {
-            if(typeof data != 'undefined'){
-                search_obj = data.results[0].geometry.bounds.northeast.lat+ "," + data.results[0].geometry.bounds.northeast.lng;
-                console.log(typeof search_obj);
-                console.log(search_obj);
-                document.getElementById("keyword").disabled = false;
-                return 1;
-            }
-        });
 }
 
 function receive_events(){
@@ -281,11 +255,14 @@ function keyword_result() {
 function button1(){
     button_1 = 1;
     button_2 = 0;
+    use_obj = obj;
+    document.getElementById('location').value = '';
     document.getElementById("location").disabled = true;
 }
 function button2(){
     button_1 = 0;
     button_2 = 1;
+    use_obj = document.getElementById('location').value;
     document.getElementById("location").disabled = false;
 }
 
@@ -325,7 +302,7 @@ function send_keyword() { //SEND THE JSON STRING WITH ALL THE VALUES FOR TICKETM
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
         },
-        body: JSON.stringify({"keyword": document.getElementById("keyword").value,"geoPoint":obj,"radius":radius, "location": document.getElementById("location").value, "category": category_selected})
+        body: JSON.stringify({"keyword": document.getElementById("keyword").value,"geoPoint":obj,"radius":radius, "location": use_obj, "category": category_selected})
     });
     const content = await rawResponse.json();
 
