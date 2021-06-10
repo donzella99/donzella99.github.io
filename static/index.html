@@ -13,50 +13,41 @@
                 <form method ="post" onsubmit="return false">
                      <p>Keyword <input type="text" id="keyword" name="keyword" onchange="keyword_result"><span id = "msg"></span></p>
 
-                     <p>Category <select id="category" name="category">
-                        <option> Default </option>
-                        <option> Music </option>
-                        <option> Sports </option>
-                        <option> Arts & Theathre </option>
-                        <option> Film </option>
-                        <option> Miscellaneous </option>
+                     <p>Category <select id="category">
+                        <option value = "1"> Default </option>
+                        <option value = "2"> Music </option>
+                        <option value = "3"> Sports </option>
+                        <option value = "4"> Arts & Theathre </option>
+                        <option value = "5"> Film </option>
+                        <option value = "6"> Miscellaneous </option>
                     </select></p>
-                     <p>Distance (miles) <input type="text" id="radius" name="radius" placeholder="10"> from <input type="radio"  name="select" id="here_button"> Here </p>
+                     <p>Distance (miles) <input type="text" id="radius" placeholder="10"> from <input type="radio"  name="select" id="here_button"> Here </p>
 
-                     <p style = "padding-left: 302px" ><input type="radio"  style= "border-radius: 20px" id="checkbox_location" name="select"> <input type="text" id="location" name="location" placeholder="location"></p>
+                     <p style = "padding-left: 302px" ><input type="radio"  style= "border-radius: 20px" id="checkbox_location" name="select"> <input type="text" id="location"  placeholder="location"></p>
 
-                     <br><input type="submit" value="Search" id = "search" >
-                     <br><input type="submit" value="Clear" id = "clear" >
+                     <br><input type="submit" value="Search" id = "search" ><input type="submit" value="Clear" id = "clear" >
                     <!-- <input type="submit" id = "clear"> -->
 
                 </form><br />
             </div>
         </div>
-
-        <table class="left" id="event-table" style="width: 400px; height: 300px;">
-            <tr id="headers">
-                <th>Date</th>
-                <th>Icon</th>
-                <th>Event</th>
-                <th>Genre</th>
-                <th>Venue</th>
-            </tr>
-            <tr id="tablerow1">
-                <td id ="cell00"></td>
-                <td id ="cell01"></td>
-                <td id ="cell02"></td>
-                <td id ="cell03"></td>
-                <td id ="cell04"></td>
-            </tr>
-        </table>
-        <table class="left" id="expand-table" style="width: 400px; height: 300px;">
-            <th>
-            </th>
-            <th>
-            </th>
-        </table>
         <center><h3 id="no-events"></h3>  </center>
-
+        <div id = "all-tables">
+                <table class="center" id="event-table" style="width: 400px; height: 1000px;">
+                    <tr>
+                        <th id="head1">Date</th>
+                        <th id="head2">Icon</th>
+                        <th id="head3" >Event</th>
+                        <th id="head4" >Genre</th>
+                        <th id="head5" >Venue</th>
+                    </tr>
+                </table>
+                <table class="center" id="expand-table" style="width: 400px; height: 1000px;">
+                    <th></th>
+                    <th></th>
+                </table>
+                <!-- <table class="left" id="expand-table">
+                </table> -->
         <script src="static/js/index1.js"></script>
 
     </body>

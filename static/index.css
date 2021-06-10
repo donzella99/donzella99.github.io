@@ -10,13 +10,18 @@
   margin-right: auto;
    min-height: 30px;
    max-height: 30px;
-   border-bottom: 1px;
+   /* border-bottom: 1px; */
    border-collapse: collapse;
 }
-#expand-table{
+ #expand-table{
   min-width: 400px ;
   margin-left: auto;
   margin-right: auto;
+  left: 70px;
+	right: 0px;
+	bottom: 0px;
+	position: static;
+	visibility: visible;
 }
 
 #form{
@@ -29,10 +34,8 @@
     padding-right: 700px;
 }
 
-#headers{
-    border-right: 1px;
-    border-collapse: collapse;
-}
+
+
 /*
 #total{
     background-color: green;
