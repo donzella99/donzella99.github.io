@@ -6,20 +6,20 @@ var ticketmaster;
 var curr;
 var button_1;
 var button_2;
+var call_extend;
 
 document.getElementById("search").addEventListener("click",function (){
     if(document.getElementById("keyword").value.length == 0){
-        document.getElementById("msg").innerHTML = " Please fill out this field.";
+    //    document.getElementById("tt1").classList.opacity = "0";
     }
     else if(document.getElementById("location").value.length == 0 && button_2 == 1){
-        document.getElementById("msg2").innerHTML = "Please Fill it In";
+    //    document.getElementById("tt2").classList.opacity = "0";
     }
     else{
         if(document.getElementById("location").value != "location" && document.getElementById("location").value != ""){
                 console.log("c1");
                 console.log(search_obj);
         }
-        document.getElementById("msg").innerHTML = "";
         receive_events();
         console.log("JALAKSLA");
         console.log(search_obj);
@@ -35,15 +35,32 @@ document.getElementById("search").addEventListener("click",function (){
 
 document.getElementById("clear").addEventListener("click",function (){
     if(document.getElementById("keyword").value.length != 0){
-        document.getElementById("keyword").value = "";
+        document.getElementById("keyword").value = '';
         button1();
         document.getElementById("here_button").checked= true;
         document.getElementById("checkbox_location").checked= false;
         delete_ext();
         delete_row(ticketmaster);
+        document.getElementById("msg").innerHTML = '';
+        document.getElementById("keyword").value = '';
+        document.getElementById("radius-key").value = '';
+        document.getElementById("category").selectedIndex = "Default";
+        call_extend = 0;
+        window.location='../#';
+
+    }
+    else{
+        button1();
+        document.getElementById("here_button").checked= true;
+        document.getElementById("checkbox_location").checked= false;
+        document.getElementById("msg").innerHTML = '';
+        document.getElementById("keyword").value = '';
+        document.getElementById("radius-key").value = '';
+        document.getElementById("category").selectedIndex = "Default";
+        call_extend = 0;
     }
     if(document.getElementById("location").value.length != 0){
-        document.getElementById("location").value = "";
+        document.getElementById("location").innerHTML = "";
     }
 });
 
@@ -56,6 +73,7 @@ document.getElementById("checkbox_location").addEventListener("click",function (
 });
 
 function init(){
+    call_extend = 0;
      document.getElementById("keyword").disabled = true;
      document.getElementById("location").disabled = true;
      button_1 = 1;
@@ -104,49 +122,119 @@ function receive_events(){
     );
 }
 
-function extend_event(){
+function extend_event(i){
+    if(call_extend == 1){
+        delete_ext();
+    }
+    curr = i-1;
+    call_extend = 1;
     events_ticketmaster = ticketmaster;
     var table1 = document.getElementById("expand-table");
-    var size = (events_ticketmaster.page.totalElements) * 215;
-    console.log(size);
-    document.getElementById("expand-table").style.paddingTop = 'size'+'px';
-    console.log("LENGTH");
-    console.log(curr);
+    console.log("HA");
+    console.log(events_ticketmaster.page.totalElements);
+    var number = ticketmaster.page.totalElements;
+    if(ticketmaster.page.totalElements >20){
+        number = 20;
+    }
+    var x = (parseInt("235px".replace(/px/,""))*number)+"px";
+    console.log(x);
+    table1.style.paddingTop  = x;
+    console.log(i);
     var row = table1.insertRow(0);
-    var cell1 = row.insertCell(0);
+    var cell0 = row.insertCell(0);
+    var cell1 = row.insertCell(1);
     cell1.innerHTML = '<h1>' + events_ticketmaster._embedded.events[curr].name + '</h1>';
 
 
-    row = table1.insertRow(1);
-    var cell2 = row.insertCell(0);
-    var date = '<h1>' + 'Date' + '</h1>' + '<p2>' + events_ticketmaster._embedded.events[curr].dates.start.localDate + " " + events_ticketmaster._embedded.events[0].dates.start.localTime + '</p2></br>';
+    var row1 = table1.insertRow(1);
+    row1.id = 'expansion-table';
+    var cell2 = row1.insertCell(0);
 
-    var artist1 = events_ticketmaster._embedded.events[curr]._embedded.attractions[1].name;
-    var artist1_url = events_ticketmaster._embedded.events[curr]._embedded.attractions[1].url;
-    // var artist2 =
-    // var artist2_url
-    var artist = '<h1>' + 'Artist/Team' + '</h1>' + '<p2><a href = ' + artist1_url + '>' + artist1 + '</a></p2>';
+    var date = "";
+    var artist1= "";
+    var artist1_url= "";
+    var artist= '<h1>' + 'Artist/Team' + '</h1>';
+    var venue= "";
+    var segment= "";
+    var gen= "";
+    var subgen= "";
+    var type= "";
+    var subType= "";
+    var genres= '<h1>' + 'Genres' + '</h1>';
+    var status= "";
+    var ticket_url= "";
+    var price = "";
+    var buy= "";
 
-    var venue = '<h1>' + 'Venue' + '</h1>' + '<p2> '+ events_ticketmaster._embedded.events[curr]._embedded.venues[0].name +'</p2>';
+    if(events_ticketmaster._embedded.events[curr].dates.start.hasOwnProperty('localDate')){
+        date = '<h1>' + 'Date' + '</h1>' + '<p2>' + events_ticketmaster._embedded.events[curr].dates.start.localDate + " " + events_ticketmaster._embedded.events[0].dates.start.localTime + '</p2></br>';
+    }
+    if(events_ticketmaster._embedded.events[curr]._embedded.attractions[0].hasOwnProperty('name')){
+        for(x = 0; x<events_ticketmaster._embedded.events[curr]._embedded.attractions.length; x++){
+            artist1 = events_ticketmaster._embedded.events[curr]._embedded.attractions[x].name;
+            artist1_url = events_ticketmaster._embedded.events[curr]._embedded.attractions[x].url;
+            if(x!=0){
+                artist += ' | ';
+            }
+            artist += '<p2><a href = ' + artist1_url + '>' + artist1 + '</a>' + '</p2>';
+        }
+    }
+console.log("ww");
+    if(events_ticketmaster._embedded.events[curr]._embedded.venues[0].hasOwnProperty('name')){
+        venue = '<h1>' + 'Venue' + '</h1>' + '<p2> '+ events_ticketmaster._embedded.events[curr]._embedded.venues[0].name +'</p2>';
+        console.log(venue);
+    }
+    if(events_ticketmaster._embedded.events[curr].classifications[0].segment.hasOwnProperty('name')){
+        segment = events_ticketmaster._embedded.events[curr].classifications[0].segment.name;
+        if(segment != 'Undefined'){
+            genres += '<p2> '+ segment + ' |' +'</p2>';
+        }
+    }
+    if(events_ticketmaster._embedded.events[curr].classifications[0].genre.hasOwnProperty('name')){
+         gen = events_ticketmaster._embedded.events[curr].classifications[0].genre.name;
+         if(gen != 'Undefined'){
+             genres += '<p2> '+ gen + ' |' +'</p2>';
+         }
+    }
+    if(events_ticketmaster._embedded.events[curr].classifications[0].subGenre.hasOwnProperty('name')){
+        subgen = events_ticketmaster._embedded.events[curr].classifications[0].subGenre.name;
+        if(subgen != 'Undefined'){
+            genres += '<p2> '+ subgen + ' |' +'</p2>';
+        }
+    }
+    if(events_ticketmaster._embedded.events[curr].classifications[0].type.hasOwnProperty('name')){
+        type = events_ticketmaster._embedded.events[curr].classifications[0].type.name;
+        if(type != 'Undefined'){
+            genres += '<p2> '+ type + ' |' +'</p2>';
+        }
+    }
+    if(events_ticketmaster._embedded.events[curr].classifications[0].subType.hasOwnProperty('name')){
+        subType = events_ticketmaster._embedded.events[curr].classifications[0].subType.name;
+        if(subType != 'Undefined'){
+            genres += '<p2> '+ subType +'</p2>';
+        }
+    }
+    if(events_ticketmaster._embedded.events[0].dates.status.hasOwnProperty('code')){
+        status = '<h1>' + 'Ticket Status' + '</h1>' + '<p2> '+ events_ticketmaster._embedded.events[0].dates.status.code +'</p2>';
+    }
+    console.log("check");
+    if(events_ticketmaster._embedded.events[0].hasOwnProperty('priceRanges')){
+        price = '<h1>' + 'Price Ranges ' + '</h1>' + '<p2> '+ events_ticketmaster._embedded.events[0].priceRanges[0].min + ' - '+ events_ticketmaster._embedded.events[0].priceRanges[0].max + ' USD' +'</p2>';
+        console.log("LOL");
+    }
+    if(events_ticketmaster._embedded.events[curr].hasOwnProperty('url')){
+        ticket_url = events_ticketmaster._embedded.events[curr].url;
+        buy = '<h1>' + 'Buy Ticket At' + '</h1>' + '<p2><a href= ' + ticket_url + '> '+ 'Ticketmaster' +'</a></p2>';
+    }
 
-    var segment = events_ticketmaster._embedded.events[curr].classifications[0].segment.name;
-    var gen = events_ticketmaster._embedded.events[curr].classifications[0].genre.name;
-    var subgen = events_ticketmaster._embedded.events[curr].classifications[0].subGenre.name;
-    var type = events_ticketmaster._embedded.events[curr].classifications[0].type.name;
-    var subType = events_ticketmaster._embedded.events[curr].classifications[0].subType.name;
-    var genres = '<h1>' + 'Genre' + '</h1>' + '<p2> '+ segment + ' |'+'</p2>' + '<p2> '+ gen + ' |' +'</p2>' + '<p2> '+ subgen + ' |' +'</p2>' + '<p2> '+ type + ' |' +'</p2>' + '<p2> '+ subType + ' |' +'</p2>';
-
-    var status = '<h1>' + 'Ticket Status' + '</h1>' + '<p2> '+ events_ticketmaster._embedded.events[0].dates.status.code +'</p2>';
-
-    var ticket_url = events_ticketmaster._embedded.events[curr].url;
-    var buy = '<h1>' + 'Buy Ticket At' + '</h1>' + '<p2><a href= ' + artist1_url + '> '+ 'Ticketmaster' +'</a></p2>';
-
-    var b = date + artist + genres + status + buy;
+    var b = date + artist + venue + genres + price + status + buy;
     cell2.innerHTML = b;
-    var cell3 = row.insertCell(1);
-    var img = document.createElement('img');
-    img.src = events_ticketmaster._embedded.events[curr].seatmap.staticUrl;
-    cell3.appendChild(img);
+    if(events_ticketmaster._embedded.events[curr].hasOwnProperty('seatmap')){
+        var cell3 = row1.insertCell(1);
+        var img = document.createElement('img');
+        img.src = events_ticketmaster._embedded.events[curr].seatmap.staticUrl;
+        cell3.appendChild(img);
+    }
 }
 
 function delete_ext(){
@@ -199,7 +287,7 @@ function add_row(events_ticketmaster){
 
 
         cell1.appendChild(img);
-        cell2.innerHTML ='<a href="#" onclick=extend_event(); return false;>'+events_ticketmaster._embedded.events[curr].name +'<\a>';
+        cell2.innerHTML ='<a href="#expansion-table" onclick=extend_event('+ i + '); return= false;>'+events_ticketmaster._embedded.events[curr].name +'<\a>';
         cell3.innerHTML = events_ticketmaster._embedded.events[curr].classifications[0].segment.name;
         cell4.innerHTML = events_ticketmaster._embedded.events[curr]._embedded.venues[0].name;
         document.getElementById("event-table").style.border = "solid #000000";
@@ -268,11 +356,11 @@ function button2(){
 
 function send_keyword() { //SEND THE JSON STRING WITH ALL THE VALUES FOR TICKETMASTER
     var radius = "";
-    if(document.getElementById("radius").value == ""){
-        radius = String(document.getElementById("radius").placeholder);
+    if(document.getElementById("radius-key").value == ""){
+        radius = String(document.getElementById("radius-key").placeholder);
     }
     else{
-        radius = document.getElementById("radius").value;
+        radius = document.getElementById("radius-key").value;
         console.log(radius);
     }
     var content_val = (document.getElementById("category").value);

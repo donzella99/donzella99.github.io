@@ -9,9 +9,10 @@
             <div id = title>
                 <h1> Events Search </h1>
             </div>
+
             <div id = "form">
                 <form method ="post" onsubmit="return false">
-                     <p>Keyword <input type="text" id="keyword" name="keyword" onchange="keyword_result"><span id = "msg"></span></p>
+                     <p>Keyword <input type="text" id="keyword" name="keyword" onchange="keyword_result"><span data-tooltip ="Please Enter a Keyword" id="tt1"></span></p>
 
                      <p>Category <select id="category">
                         <option value = "1"> Default </option>
@@ -21,9 +22,9 @@
                         <option value = "5"> Film </option>
                         <option value = "6"> Miscellaneous </option>
                     </select></p>
-                     <p>Distance (miles) <input type="text" id="radius" placeholder="10"> from <input type="radio"  name="select" id="here_button"> Here </p>
+                     <p>Distance (miles) <input type="text" id="radius-key" placeholder="10" name="radius-key"> from <input type="radio"  name="select" id="here_button"> Here </p>
 
-                     <p style = "padding-left: 302px" ><input type="radio"  style= "border-radius: 20px" id="checkbox_location" name="select"> <input type="text" id="location"  placeholder="location"></p>
+                     <p style = "padding-left: 302px" ><input type="radio" id="checkbox_location" name="select"> <input type="text" id="location"  placeholder="location"> <span data-tooltip-2 ="Only Numbers Allowed" id="tt2"></span> </p>
 
                      <br><input type="submit" value="Search" id = "search" ><input type="submit" value="Clear" id = "clear" >
                     <!-- <input type="submit" id = "clear"> -->
@@ -31,9 +32,10 @@
                 </form><br />
             </div>
         </div>
+        <hr />
         <center><h3 id="no-events"></h3>  </center>
         <div id = "all-tables">
-                <table class="center" id="event-table" style="width: 400px; height: 1000px;">
+                <table class="center" id="event-table">
                     <tr>
                         <th id="head1">Date</th>
                         <th id="head2">Icon</th>
@@ -42,7 +44,7 @@
                         <th id="head5" >Venue</th>
                     </tr>
                 </table>
-                <table class="center" id="expand-table" style="width: 400px; height: 1000px;">
+                <table class="center" id="expand-table" >
                     <th></th>
                     <th></th>
                 </table>
