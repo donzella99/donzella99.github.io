@@ -12,7 +12,7 @@
 
             <div id = "form">
                 <form method ="post" onsubmit="return false">
-                     <p>Keyword <input type="text" id="keyword" name="keyword" onchange="keyword_result"><span data-tooltip ="Please Enter a Keyword" id="tt1"></span></p>
+                     <p>Keyword <input type="text" id="keyword" name="keyword" onchange="keyword_result"></p><p id="tt1"> </p>
 
                      <p>Category <select id="category">
                         <option value = "1"> Default </option>
@@ -24,7 +24,8 @@
                     </select></p>
                      <p>Distance (miles) <input type="text" id="radius-key" placeholder="10" name="radius-key"> from <input type="radio"  name="select" id="here_button"> Here </p>
 
-                     <p style = "padding-left: 302px" ><input type="radio" id="checkbox_location" name="select"> <input type="text" id="location"  placeholder="location"> <span data-tooltip-2 ="Only Numbers Allowed" id="tt2"></span> </p>
+                     <p id="tt2"> </p><p style = "padding-left: 302px" ><input type="radio" id="checkbox_location" name="select"> <input type="text" id="location"  placeholder="location"> </p>
+                     <p id="tt3"> </p>
 
                      <br><input type="submit" value="Search" id = "search" ><input type="submit" value="Clear" id = "clear" >
                     <!-- <input type="submit" id = "clear"> -->

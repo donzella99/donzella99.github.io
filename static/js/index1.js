@@ -10,16 +10,29 @@ var call_extend;
 
 document.getElementById("search").addEventListener("click",function (){
     if(document.getElementById("keyword").value.length == 0){
-    //    document.getElementById("tt1").classList.opacity = "0";
+        document.getElementById('tt1').innerHTML = "Please Enter a Keyword ^";
+        document.getElementById('tt2').innerHTML = "";
+        document.getElementById('tt3').innerHTML = "";
     }
     else if(document.getElementById("location").value.length == 0 && button_2 == 1){
     //    document.getElementById("tt2").classList.opacity = "0";
+        document.getElementById('tt1').innerHTML = "";
+        document.getElementById('tt2').innerHTML = "";
+        document.getElementById('tt3').innerHTML = "Please Enter a Location";
+    }
+    else if(isNaN(document.getElementById('radius-key').value)){
+        document.getElementById('tt2').innerHTML = "Needs to be a Number^";
+        document.getElementById('tt3').innerHTML = "";
+        document.getElementById('tt1').innerHTML = "";
     }
     else{
         if(document.getElementById("location").value != "location" && document.getElementById("location").value != ""){
                 console.log("c1");
                 console.log(search_obj);
         }
+        document.getElementById('tt1').innerHTML = "";
+        document.getElementById('tt2').innerHTML = "";
+        document.getElementById('tt3').innerHTML = "";
         receive_events();
         console.log("JALAKSLA");
         console.log(search_obj);
@@ -35,14 +48,18 @@ document.getElementById("search").addEventListener("click",function (){
 
 document.getElementById("clear").addEventListener("click",function (){
     if(document.getElementById("keyword").value.length != 0){
+        document.getElementById('tt1').innerHTML = "";
+        document.getElementById('tt2').innerHTML = "";
+        document.getElementById('tt3').innerHTML = "";
         document.getElementById("keyword").value = '';
         button1();
         document.getElementById("here_button").checked= true;
         document.getElementById("checkbox_location").checked= false;
         delete_ext();
         delete_row(ticketmaster);
-        document.getElementById("msg").innerHTML = '';
+    //    document.getElementById("msg").innerHTML = '';
         document.getElementById("keyword").value = '';
+        document.getElementById("radius-key").innerHTML = '';
         document.getElementById("radius-key").value = '';
         document.getElementById("category").selectedIndex = "Default";
         call_extend = 0;
@@ -51,16 +68,21 @@ document.getElementById("clear").addEventListener("click",function (){
     }
     else{
         button1();
+        document.getElementById('tt1').innerHTML = "";
+        document.getElementById('tt2').innerHTML = "";
+        document.getElementById('tt3').innerHTML = "";
         document.getElementById("here_button").checked= true;
         document.getElementById("checkbox_location").checked= false;
-        document.getElementById("msg").innerHTML = '';
+    //    document.getElementById("msg").innerHTML = '';
         document.getElementById("keyword").value = '';
+        document.getElementById("radius-key").innerHTML = '';
         document.getElementById("radius-key").value = '';
         document.getElementById("category").selectedIndex = "Default";
         call_extend = 0;
     }
     if(document.getElementById("location").value.length != 0){
         document.getElementById("location").innerHTML = "";
+        document.getElementById("radius-key").value = '';
     }
 });
 
@@ -179,7 +201,6 @@ function extend_event(i){
             artist += '<p2><a href = ' + artist1_url + '>' + artist1 + '</a>' + '</p2>';
         }
     }
-console.log("ww");
     if(events_ticketmaster._embedded.events[curr]._embedded.venues[0].hasOwnProperty('name')){
         venue = '<h1>' + 'Venue' + '</h1>' + '<p2> '+ events_ticketmaster._embedded.events[curr]._embedded.venues[0].name +'</p2>';
         console.log(venue);
@@ -306,9 +327,6 @@ function delete_row(events_ticketmaster){
     }
     document.getElementById("event-table").style.border = "solid #FFFFFF";
 }
-
-
-
 
 function print_events(events_ticketmaster){
     console.log((document.getElementById("event-table").rows.length));
