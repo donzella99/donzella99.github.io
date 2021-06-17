@@ -7,34 +7,58 @@ const hostname = '127.0.0.1';
 const port = '3000';
 const fetch = require("node-fetch");
 const path = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhKgPQynndjc1pcDNq0flHYCg2ltMF";
-const axios = require('axios');
+ const axios = require('axios');
+ // axios.defaults.baseURL = "http://localhost:3000/";
 
-// var bodyParser = require('body-parser');
+var bodyParser = require('body-parser');
+var finalData;
 
-// app.use(bodyParser.urlencoded());
-// app.use(bodyParser.json());
-//app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 app.use(express.static(__dirname + "/"));
 
-var dz = [{"Roberto" : "Big Baller"}];
+// var dz = [{"Robert" : "Big Baller"}];
+dz = "notready";
 
-function makeGetRequest(path) {
-    axios.get(path).then(
-        (response) => {
-            var result = response.data;
-            console.log(result);
-        },
-        (error) => {
-            console.log(error);
-        }
-    );
-}
-makeGetRequest('http://127.0.0.1:5000/test');
+// function ticketmaster() {
+//     fetch(path)
+//     // .then(response => {
+//     // return response.json();
+//     // })
+//     .then(data => {
+//             var obj = data.loc;
+//             console.log(obj);
+//             return obj;
+//     })
+//     .catch((error) => {
+//         console.log(error);
+//     });
+//     return 1;
+// }
+
+async function getSchedule(res) {
+    try {
+      let scheduleArr = await axios.get(path + "&keyword=" + finalData.Keyword);
+      dz =(scheduleArr.data);
+      dz = JSON.stringify(dz);
+      //console.log(dz);
+      res.send(dz);
+    } catch (err) {
+      console.log(`ERROR: ${err}`);
+    }
+  }
 
 app.get("/search", function(req,res){
-    var obj = {};
-	console.log("hello");
-	res.send(dz);
+    // var obj = {};
+    finalData = (req.query);
+    console.log(finalData);
+    try{
+        getSchedule(res);
+    }
+    catch(err){
+        console.log("error");
+    }
+    // console.log(finalData.Keyword);
 });
 
 app.listen(port,function(){

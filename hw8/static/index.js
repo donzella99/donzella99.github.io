@@ -9,8 +9,8 @@ var dz = [{"Roberto" : "Big Baller"}];
 var universal;
 var count = 0;
 var click =0;
-const axios = require('axios');
 const apiHost = "http://localhost:3000";
+var events_ticketmaster;
 
 function createRowColumn(row) {
     var column = document.createElement("td");
@@ -41,7 +41,11 @@ function add_event() {
     $('#nav-1').removeClass("he");
     $('#nav-2').addClass("he");
     $('#nav-3').addClass("he");
-    for(i = 0; i<1; i++){
+    var max = 20;
+    if(events_ticketmaster.page.totalElements<20){
+        max = events_ticketmaster.page.totalElements;
+    }
+    for(i = 0; i<max; i++){
         var newrow = document.createElement("tr");
         var number = createRowColumn(newrow);
         var date = createRowColumn(newrow);
@@ -53,11 +57,11 @@ function add_event() {
         // console.log(universal['0']._embedded);
         count= i+1;
         number.innerHTML = count;
-        date.innerHTML = universal['0']._embedded.events[i].dates.start.localDate;
-        event_name.innerHTML = '<a href="#expansion-table" onclick=event_details('+ i + '); return= false;> ' + universal['0']._embedded.events[i].name + ' </a>' ;
-        var cat = universal['0']._embedded.events[i].classifications[0].segment.name + ' | ' +universal['0']._embedded.events[i].classifications[0].genre.name + ' | '+  universal['0']._embedded.events[i].classifications[0].subGenre.name;
+        date.innerHTML = events_ticketmaster._embedded.events[i].dates.start.localDate;
+        event_name.innerHTML = '<a href="#expansion-table" onclick=event_details('+ i + '); return= false;> ' + events_ticketmaster._embedded.events[i].name + ' </a>' ;
+        var cat = events_ticketmaster._embedded.events[i].classifications[0].segment.name + ' | ' + events_ticketmaster._embedded.events[i].classifications[0].genre.name + ' | '+  events_ticketmaster._embedded.events[i].classifications[0].subGenre.name;
         category.innerHTML = cat;
-        venue_info.innerHTML = universal['0']._embedded.events[i]._embedded.venues[0].name;
+        venue_info.innerHTML = events_ticketmaster._embedded.events[i]._embedded.venues[0].name;
         var checkbox = document.createElement("input");
         checkbox.setAttribute("type", "checkbox");
         favorite.appendChild(checkbox);
@@ -159,19 +163,23 @@ function receive_events(){
 function send_ip(){
     console.log(typeof dz);
     console.log(typeof universal);
+    var bbb;
     if($('#keyword').val().length != 0){
-        //console.log(document.getElementById('keyword').val());
         bbb = {"Keyword" : $('#keyword').val()};
-        //console.log(universal);
+        console.log("Bbb");
+        console.log(typeof bbb);
     }
     return $.ajax({
          type: 'GET',
-         data: JSON.stringify({"Keyword" : $('#keyword').val()}),
+         data: (bbb),
          contentType: 'application/json',
          url: 'http://localhost:3000/search',
          success: function(data) {
+             data = JSON.parse(data);
              console.log('success');
-             console.log(data);
+             console.log(typeof data);
+             events_ticketmaster = data;
+             console.log(data._embedded.events[0].name);
          }
      });
 }
@@ -193,8 +201,9 @@ $("#search").on("click",function(){
 
     $.when(extract_ip()).done(function(a1){
         send_ip();
-        add_event();
-    //    delete_event();
+        $.when(send_ip()).done(function(a1){
+            add_event();
+        });
     });
 });
 
@@ -225,7 +234,6 @@ function add_row(newrow){
 }
 
 function add_venue_row(){
-    var events_ticketmaster = universal['0'];
     var address = "";
     var city = "";
     var phone_number = "";
@@ -298,7 +306,6 @@ function add_venue_row(){
 }
 
 function add_event_row(){
-    var events_ticketmaster = universal['0'];
     var artist;
     var artist_string="";
     var date = "";
@@ -432,7 +439,7 @@ function add_event_row(){
 
 function initMap() {
   // The location of Uluru
-  var events_ticketmaster = universal['0'];
+
   var latitude =1;
   var longitude;
   if(latitude ==1){
