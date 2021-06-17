@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
     <link rel = "stylesheet" href="index.css" />
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -12,9 +14,6 @@
     <title>Hello, world!</title>
   </head>
   <body>
-
-    <body>
-
 
 </br></br></br>
 <form action="" class="top-form back" method = "novalidate">
@@ -60,8 +59,37 @@
             <button type="button" id ="results" onclick="window.location.href" class="btn btn-primary">Results</button>
             <button type="button" id ="favorites" onclick="window.location.href" class="btn btn-primary btn-change">Favorites</button>
     </nav>
+
     <br />
-    <br />
+    <nav class="navbar navbar-light bg-light table-form" id="nav-1">
+        <li class="nav-item active ml-auto navbar-nav">
+            <a class="nav-link" href="#"><b>Details ></b><span class="sr-only"></span></a>
+        </li>
+    </nav>
+    <nav class="navbar navbar-light bg-light table-form" id="nav-2">
+      <a class="navbar-brand me-auto" href=create_event()>
+              <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active navbar-nav">
+                      <a class="nav-link" href="#"><button class="btn btn-primary"> < List</button><span class="sr-only"></span></a>
+                  </li>
+              </ul>
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item active navbar-nav">
+                      <a class="navbar-brand" href="#"> <img src="twitter.png" width="30" height="30" alt=""> </a>
+                  </li>
+                  <li class="nav-item active navbar-nav">
+                      <a class="navbar-brand" onclick="star_button()" id="star" rel=”No-Refresh”>
+                          <span class="fa fa-star" id="btn-star"></span>
+                      </a>
+                  </li>
+              </ul>
+      </a>
+    </nav>
+    <nav class="navbar navbar-light bg-light table-form" id="nav-3">
+      <a class="navbar-brand me-auto" href=create_event()>
+        Details>
+      </a>
+  </nav></br></br>
     <table class="table table-striped table-form " id="table">
       <thead>
         <tr>
@@ -74,15 +102,43 @@
         </tr>
       </thead>
       <tbody>
+          <div id="tab"> <!--active -->
+              <ul class="nav nav-tabs table-form">
+              		<li class="nav-item ml-auto hide">
+              			<a href="" onclick="add_event_row()" class="nav-link active" role="tab" data-toggle="tab">Event</a>
+              		</li>
+
+              		<li class="nav-item hide">
+              			<a href="" onclick="star_button()" class="nav-link" role="tab" data-toggle="tab">Artist/Teams</a>
+              		</li>
+
+              		<li class="nav-item hide">
+              			<a href=""  onclick="add_venue_row()" class="nav-link" role="tab" data-toggle="tab">Venue</a>
+              		</li>
+              	</ul>
+          </div>
       </tbody>
     </table>
+
+    <table class="table table-striped table-form " id="table-event">
+      <thead>
+        <tr>
+        </tr>
+      </thread>
+      <tbody id="tbody1">
+      </tbody>
+    </table>
+
+    <!-- <div id="map"></div> -->
 
     </body>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="index.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXqpQCJmyT4GKf6nB5r4MqREQ7oAzYAdU&callback=initMap&libraries=&v=weekly"></script>
 </html>

@@ -1,6 +1,14 @@
+body {
+     font: 20px Montserrat, sans-serif;
+     line-height: 1.8;
+  /* ?* color: #f5f6f7; */
+ }
+ p {font-size: 19px;}
+
 .top-form{
-    width: 1250px;
+    width: 900px;
     margin: auto;
+    font: 20px Montserrat, sans-serif;
 }
 
 .table-form{
@@ -14,7 +22,7 @@
 }
 
 a{
-    background-color: blue !important;
+    color: grey;
 }
 
 .btn-change{
@@ -24,7 +32,6 @@ a{
 }
 
 .btn-clear{
-    color: white !important
     background-color: white !important;
     border-color: #E9ECEF !important;
 }
@@ -58,4 +65,21 @@ a{
 
 .hide-table{
     opacity:1;
+}
+
+.he{
+    height: 0px !important;
+    opacity: 0 !important;
+}
+
+.star-fill{
+    color: orange !important;
+}
+
+#map {
+  height: 400px;
+
+  /* The height is 400 pixels */
+  width: 400px;
+  /* The width is the width of the web page */
 }

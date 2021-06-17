@@ -6,6 +6,8 @@ const https = require("https");
 const hostname = '127.0.0.1';
 const port = '3000';
 const fetch = require("node-fetch");
+const path = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhKgPQynndjc1pcDNq0flHYCg2ltMF";
+const axios = require('axios');
 
 // var bodyParser = require('body-parser');
 
@@ -15,6 +17,19 @@ const fetch = require("node-fetch");
 app.use(express.static(__dirname + "/"));
 
 var dz = [{"Roberto" : "Big Baller"}];
+
+function makeGetRequest(path) {
+    axios.get(path).then(
+        (response) => {
+            var result = response.data;
+            console.log(result);
+        },
+        (error) => {
+            console.log(error);
+        }
+    );
+}
+makeGetRequest('http://127.0.0.1:5000/test');
 
 app.get("/search", function(req,res){
     var obj = {};
