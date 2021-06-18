@@ -12,8 +12,13 @@
   "dependencies": {
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
+    "config": "^3.3.6",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "twit": "^2.2.11",
+    "unique-random-array": "^3.0.0",
+    "unirest": "^0.6.0"
   },
   "devDependencies": {
     "pstree.remy": "^1.1.0"

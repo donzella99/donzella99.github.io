@@ -17,28 +17,46 @@
 
 </br></br></br>
 <form action="" class="top-form back" method = "novalidate">
-        <div class="form-group">
+        <div class="form-group form-inline">
             <label for="keyword">Keyword </label>
-            <input type="text" name="keyword" id="keyword" class="form-control" required placeholder="Enter Artist, Team, or Event Name (e.g. Warriors)">
+            <input type="text" name="keyword" id="keyword" class="form-control ml-auto keyword-form" required placeholder="Enter Artist, Team, or Event Name (e.g. Warriors)">
             <div class="invalid-feedback">Please enter a Keyword.</div>
         </div>
-        <div class="form-group">
-            <label for="Category">Category</label>
-            <select name="category" id="category" class="form-control">
-                <option value="All">All</option>
-                <option value="Sports">Sports</option>
+        <div class="form-group form-inline">
+            <label for="Category">Category</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <select name="category" id="category" class="form-control category-form">
+                <option value=1>All</option>
+                <option value=2>Music</option>
+                <option value=3>Sports</option>
+                <option value=4>Arts & Theatre</option>
+                <option value=5>Film</option>
+                <option value=6>Miscellaneous</option>
+            </select>
+        </div>
+        <div class="form-group form-inline">
+            <label for="radius">Distance </label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="text" name="radius" id="radius" class="form-control category-form" required placeholder="10">&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="invalid-feedback">Please enter a Number Only.</div>
+            <select name="units" id="units" class="form-control">
+                <option value=1>Miles</option>
+                <option value=2>Kilometer</option>
             </select>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="exampleRadios" id="current-location" value="option1" checked>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <input class="form-check-input" type="radio" name="exampleRadios" id="current-location" value="option1" checked>
           <label class="form-check-label" for="exampleRadios1"> Current Location </label>
         </div>
         <div class="form-check">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <input class="form-check-input" type="radio" name="exampleRadios" id="other" value="option2">
           <label class="form-check-label" for="exampleRadios2"> Other. Please Specify </label>
+
         </div>
+    </br>
         <div class="form-group">
-            <input type="text" name="loacation" id="location" class="form-control" required>
+             <input type="text" name="loacation" id="location" class="form-control keyword-form" required>
             <div class="invalid-feedback">Please enter a Location.</div>
         </div>
 
@@ -55,27 +73,28 @@
     </br></br>
     </form>
     <br /><br />
+
     <nav class="navbar navbar-expand-lg navbar-light bg-white table-form button-center">
-            <button type="button" id ="results" onclick="window.location.href" class="btn btn-primary">Results</button>
-            <button type="button" id ="favorites" onclick="window.location.href" class="btn btn-primary btn-change">Favorites</button>
+            <button type="button" id ="results" onclick="add_event()" class="btn btn-primary">Results</button>
+            <button type="button" id ="favorites" onclick="add_favorites()" class="btn btn-primary btn-change">Favorites</button>
     </nav>
 
     <br />
     <nav class="navbar navbar-light bg-light table-form" id="nav-1">
         <li class="nav-item active ml-auto navbar-nav">
-            <a class="nav-link" href="#"><b>Details ></b><span class="sr-only"></span></a>
+            <a class="nav-link" href="#" onclick ="add_event_row(curr);  fake();"><b>Details ></b><span class="sr-only"></span></a>
         </li>
     </nav>
     <nav class="navbar navbar-light bg-light table-form" id="nav-2">
       <a class="navbar-brand me-auto" href=create_event()>
               <ul class="navbar-nav mr-auto">
                   <li class="nav-item active navbar-nav">
-                      <a class="nav-link" href="#"><button class="btn btn-primary"> < List</button><span class="sr-only"></span></a>
+                      <a class="nav-link" onclick="add_event()" href="#"><button class="btn btn-primary"> < List</button><span class="sr-only"></span></a>
                   </li>
               </ul>
               <ul class="navbar-nav ml-auto">
                   <li class="nav-item active navbar-nav">
-                      <a class="navbar-brand" href="#"> <img src="twitter.png" width="30" height="30" alt=""> </a>
+                      <a class="navbar-brand" href="#" onclick="tweet(curr)"> <img src="twitter.png" width="30" height="30" alt=""> </a>
                   </li>
                   <li class="nav-item active navbar-nav">
                       <a class="navbar-brand" onclick="star_button()" id="star" rel=”No-Refresh”>
@@ -89,7 +108,7 @@
       <a class="navbar-brand me-auto" href=create_event()>
         Details>
       </a>
-  </nav></br></br>
+  </nav>
     <table class="table table-striped table-form " id="table">
       <thead>
         <tr>
@@ -105,26 +124,24 @@
           <div id="tab"> <!--active -->
               <ul class="nav nav-tabs table-form">
               		<li class="nav-item ml-auto hide">
-              			<a href="" onclick="add_event_row()" class="nav-link active" role="tab" data-toggle="tab">Event</a>
+              			<a href="#" onclick="add_event_row(curr);  fake();" class="nav-link my-tab active" role="tab" data-toggle="tab" >Event</a>
               		</li>
 
               		<li class="nav-item hide">
-              			<a href="" onclick="star_button()" class="nav-link" role="tab" data-toggle="tab">Artist/Teams</a>
+              			<a href="#" onclick="star_button();  fake();" class="nav-link my-tab" role="tab" data-toggle="tab">Artist/Teams</a>
               		</li>
 
               		<li class="nav-item hide">
-              			<a href=""  onclick="add_venue_row()" class="nav-link" role="tab" data-toggle="tab">Venue</a>
+              			<a href="#"  onclick="add_venue_row(curr); fake();" class="nav-link my-tab" role="tab" data-toggle="tab">Venue</a>
               		</li>
               	</ul>
           </div>
       </tbody>
     </table>
 
-    <table class="table table-striped table-form " id="table-event">
-      <thead>
+    <table class="table table-striped table-form" id="table-event">
         <tr>
         </tr>
-      </thread>
       <tbody id="tbody1">
       </tbody>
     </table>
@@ -140,5 +157,5 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="index.js"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXqpQCJmyT4GKf6nB5r4MqREQ7oAzYAdU&callback=initMap&libraries=&v=weekly"></script>
+        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXqpQCJmyT4GKf6nB5r4MqREQ7oAzYAdU&callback=initMap&libraries=&v=weekly"></script> -->
 </html>

@@ -6,7 +6,11 @@ body {
  p {font-size: 19px;}
 
 .top-form{
-    width: 900px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 1200px;
     margin: auto;
     font: 20px Montserrat, sans-serif;
 }
@@ -64,8 +68,9 @@ a{
 }
 
 .hide-table{
-    opacity:1;
+    opacity:0 !important;
 }
+
 
 .he{
     height: 0px !important;
@@ -82,4 +87,12 @@ a{
   /* The height is 400 pixels */
   width: 400px;
   /* The width is the width of the web page */
+}
+
+.keyword-form{
+    width: 800px !important;
+    /* margin: auto; */
+}
+.category-form{
+    width: 200px !important;
 }

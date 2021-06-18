@@ -13,6 +13,10 @@ const path = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhK
 var bodyParser = require('body-parser');
 var finalData;
 
+var Twit = require('twit');
+var config = require('./config');
+var T = new Twit(config);
+
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/"));
@@ -38,14 +42,17 @@ dz = "notready";
 
 async function getSchedule(res) {
     try {
-      let scheduleArr = await axios.get(path + "&keyword=" + finalData.Keyword);
-      dz =(scheduleArr.data);
-      dz = JSON.stringify(dz);
-      //console.log(dz);
-      res.send(dz);
-    } catch (err) {
-      console.log(`ERROR: ${err}`);
-    }
+        var thing = path + "&keyword=" + finalData.Keyword + "&sort=date,asc"+"&geoPoint="  + finalData.geoPoint + "&radius=" + finalData.Radius + "&SegmentId=" + finalData.Category;
+        console.log(thing);
+        let scheduleArr = await axios.get(path + "&keyword=" + finalData.Keyword +"&sort=date,asc&geoPoint=" + finalData.geoPoint + "&radius=" + finalData.Radius + "&SegmentId=" + finalData.Category);
+        dz =(scheduleArr.data);
+        dz = JSON.stringify(dz);
+        //console.log(dz);
+        res.send(dz);
+        }
+        catch (err) {
+          console.log(`ERROR: ${err}`);
+        }
   }
 
 app.get("/search", function(req,res){
