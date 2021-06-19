@@ -198,9 +198,15 @@ $('#other').click(function(){
 });
 
 function init(){
+    for(i = 0; i<localStorage.length; i ++)
+    {
+        console.log(localStorage.getItem(i));
+    }
     console.log("init");
     console.log((localStorage.getItem(0)));
     console.log("init");
+    fav_count = localStorage.length;
+    console.log(fav_count);
     //localStorage.clear();
     // localStorage.removeItem(0);
     // localStorage.removeItem(1);
@@ -338,6 +344,7 @@ function send_ip(){
 // });
 
 $("#clear").on("click",function(){
+    localStorage.clear();
     delete_event_rows();
     document.getElementById("keyword").value = '';
     button_1 = 1;
@@ -362,19 +369,22 @@ function search_favorites(name, date){
     var cnt = 0;
     for(i = 0; i<localStorage.length; i ++)
     {
+        console.log("i");
+        console.log(i);
         console.log(localStorage.getItem(i));
+        console.log(name);
+        console.log(date);
         if((localStorage.getItem(i)) == name || (localStorage.getItem(i)) == date){
             cnt++;
         }
     }
-    console.log(cnt);
     if(cnt == 2){
         result = 1;
     }
     return result;
 }
 
-function remove_favorites(){
+function remove_favorites(name,date){
     var result =0;
     var cnt = 0;
     for(i = 0; i<localStorage.length; i ++)
@@ -387,10 +397,29 @@ function remove_favorites(){
                 result = i;
         }
     }
-    localStorage.removeItem(result-1);
+    // localStorage.getItem(result-1);
+    // localStorage.getItem(result);
+    // localStorage.getItem(result+1);
+    // localStorage.getItem(result+2);
+    // console.log("wait");
+    // console.log(localStorage.length);
+    // console.log(result);
+    // for(i = 0; i<localStorage.length; i ++)
+    // {
+    //     console.log(localStorage.getItem(i));
+    // }
+    // console.log("now");
     localStorage.removeItem(result);
     localStorage.removeItem(result+1);
     localStorage.removeItem(result+2);
+    localStorage.removeItem(result+3);
+    // console.log("removing");
+    // console.log(localStorage.length);
+    // for(i = 0; i<localStorage.length; i ++)
+    // {
+    //     console.log(localStorage.getItem(i));
+    // }
+    // console.log("removed");
 }
 
 
@@ -401,15 +430,16 @@ function star_button2(favorite,i){
     // console.log(name);
     // console.log(date);
     if(search_favorites(name, date)){
-        remove_favorites();
+        console.log("exists");
+        remove_favorites(name,date);
         $('#' + favorite.id).removeClass("star-fill");
         favorites[i]= 0;
     }
     else{
+        console.log("doesnt exist");
         $('#' + favorite.id).addClass("star-fill");
         favorites[i]= 1;
-        localStorage.setItem(fav_count,events_ticketmaster._embedded.events[i].name);///TODO
-        fav_count++;
+        add_storage(i);
     }
 }
 
@@ -426,6 +456,8 @@ function add_venue_row(newrow){
 }
 
 function add_favorites(){
+    var seen = 0;
+    var ct = 0;
     $('#map').addClass('hide-table');
     $('.my-tab').hide();
     console.log("FAV");
@@ -436,7 +468,34 @@ function add_favorites(){
     if(document.getElementById("table").rows.length > 1){
         delete_event_rows();
     }
-    if(favorites.length == 0){
+    for(i = 0; i<localStorage.length; i++)
+    {
+        console.log(localStorage.getItem(i));
+        if((localStorage.getItem(i) != null)){
+            seen =1;
+            var newrow1 = document.createElement("tr");
+            var number = createRowColumn(newrow1);
+            var date = createRowColumn(newrow1);
+            var event_name = createRowColumn(newrow1);
+            var category = createRowColumn(newrow1);
+            var venue_info = createRowColumn(newrow1);
+            var favorite = createRowColumn(newrow1);
+
+            number.innerHTML = ct;
+            date.innerHTML = localStorage.getItem(i);
+            event_name.innerHTML = localStorage.getItem(i+1);
+            category.innerHTML = localStorage.getItem(i+2);
+            venue_info.innerHTML = localStorage.getItem(i+3);
+            i = i+3;
+
+            var table = document.getElementById('table');
+            var tbody = table.querySelector('tbody');
+            tbody.appendChild(newrow1);
+            ct++;
+        }
+        console.log(localStorage.getItem(i));
+    }
+    if(seen == 0){
         console.log("a");
         var newrow = document.createElement("tr");
         var no_items = createRowColumn(newrow);
@@ -450,34 +509,7 @@ function add_favorites(){
         var tbody1 = table1.querySelector('tbody');
         tbody1.appendChild(newrow);
     }
-    else {
-        var array_favorites =Object.keys(favorites);
-        for (i = 0; i<array_favorites.length; i++){
-            console.log("b");
-            var newrow1 = document.createElement("tr");
-            var number = createRowColumn(newrow1);
-            var date = createRowColumn(newrow1);
-            var event_name = createRowColumn(newrow1);
-            var category = createRowColumn(newrow1);
-            var venue_info = createRowColumn(newrow1);
-            var favorite = createRowColumn(newrow1);
-            favorite.id = 'table' + i;
-            var fav_id = 'table' + i;
 
-            var x = array_favorites[i];
-            console.log(x);
-            number.innerHTML = i+1;
-            date.innerHTML = events_ticketmaster._embedded.events[x].dates.start.localDate;
-            event_name.innerHTML = '<a href="#" onclick=add_event_row('+ x + '); return= false;> ' + events_ticketmaster._embedded.events[x].name + ' </a>' ;
-            var cat = events_ticketmaster._embedded.events[x].classifications[0].segment.name + ' | ' + events_ticketmaster._embedded.events[x].classifications[0].genre.name + ' | '+  events_ticketmaster._embedded.events[i].classifications[0].subGenre.name;
-            category.innerHTML = cat;
-            venue_info.innerHTML = events_ticketmaster._embedded.events[i]._embedded.venues[0].name;
-            favorite.innerHTML = '<a class="navbar-brand" onclick=star_button2(' + fav_id + ',' + i +') id="star" rel=”No-Refresh”><span class="fa fa-star" id="btn-star"></span></a>';
-            var table = document.getElementById('table');
-            var tbody = table.querySelector('tbody');
-            tbody.appendChild(newrow1);
-        }
-    }
 }
 
 
@@ -816,7 +848,7 @@ function tweet(curr){
 }
 
 init();
-search_favorites();
+//search_favorites();
 // receive_events();
 
 // });
