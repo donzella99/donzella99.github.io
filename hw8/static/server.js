@@ -4,10 +4,11 @@ const express = require("express");
 const app = express();
 const https = require("https");
 const hostname = '127.0.0.1';
-const port = '3000';
+const port = '3001';
 const fetch = require("node-fetch");
 const path = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhKgPQynndjc1pcDNq0flHYCg2ltMF";
  const axios = require('axios');
+
  // axios.defaults.baseURL = "http://localhost:3000/";
 
 var bodyParser = require('body-parser');
@@ -24,21 +25,32 @@ app.use(express.static(__dirname + "/"));
 // var dz = [{"Robert" : "Big Baller"}];
 dz = "notready";
 
-// function ticketmaster() {
-//     fetch(path)
-//     // .then(response => {
-//     // return response.json();
-//     // })
-//     .then(data => {
-//             var obj = data.loc;
-//             console.log(obj);
-//             return obj;
-//     })
-//     .catch((error) => {
-//         console.log(error);
-//     });
-//     return 1;
+
+// let { userAccessToken } = require('./spotifyConfig');
+//
+// async function getArtists() {
+//     const result = [];
+//         try {
+//             for (let i = 2000; i < 2020; i++) {
+//                     let data = await fetch(`https://api.spotify.com/v1/search?q=year%3A${i}&type=artist&market=US`, {
+//                         method: "GET",
+//                         headers: {
+//                             Authorization: `Bearer ${userAccessToken}`
+//                         }
+//                     });
+//                     let actualData = await data.json();
+//                     var allItems = actualData.artists.items;
+//                 var x = allItems.map(item => {
+//                         var everyOne = item.name;
+//                         return everyOne;
+//                     });
+//             result.push(x);
+//             }
+//             return result.flat();
+//         } catch (e) { console.log (e); }
 // }
+// getArtists();
+
 
 async function getSchedule(res) {
     try {
@@ -72,6 +84,27 @@ app.listen(port,function(){
     console.log("server started");
 });
 
+// app.get("/spotify", function (request, response) {
+//   let query = request.query.query;
+//
+//   console.log(request);
+//
+//   if(request.query.context) {
+//     if(request.query.context == 'artist') {
+//       query = 'artist:' + request.query.query;
+//     }
+//     if(request.query.context == 'track') {
+//       query = 'track:' + request.query.query;
+//     }
+//   }
+//   spotifyApi.searchTracks(query)
+//   .then(function(data) {
+//     console.log(data.body);
+//     response.send(data.body);
+//   }, function(err) {
+//     console.log(err)
+// //   });
+// });
 
 
 //axios

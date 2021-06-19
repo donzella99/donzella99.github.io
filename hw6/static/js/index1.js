@@ -8,6 +8,7 @@ var button_1;
 var button_2;
 var call_extend;
 
+
 document.getElementById("search").addEventListener("click",function (){
     if(document.getElementById("keyword").value.length == 0){
         document.getElementById('tt1').innerHTML = "Please Enter a Keyword ^";

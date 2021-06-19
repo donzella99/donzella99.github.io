@@ -166,6 +166,7 @@ $('#search').click(function(){
                     $.when(send_ip()).done(function(a1){
                         add_event();
                     });
+                    $('tr').removeClass('hide-table');
                 }
                 else if($('#location').val().length != 0 && button_2){
                     geo_coding();
@@ -294,24 +295,21 @@ function add_storage(i){
     localStorage.setItem(fav_count,events_ticketmaster._embedded.events[i]._embedded.venues[0].name);
     fav_count++;
     console.log(fav_count);
-console.log("Start");
-    for(t=0; t<localStorage.length; t++){
-        if((typeof localStorage.getItem(t)) == "object"){
-            console.log(JSON.parse(localStorage.getItem(t)));
-        }
-
-    }
+    console.log("Start");
+     for(t=0; t<localStorage.length; t++){
+             console.log((localStorage.getItem(t)));
+     }
     console.log("End");
 }
 
 function send_ip(){
-    console.log(typeof dz);
-    console.log(typeof universal);
+    // console.log(typeof dz);
+    // console.log(typeof universal);
     var bbb;
     if($('#keyword').val().length != 0){
         keyword_result = $('#keyword').val();
-        console.log("Bbb");
-        console.log(typeof keyword_result);
+        // console.log("Bbb");
+        // console.log(typeof keyword_result);
     }
     var content_val = (document.getElementById("category").value);
     var category_selected;
@@ -366,13 +364,16 @@ $("#clear").on("click",function(){
 });
 
 function star_button(){
-    if(click == 0){
-        $('#btn-star').addClass("star-fill");
-        click =1;
+    if(search_favorites(events_ticketmaster._embedded.events[curr].name, events_ticketmaster._embedded.events[curr].dates.start.localDate)){
+        console.log("exists");
+        remove_favorites(events_ticketmaster._embedded.events[curr].name, events_ticketmaster._embedded.events[curr].dates.start.localDate);
+        $('#star').removeClass("star-fill");
+        favorites[curr]= 0;
     }
     else{
-        $('#btn-star').removeClass("star-fill");
-        click = 0;
+        $('#star').addClass("star-fill");
+        favorites[curr]= 1;
+        add_storage(curr);
     }
 }
 
@@ -400,14 +401,17 @@ function search_favorites(name, date){
 function remove_favorites(name,date){
     var result =0;
     var cnt = 0;
+    var good =0;
     for(i = 0; i<localStorage.length; i ++)
     {
         console.log(localStorage.getItem(i));
         if((localStorage.getItem(i)) == name || (localStorage.getItem(i)) == date){
             cnt++;
         }
-        if(count == 2){
+        if(cnt == 2){
                 result = i;
+                cnt=0;
+                good =1;
         }
     }
     console.log("not_now-Removal");
@@ -416,11 +420,21 @@ function remove_favorites(name,date){
             console.log(localStorage.getItem(t));
         }
         console.log("now-Removal");
+        var res1 = result-1;
+        var res2 = result+1;
+        var res3 =  result+2;
+        console.log(result);
+        if(good){
+            localStorage.setItem(res1," ");
+            localStorage.setItem(result," ");
+            localStorage.setItem(res2," ");
+            localStorage.setItem(res3," ");
+        }
 
-    localStorage.removeItem(result);
-    localStorage.removeItem(result+1);
-    localStorage.removeItem(result+2);
-    localStorage.removeItem(result+3);
+        // localStorage.removeItem(result);
+        // localStorage.removeItem(res1);
+        // localStorage.removeItem(res2);
+        // localStorage.removeItem(res3);
 
     console.log("Start-Removal");
         for(t=0; t<localStorage.length; t++){
@@ -429,7 +443,6 @@ function remove_favorites(name,date){
         console.log("End-Removal");
 
 }
-
 
 function star_button2(favorite,i){
     // console.log(i);
@@ -479,7 +492,7 @@ function add_favorites(){
     for(i = 0; i<localStorage.length; i++)
     {
         console.log(localStorage.getItem(i));
-        if((localStorage.getItem(i) != null)){
+        if((localStorage.getItem(i) != null) && (localStorage.getItem(i) != " ")){
             seen =1;
             var newrow1 = document.createElement("tr");
             var number = createRowColumn(newrow1);
@@ -488,6 +501,7 @@ function add_favorites(){
             var category = createRowColumn(newrow1);
             var venue_info = createRowColumn(newrow1);
             var favorite = createRowColumn(newrow1);
+            var fav_id = 'table' + i;
 
             number.innerHTML = ct;
             date.innerHTML = localStorage.getItem(i);
@@ -499,6 +513,8 @@ function add_favorites(){
             var table = document.getElementById('table');
             var tbody = table.querySelector('tbody');
             tbody.appendChild(newrow1);
+            favorite.innerHTML = '<a class="navbar-brand" href="#" onclick="tweet(curr)"> <img src="trash.png" width="30" height="30" alt=""> </a>';
+            $(favorite).addClass("star-fill");
             ct++;
         }
         console.log(localStorage.getItem(i));
@@ -517,11 +533,25 @@ function add_favorites(){
         var tbody1 = table1.querySelector('tbody');
         tbody1.appendChild(newrow);
     }
-delete_event_details();
+    delete_event_details();
+    $(".progress-bar").animate({
+        width: "100%"
+    }, 1000, function() {
+            $('#nav-1').removeClass("he");
+            $('#nav-2').addClass("he");
+            $('#nav-3').addClass("he");
+            $('#table').removeClass('hide-table');
+            $('tr').removeClass('hide-table');
+            $(this).closest('.progress').fadeOut();
+    });
+    $('#tr1').removeClass('hide-table');
+    $('#table').removeClass('hide-table');
+    document.getElementById('fav').innerHTML = "Remove";
 }
 
 
 function add_event() {
+    document.getElementById('fav').innerHTML = "Favorite";
     document.getElementById("results").disabled = false;
     document.getElementById("favorites").disabled = false;
     $('#map').addClass('hide-table');
@@ -536,6 +566,8 @@ function add_event() {
     }
 
     if(events_ticketmaster.page.totalElements==0){
+
+
         document.getElementById('no-results').innerHTML = "No Results Found... Please Try Again or Enter a New Keyword!";
         document.getElementById("results").disabled = true;
         document.getElementById("favorites").disabled = true;
@@ -598,12 +630,12 @@ function add_event() {
             }
             category.innerHTML = genres;
             venue_info.innerHTML = events_ticketmaster._embedded.events[y]._embedded.venues[0].name;
-            if(search_favorites(events_ticketmaster._embedded.events[y].name, events_ticketmaster._embedded.events[y].dates.start.localDate)){
-                favorite.innerHTML = '<a class="navbar-brand" onclick=star_button2(' + fav_id + ',' + y + ') id="star" rel=”No-Refresh”><span class="fa fa-star" id="btn-star"></span></a>';
-                $('#' + favorite.id).removeClass("star-fill");
-            }
-            else{
-                favorite.innerHTML = '<a class="navbar-brand" onclick=star_button2(' + fav_id + ',' + y + ') id="star" rel=”No-Refresh”><span class="fa fa-star" id="btn-star"></span></a>';
+
+            favorite.innerHTML = '<a class="navbar-brand" onclick=star_button2(' + fav_id + ',' + y + ') id="star-1" rel=”No-Refresh”><span class="fa fa-star" id="btn-star"></span></a>';
+            if(search_favorites(events_ticketmaster._embedded.events[y].name,events_ticketmaster._embedded.events[y].dates.start.localDate)){
+                console.log("HASH");
+                    console.log(favorite.id);
+                    $(favorite).addClass("star-fill");
             }
             // var checkbox = document.createElement("input");
             // checkbox.setAttribute("type", "checkbox");
@@ -739,7 +771,6 @@ function add_event_row(i){
     delete_event_details();
 
     delete_event_rows();
-    $('#table').addClass('hide-table');
     //TODO
 
     if(events_ticketmaster._embedded.events[curr]._embedded.hasOwnProperty('attractions')){
@@ -852,6 +883,14 @@ function add_event_row(i){
     artist.innerHTML = "Seat Map";
     artist_string.innerHTML = 'events_ticketmaster._embedded.events[0].seatmap.staticUrl'; //TODO
     add_row(newrow7);
+    if(search_favorites(events_ticketmaster._embedded.events[curr].name,events_ticketmaster._embedded.events[curr].dates.start.localDate)){
+            $('#star').addClass('star-fill');
+    }
+    else{
+        $('#star').removeClass('star-fill');
+    }
+    $('#tr1').addClass('hide-table');
+    $('#table').addClass('hide-table');
 }
 
 function tweet(curr){
