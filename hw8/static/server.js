@@ -14,9 +14,9 @@ const path = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhK
 var bodyParser = require('body-parser');
 var finalData;
 
-var Twit = require('twit');
-var config = require('./config');
-var T = new Twit(config);
+// var client_id = 'CLIENT_ID'; // Your client id
+// var client_secret = 'CLIENT_SECRET'; // Your secret
+// var redirect_uri = 'REDIRECT_URI'; // Your redirect uri
 
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
@@ -25,31 +25,6 @@ app.use(express.static(__dirname + "/"));
 // var dz = [{"Robert" : "Big Baller"}];
 dz = "notready";
 
-
-// let { userAccessToken } = require('./spotifyConfig');
-//
-// async function getArtists() {
-//     const result = [];
-//         try {
-//             for (let i = 2000; i < 2020; i++) {
-//                     let data = await fetch(`https://api.spotify.com/v1/search?q=year%3A${i}&type=artist&market=US`, {
-//                         method: "GET",
-//                         headers: {
-//                             Authorization: `Bearer ${userAccessToken}`
-//                         }
-//                     });
-//                     let actualData = await data.json();
-//                     var allItems = actualData.artists.items;
-//                 var x = allItems.map(item => {
-//                         var everyOne = item.name;
-//                         return everyOne;
-//                     });
-//             result.push(x);
-//             }
-//             return result.flat();
-//         } catch (e) { console.log (e); }
-// }
-// getArtists();
 
 
 async function getSchedule(res) {
@@ -79,6 +54,21 @@ app.get("/search", function(req,res){
     }
     // console.log(finalData.Keyword);
 });
+
+// async function check() {
+//     try {
+//         let scheduleArr = await axios.get('https://accounts.spotify.com/api/token');
+//         dz =(scheduleArr.data);
+//         dz = JSON.stringify(dz);
+//         console.log("SPotiy");
+//         console.log(dz);
+//         }
+//         catch (err) {
+//           console.log(`ERROR: ${err}`);
+//         }
+//   }
+//
+//   check();
 
 app.listen(port,function(){
     console.log("server started");

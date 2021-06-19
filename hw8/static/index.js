@@ -60,6 +60,9 @@ function createRowColumn(row) {
 }
 
 function delete_event_rows(){
+    $('#map').addClass('hide-table');
+    $('.my-tab').hide();
+    $('table-event').addClass('hide-table');
     var y = (document.getElementById("table").rows.length);
     $('tr').addClass('hide-table');
     if(document.getElementById("table").rows.length >1){
@@ -70,6 +73,11 @@ function delete_event_rows(){
 }
 
 function delete_event_details(){
+    $('#map').addClass('hide-table');
+    $('.my-tab').hide();
+    $('table-event').addClass('hide-table');
+    console.log("not here pls");
+    $('#nav-2').addClass("he");
     var y = (document.getElementById("table-event").rows.length);
     console.log(y);
     if(document.getElementById("table-event").rows.length >1){
@@ -140,7 +148,14 @@ $('#search').click(function(){
         radius =10;
     }
     else{
-        radius = $('#radius').val();
+        var content_val = (document.getElementById("units").value);
+        var category_selected;
+        if(content_val == 1){
+            radius = $('#radius').val();
+        }
+        else{
+            radius = Math.round($('#radius').val() / 1.6);
+        }
     }
     if($('#location').val().length == 0 && button_2){
         $('#location').addClass("is-invalid");
@@ -353,14 +368,20 @@ function send_ip(){
 // });
 
 $("#clear").on("click",function(){
-    localStorage.clear();
-    fav_count = 0;
     delete_event_rows();
     document.getElementById("keyword").value = '';
     button_1 = 1;
     button_2 = 0;
     document.getElementById("location").value = "";
     document.getElementById("location").disabled = true;
+    //document.getElementById("here_button").checked= true;
+    $('#current-location').checked = true;
+//    document.getElementById("msg").innerHTML = '';
+    // document.getElementById("keyword").value = '';
+    // document.getElementById("radius-key").innerHTML = '';
+    // document.getElementById("radius-key").value = '';
+    document.getElementById("category").selectedIndex = "Default";
+    document.getElementById("category").selectedIndex = "Miles";
 });
 
 function star_button(){
@@ -414,8 +435,8 @@ function remove_favorites(name,date){
                 good =1;
         }
     }
-    console.log("not_now-Removal");
-    console.log("result");
+    // console.log("not_now-Removal");
+    // console.log("result");
         for(t=0; t<localStorage.length; t++){
             console.log(localStorage.getItem(t));
         }
@@ -430,17 +451,17 @@ function remove_favorites(name,date){
             localStorage.setItem(res2," ");
             localStorage.setItem(res3," ");
         }
-
-        // localStorage.removeItem(result);
-        // localStorage.removeItem(res1);
-        // localStorage.removeItem(res2);
-        // localStorage.removeItem(res3);
-
-    console.log("Start-Removal");
-        for(t=0; t<localStorage.length; t++){
-            console.log(localStorage.getItem(t));
-        }
-        console.log("End-Removal");
+    //
+    //     // localStorage.removeItem(result);
+    //     // localStorage.removeItem(res1);
+    //     // localStorage.removeItem(res2);
+    //     // localStorage.removeItem(res3);
+    //
+    // console.log("Start-Removal");
+    //     for(t=0; t<localStorage.length; t++){
+    //         console.log(localStorage.getItem(t));
+    //     }
+    //     console.log("End-Removal");
 
 }
 
@@ -489,6 +510,7 @@ function add_favorites(){
     if(document.getElementById("table").rows.length > 1){
         delete_event_rows();
     }
+
     for(i = 0; i<localStorage.length; i++)
     {
         console.log(localStorage.getItem(i));
@@ -501,6 +523,7 @@ function add_favorites(){
             var category = createRowColumn(newrow1);
             var venue_info = createRowColumn(newrow1);
             var favorite = createRowColumn(newrow1);
+            favorite.id = 'table' + y;
             var fav_id = 'table' + i;
 
             number.innerHTML = ct;
@@ -508,12 +531,19 @@ function add_favorites(){
             event_name.innerHTML = localStorage.getItem(i+1);
             category.innerHTML = localStorage.getItem(i+2);
             venue_info.innerHTML = localStorage.getItem(i+3);
+            var z =i;
             i = i+3;
+
+            var n = localStorage.getItem(i+1);
+            var d = localStorage.getItem(i);
+            console.log("HERE");
+            console.log(n);
+            console.log(d);
 
             var table = document.getElementById('table');
             var tbody = table.querySelector('tbody');
             tbody.appendChild(newrow1);
-            favorite.innerHTML = '<a class="navbar-brand" href="#" onclick="tweet(curr)"> <img src="trash.png" width="30" height="30" alt=""> </a>';
+            favorite.innerHTML = '<a class="navbar-brand" href="#" onclick= reme('+i+'); return = false; ><img src="trash.png" width="30" height="30" alt=""> </a>';
             $(favorite).addClass("star-fill");
             ct++;
         }
@@ -547,6 +577,42 @@ function add_favorites(){
     $('#tr1').removeClass('hide-table');
     $('#table').removeClass('hide-table');
     document.getElementById('fav').innerHTML = "Remove";
+}
+
+function reme(x){
+    var name = localStorage.getItem(x-2);
+    var date = localStorage.getItem(x-3);
+    var result =0;
+    var cnt = 0;
+    var good =0;
+    for(i = 0; i<localStorage.length; i ++)
+    {
+        console.log(localStorage.getItem(i));
+        if((localStorage.getItem(i)) == name || (localStorage.getItem(i)) == date){
+            cnt++;
+        }
+        if(cnt == 2){
+                result = i;
+                cnt=0;
+                good =1;
+        }
+    }
+    console.log("not_now-Removal");
+        for(t=0; t<localStorage.length; t++){
+            console.log(localStorage.getItem(t));
+        }
+        console.log("now-Removal");
+        var res1 = result-1;
+        var res2 = result+1;
+        var res3 =  result+2;
+        if(good){
+            console.log("FOUHND");
+            localStorage.setItem(res1," ");
+            localStorage.setItem(result," ");
+            localStorage.setItem(res2," ");
+            localStorage.setItem(res3," ");
+        }
+        add_favorites();
 }
 
 
@@ -891,6 +957,7 @@ function add_event_row(i){
     }
     $('#tr1').addClass('hide-table');
     $('#table').addClass('hide-table');
+    $('#nav-2').removeClass("he");
 }
 
 function tweet(curr){
