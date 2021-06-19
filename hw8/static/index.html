@@ -12,75 +12,111 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>Hello, world!</title>
+</html>
   </head>
-  <body>
+  <body top-form>
 
 </br></br></br>
-<form action="" class="top-form back" method = "novalidate">
-        <div class="form-group form-inline">
-            <label for="keyword">Keyword </label>
-            <input type="text" name="keyword" id="keyword" class="form-control ml-auto keyword-form" required placeholder="Enter Artist, Team, or Event Name (e.g. Warriors)">
-            <div class="invalid-feedback">Please enter a Keyword.</div>
-        </div>
-        <div class="form-group form-inline">
-            <label for="Category">Category</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <select name="category" id="category" class="form-control category-form">
-                <option value=1>All</option>
-                <option value=2>Music</option>
-                <option value=3>Sports</option>
-                <option value=4>Arts & Theatre</option>
-                <option value=5>Film</option>
-                <option value=6>Miscellaneous</option>
-            </select>
-        </div>
-        <div class="form-group form-inline">
-            <label for="radius">Distance </label>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="text" name="radius" id="radius" class="form-control category-form" required placeholder="10">&nbsp;&nbsp;&nbsp;&nbsp;
-            <div class="invalid-feedback">Please enter a Number Only.</div>
-            <select name="units" id="units" class="form-control">
-                <option value=1>Miles</option>
-                <option value=2>Kilometer</option>
-            </select>
-        </div>
-        <div class="form-check">
-         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         <input class="form-check-input" type="radio" name="exampleRadios" id="current-location" value="option1" checked>
-          <label class="form-check-label" for="exampleRadios1"> Current Location </label>
-        </div>
-        <div class="form-check">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <input class="form-check-input" type="radio" name="exampleRadios" id="other" value="option2">
-          <label class="form-check-label" for="exampleRadios2"> Other. Please Specify </label>
+    <form action="" class="top-form back" method = "novalidate">
+            <center>
+                <h2>Ticketmaster Event Search</h2>
+            </center>
+            <br/>
+            <div class="form-group row">
+                    <label for="keyword" class ="col-xl-2 col-form-label">Keyword </label>
+                    <div>
+                        <input type="text" name="keyword" id="keyword" class="col-xl-10 form-control keyword-form" required placeholder="Enter Artist, Team, or Event Name (e.g. Warriors)">
+                        <div class="col-xl-10 invalid-feedback">Please enter a Keyword.</div>
+                    </div>
+            </div>
+            <div class="form-group row">
+                <label for="Category" class ="col-xl-2 col-form-label">Category</label>
+                <select name="category" id="category" class="form-control category-form col-xl-2">
+                    <option value=1>All</option>
+                    <option value=2>Music</option>
+                    <option value=3>Sports</option>
+                    <option value=4>Arts & Theatre</option>
+                    <option value=5>Film</option>
+                    <option value=6>Miscellaneous</option>
+                </select>
+            </div>
+            <div class="form-group row ">
+                <label for="radius" class ="col-xl-2 col-form-label">Distance </label>
 
-        </div>
-    </br>
-        <div class="form-group">
-             <input type="text" name="loacation" id="location" class="form-control keyword-form" required>
-            <div class="invalid-feedback">Please enter a Location.</div>
+                <input type="text" name="radius" id="radius" class="form-control category-form col-xl-2" required placeholder="10">
+                <div class="invalid-feedback">Please enter a Number Only.</div>
+                <select name="units" id="units" class="form-control unit-form col-xl-2">
+                    <option value=1>Miles</option>
+                    <option value=2>Kilometer</option>
+                </select>
+            </div>
+        <div class="container">
+            <div class="row justify-content-start">
+                    <div class= "col-md-2 col-xs-12 one">
+                        <label for="form-check-input" class="form-text">From </label>
+                    </div>
+                    <div class= " col-md-10 col-12 two">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="current-location" value="option1" checked>
+                            <label class="form-check-label radio_loc" for="current-location" class="text1"> Current Location </label>
+                    </div>
+                <!-- </div> -->
+            </div>
+                  <div class="row justify-content-start">
+                      <div class= " col-md-2 one">
+
+                      </div>
+                      <div class= "col-md-10 col-12 two">
+                           <input class="form-check-input" type="radio" name="exampleRadios" id="other" value="option2">
+                           <label class="form-check-label radio_loc" for="other" class="text1"> Other. Please Specify </label>
+                      </div>
+                      <!-- <div class= "col-4"></div> -->
+              </div>
+            </div>
+
+        <div class="container">
+            <div class="row justify-content-start">
+                <div class = "col-sm-2"></div>
+                <div class="form-group col-sm-4">
+                     <input type="text" name="loacation" id="location" class="form-control location-form" required>
+                    <div class="invalid-feedback">Please enter a Location.</div>
+                </div>
+            </div>
         </div>
 
-    </br><button type="button" id ="search" onclick="window.location.href" class="btn btn-primary">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-    </svg>
-    Submit</button>
-    <button type="button" id ="clear" onclick="window.location.href" class="btn btn-clear">
-         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-nested invert" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M4.5 11.5A.5.5 0 0 1 5 11h10a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 1 3h10a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5z"/>
+        </br><button type="button" id ="search" onclick="window.location.href" class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
         </svg>
-    Clear</button>
-    </br></br>
+        Submit</button>
+        <button type="button" id ="clear" onclick="window.location.href" class="btn btn-clear">
+             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-nested invert" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M4.5 11.5A.5.5 0 0 1 5 11h10a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 1 3h10a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+        Clear</button>
+        </br></br>
     </form>
     <br /><br />
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white table-form button-center">
-            <button type="button" id ="results" onclick="add_event()" class="btn btn-primary">Results</button>
-            <button type="button" id ="favorites" onclick="add_favorites()" class="btn btn-primary btn-change">Favorites</button>
-    </nav>
-
+    <div class="container">
+        <div class="row justify-content-center">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white ">
+                <div class = "col-6 col-md-5">
+                    <button type="button" id ="results" onclick="add_event()" class="btn btn-primary">Results</button>
+                </div>
+                <div class = "col-6 col-md-5">
+                    <button type="button" id ="favorites" onclick="add_favorites()" class="btn btn-primary btn-change">Favorites</button>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div id="popup-background" class="popup-background" style="display: none;">
+    <div class="popup-content">
+        <div id="popup-title"></div>
+        <img id="popup-image" class="popup-image">
+    </div>
+</div>
     <br />
-    <nav class="navbar navbar-light bg-light table-form" id="nav-1">
+    <nav class="navbar navbar-light bg-light head-form col-12" id="nav-1">
         <li class="nav-item active ml-auto navbar-nav">
             <a class="nav-link" href="#" onclick ="add_event_row(curr);  fake();"><b>Details ></b><span class="sr-only"></span></a>
         </li>
@@ -119,6 +155,9 @@
           <th scope="col">Venue Info</th>
           <th scope="col">Favorite</th>
         </tr>
+        <div class="progress table-form">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"</div>
+        </div>
       </thead>
       <tbody>
           <div id="tab"> <!--active -->
@@ -138,6 +177,7 @@
           </div>
       </tbody>
     </table>
+    <center><h1 id="no-results">GATA</h1></center>
 
     <table class="table table-striped table-form" id="table-event">
         <tr>
@@ -146,7 +186,11 @@
       </tbody>
     </table>
 
-    <!-- <div id="map"></div> -->
+
+    <center>
+        <div id="map"></div>
+    </center>
+
 
     </body>
         <!-- Optional JavaScript -->
@@ -156,6 +200,5 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="index.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXqpQCJmyT4GKf6nB5r4MqREQ7oAzYAdU&callback=initMap&libraries=&v=weekly"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXqpQCJmyT4GKf6nB5r4MqREQ7oAzYAdU&callback=initMap&libraries=&v=weekly"></script> -->
-</html>
