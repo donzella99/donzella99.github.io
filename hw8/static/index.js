@@ -283,6 +283,8 @@ function add_storage(i){
             genres += '<p2> '+ subType +'</p2>';
         }
     }
+    console.log("checkpoint");
+    console.log(events_ticketmaster._embedded.events[i].dates.start.localDate);
     localStorage.setItem(fav_count,events_ticketmaster._embedded.events[i].dates.start.localDate);
     fav_count++;
     localStorage.setItem(fav_count,events_ticketmaster._embedded.events[i].name);
@@ -291,6 +293,15 @@ function add_storage(i){
     fav_count++;
     localStorage.setItem(fav_count,events_ticketmaster._embedded.events[i]._embedded.venues[0].name);
     fav_count++;
+    console.log(fav_count);
+console.log("Start");
+    for(t=0; t<localStorage.length; t++){
+        if((typeof localStorage.getItem(t)) == "object"){
+            console.log(JSON.parse(localStorage.getItem(t)));
+        }
+
+    }
+    console.log("End");
 }
 
 function send_ip(){
@@ -345,6 +356,7 @@ function send_ip(){
 
 $("#clear").on("click",function(){
     localStorage.clear();
+    fav_count = 0;
     delete_event_rows();
     document.getElementById("keyword").value = '';
     button_1 = 1;
@@ -369,11 +381,11 @@ function search_favorites(name, date){
     var cnt = 0;
     for(i = 0; i<localStorage.length; i ++)
     {
-        console.log("i");
-        console.log(i);
-        console.log(localStorage.getItem(i));
-        console.log(name);
-        console.log(date);
+        // console.log("i");
+        // console.log(i);
+        // console.log(localStorage.getItem(i));
+        // console.log(name);
+        // console.log(date);
         if((localStorage.getItem(i)) == name || (localStorage.getItem(i)) == date){
             cnt++;
         }
@@ -381,6 +393,7 @@ function search_favorites(name, date){
     if(cnt == 2){
         result = 1;
     }
+    console.log(result);
     return result;
 }
 
@@ -397,29 +410,24 @@ function remove_favorites(name,date){
                 result = i;
         }
     }
-    // localStorage.getItem(result-1);
-    // localStorage.getItem(result);
-    // localStorage.getItem(result+1);
-    // localStorage.getItem(result+2);
-    // console.log("wait");
-    // console.log(localStorage.length);
-    // console.log(result);
-    // for(i = 0; i<localStorage.length; i ++)
-    // {
-    //     console.log(localStorage.getItem(i));
-    // }
-    // console.log("now");
+    console.log("not_now-Removal");
+    console.log("result");
+        for(t=0; t<localStorage.length; t++){
+            console.log(localStorage.getItem(t));
+        }
+        console.log("now-Removal");
+
     localStorage.removeItem(result);
     localStorage.removeItem(result+1);
     localStorage.removeItem(result+2);
     localStorage.removeItem(result+3);
-    // console.log("removing");
-    // console.log(localStorage.length);
-    // for(i = 0; i<localStorage.length; i ++)
-    // {
-    //     console.log(localStorage.getItem(i));
-    // }
-    // console.log("removed");
+
+    console.log("Start-Removal");
+        for(t=0; t<localStorage.length; t++){
+            console.log(localStorage.getItem(t));
+        }
+        console.log("End-Removal");
+
 }
 
 
@@ -432,6 +440,7 @@ function star_button2(favorite,i){
     if(search_favorites(name, date)){
         console.log("exists");
         remove_favorites(name,date);
+        console.log('#' + favorite.id);
         $('#' + favorite.id).removeClass("star-fill");
         favorites[i]= 0;
     }
@@ -461,7 +470,6 @@ function add_favorites(){
     $('#map').addClass('hide-table');
     $('.my-tab').hide();
     console.log("FAV");
-    delete_event_details();
     if(events_ticketmaster.page.totalElements<20){
         max = events_ticketmaster.page.totalElements;
     }
@@ -509,7 +517,7 @@ function add_favorites(){
         var tbody1 = table1.querySelector('tbody');
         tbody1.appendChild(newrow);
     }
-
+delete_event_details();
 }
 
 
@@ -534,7 +542,7 @@ function add_event() {
     }
     else{
         document.getElementById('no-results').innerHTML = "";
-        for(i = 0; i<max; i++){
+        for(y = 0; y<max; y++){
             var newrow = document.createElement("tr");
             var number = createRowColumn(newrow);
             var date = createRowColumn(newrow);
@@ -542,14 +550,14 @@ function add_event() {
             var category = createRowColumn(newrow);
             var venue_info = createRowColumn(newrow);
             var favorite = createRowColumn(newrow);
-            favorite.id = 'table' + i;
-            var fav_id = 'table' + i;
+            favorite.id = 'table' + y;
+            var fav_id = 'table' + y;
             // console.log("here");
             // console.log(universal['0']._embedded);
-            count= i+1;
+            count= y+1;
             number.innerHTML = count;
-            date.innerHTML = events_ticketmaster._embedded.events[i].dates.start.localDate;
-            event_name.innerHTML = '<a href="#" onclick=add_event_row('+ i + '); return= false;> ' + events_ticketmaster._embedded.events[i].name + ' </a>' ;
+            date.innerHTML = events_ticketmaster._embedded.events[y].dates.start.localDate;
+            event_name.innerHTML = '<a href="#" onclick=add_event_row('+ y + '); return= false;> ' + events_ticketmaster._embedded.events[y].name + ' </a>' ;
 
             var segment="";
             var genres="";
@@ -558,39 +566,45 @@ function add_event() {
             var type= "";
             var subType= "";
 
-            if(events_ticketmaster._embedded.events[i].classifications[0].hasOwnProperty('segment')){
-                segment = events_ticketmaster._embedded.events[i].classifications[0].segment.name;
+            if(events_ticketmaster._embedded.events[y].classifications[0].hasOwnProperty('segment')){
+                segment = events_ticketmaster._embedded.events[y].classifications[0].segment.name;
                 if(segment != 'Undefined'){
                     genres += '<p2> '+ segment + ' |' +'</p2>';
                 }
             }
-            if(events_ticketmaster._embedded.events[i].classifications[0].hasOwnProperty('genre')){
-                 gen = events_ticketmaster._embedded.events[i].classifications[0].genre.name;
+            if(events_ticketmaster._embedded.events[y].classifications[0].hasOwnProperty('genre')){
+                 gen = events_ticketmaster._embedded.events[y].classifications[0].genre.name;
                  if(gen != 'Undefined'){
                      genres += '<p2> '+ gen + ' |' +'</p2>';
                  }
             }
-            if(events_ticketmaster._embedded.events[i].classifications[0].hasOwnProperty('subGenre')){
-                subgen = events_ticketmaster._embedded.events[i].classifications[0].subGenre.name;
+            if(events_ticketmaster._embedded.events[y].classifications[0].hasOwnProperty('subGenre')){
+                subgen = events_ticketmaster._embedded.events[y].classifications[0].subGenre.name;
                 if(subgen != 'Undefined'){
                     genres += '<p2> '+ subgen + ' |' +'</p2>';
                 }
             }
-            if(events_ticketmaster._embedded.events[i].classifications[0].hasOwnProperty('type')){
-                type = events_ticketmaster._embedded.events[i].classifications[0].type.name;
+            if(events_ticketmaster._embedded.events[y].classifications[0].hasOwnProperty('type')){
+                type = events_ticketmaster._embedded.events[y].classifications[0].type.name;
                 if(type != 'Undefined'){
                     genres += '<p2> '+ type + ' |' +'</p2>';
                 }
             }
-            if(events_ticketmaster._embedded.events[i].classifications[0].hasOwnProperty('subType')){
-                subType = events_ticketmaster._embedded.events[i].classifications[0].subType.name;
+            if(events_ticketmaster._embedded.events[y].classifications[0].hasOwnProperty('subType')){
+                subType = events_ticketmaster._embedded.events[y].classifications[0].subType.name;
                 if(subType != 'Undefined'){
                     genres += '<p2> '+ subType +'</p2>';
                 }
             }
             category.innerHTML = genres;
-            venue_info.innerHTML = events_ticketmaster._embedded.events[i]._embedded.venues[0].name;
-            favorite.innerHTML = '<a class="navbar-brand" onclick=star_button2(' + fav_id + ',' + i + ') id="star" rel=”No-Refresh”><span class="fa fa-star" id="btn-star"></span></a>';
+            venue_info.innerHTML = events_ticketmaster._embedded.events[y]._embedded.venues[0].name;
+            if(search_favorites(events_ticketmaster._embedded.events[y].name, events_ticketmaster._embedded.events[y].dates.start.localDate)){
+                favorite.innerHTML = '<a class="navbar-brand" onclick=star_button2(' + fav_id + ',' + y + ') id="star" rel=”No-Refresh”><span class="fa fa-star" id="btn-star"></span></a>';
+                $('#' + favorite.id).removeClass("star-fill");
+            }
+            else{
+                favorite.innerHTML = '<a class="navbar-brand" onclick=star_button2(' + fav_id + ',' + y + ') id="star" rel=”No-Refresh”><span class="fa fa-star" id="btn-star"></span></a>';
+            }
             // var checkbox = document.createElement("input");
             // checkbox.setAttribute("type", "checkbox");
             // favorite.appendChild(checkbox);
