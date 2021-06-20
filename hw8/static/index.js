@@ -25,6 +25,7 @@ var favorites = {};
 var favorites_name = {};
 var the_curr = 0;
 var fav_count = 0;
+var available =0;
 
 
 
@@ -214,6 +215,8 @@ $('#other').click(function(){
 });
 
 function init(){
+    $( "#Results" ).click();
+    $( "#current-location" ).click();
     for(i = 0; i<localStorage.length; i ++)
     {
         console.log(localStorage.getItem(i));
@@ -353,14 +356,72 @@ function send_ip(){
          contentType: 'application/json',
          url: 'http://localhost:3001/search',
          success: function(data) {
-             data = JSON.parse(data);
+             if(data != "error"){
+                data = JSON.parse(data);
+                events_ticketmaster = data;
+                available =1;
+             }
+             else{
+                 available =0;
+             }
              console.log('success');
              console.log(typeof data);
-             events_ticketmaster = data;
+         },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+            display_error();
          }
      });
 }
 
+function display_error(){
+        $('#map').addClass('hide-table');
+        $('.my-tab').hide();
+        if(available == 1){
+            delete_event_details();
+        }
+        var max = 20;
+        var newrow1 = document.createElement("tr");
+        var number1 = createRowColumn(newrow1);
+        var date1 = createRowColumn(newrow1);
+        var event_name1 = createRowColumn(newrow1);
+        var category1 = createRowColumn(newrow1);
+        var venue_info1 = createRowColumn(newrow1);
+        var favorite1 = createRowColumn(newrow1);
+        number1.innerHTML = "There is an Error";
+        newrow1.style.backgroundColor = "pink";
+        $('#table').removeClass('hide-table');
+        $('#nav-1').addClass("he");
+        $('tr').addClass('hide-table');
+
+        var table1 = document.getElementById('table');
+        var tbody1 = table1.querySelector('tbody');
+        tbody1.appendChild(newrow1);
+}
+
+function spotify(){
+        $('#map').addClass('hide-table');
+        $('.my-tab').hide();
+        if(available == 1){
+            delete_event_details();
+        }
+        var max = 20;
+        var newrow1 = document.createElement("tr");
+        var number1 = createRowColumn(newrow1);
+        var date1 = createRowColumn(newrow1);
+        var event_name1 = createRowColumn(newrow1);
+        var category1 = createRowColumn(newrow1);
+        var venue_info1 = createRowColumn(newrow1);
+        var favorite1 = createRowColumn(newrow1);
+        number1.innerHTML = "Spotify is under maintanence... Try Again Later!";
+        newrow1.style.backgroundColor = "gold";
+        $('#table').removeClass('hide-table');
+        $('#nav-1').addClass("he");
+        $('tr').addClass('hide-table');
+
+        var table1 = document.getElementById('table');
+        var tbody1 = table1.querySelector('tbody');
+        tbody1.appendChild(newrow1);
+}
 // Referencing https://stackoverflow.com/questions/34404663/bootstrap-table-add-row-dynamically-javascript
 
 // $("#search").on("click",function(){
@@ -382,6 +443,8 @@ $("#clear").on("click",function(){
     // document.getElementById("radius-key").value = '';
     document.getElementById("category").selectedIndex = "Default";
     document.getElementById("category").selectedIndex = "Miles";
+    $( "#current-location" ).click();
+    $( "#Results" ).click();
 });
 
 function star_button(){
@@ -557,6 +620,7 @@ function add_favorites(){
         var no_items2 = createRowColumn(newrow);
         var no_items3 = createRowColumn(newrow);
         var no_items4 = createRowColumn(newrow);
+        var no_items5 = createRowColumn(newrow);
 
         no_items.innerHTML = "No Favorites Found!";
         var table1 = document.getElementById('table');
@@ -632,11 +696,22 @@ function add_event() {
     }
 
     if(events_ticketmaster.page.totalElements==0){
+        var newrow1 = document.createElement("tr");
+        var number1 = createRowColumn(newrow1);
+        var date1 = createRowColumn(newrow1);
+        var event_name1 = createRowColumn(newrow1);
+        var category1 = createRowColumn(newrow1);
+        var venue_info1 = createRowColumn(newrow1);
+        var favorite1 = createRowColumn(newrow1);
+        number1.innerHTML = "No Records.";
+        newrow1.style.backgroundColor = "gold";
+        $('#table').removeClass('hide-table');
+        $('#nav-1').addClass("he");
+        $('tr').addClass('hide-table');
 
-
-        document.getElementById('no-results').innerHTML = "No Results Found... Please Try Again or Enter a New Keyword!";
-        document.getElementById("results").disabled = true;
-        document.getElementById("favorites").disabled = true;
+        var table1 = document.getElementById('table');
+        var tbody1 = table1.querySelector('tbody');
+        tbody1.appendChild(newrow1);
     }
     else{
         document.getElementById('no-results').innerHTML = "";
@@ -711,17 +786,17 @@ function add_event() {
             var tbody = table.querySelector('tbody');
             tbody.appendChild(newrow);
         }
+        $(".progress-bar").animate({
+            width: "100%"
+        }, 1000, function() {
+                $('#nav-1').removeClass("he");
+                $('#nav-2').addClass("he");
+                $('#nav-3').addClass("he");
+                $('#table').removeClass('hide-table');
+                $('tr').removeClass('hide-table');
+                $(this).closest('.progress').fadeOut();
+        });
     }
-    $(".progress-bar").animate({
-        width: "100%"
-    }, 1000, function() {
-            $('#nav-1').removeClass("he");
-            $('#nav-2').addClass("he");
-            $('#nav-3').addClass("he");
-            $('#table').removeClass('hide-table');
-            $('tr').removeClass('hide-table');
-            $(this).closest('.progress').fadeOut();
-    });
 }
 
 function fake(){
@@ -806,6 +881,8 @@ function add_venue_row(){
         var table = document.getElementById('table-image');
         var tbody = table;
     }
+    $('#nav-2').removeClass("he");
+    $('.my-tab').show();
 
 }
 
@@ -947,7 +1024,11 @@ function add_event_row(i){
     artist = createRowColumn(newrow7);
     artist_string = createRowColumn(newrow7);
     artist.innerHTML = "Seat Map";
-    artist_string.innerHTML = 'events_ticketmaster._embedded.events[0].seatmap.staticUrl'; //TODO
+    if(events_ticketmaster._embedded.events[curr].hasOwnProperty('seatmap')){
+        var img = document.createElement('img');
+        img.src = events_ticketmaster._embedded.events[curr].seatmap.staticUrl;
+        artist_string.appendChild(img);
+    }
     add_row(newrow7);
     if(search_favorites(events_ticketmaster._embedded.events[curr].name,events_ticketmaster._embedded.events[curr].dates.start.localDate)){
             $('#star').addClass('star-fill');
@@ -958,6 +1039,7 @@ function add_event_row(i){
     $('#tr1').addClass('hide-table');
     $('#table').addClass('hide-table');
     $('#nav-2').removeClass("he");
+    $('.my-tab').show();
 }
 
 function tweet(curr){

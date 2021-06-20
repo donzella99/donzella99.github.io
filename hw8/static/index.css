@@ -56,10 +56,14 @@ body {
          font-size: 20px !important;
      }
      .table-form{
-         width: 250px !important;
+         width: 300px !important;
          margin: auto;
      }
      .head-form{
+         width: 250px !important;
+         margin: auto;
+     }
+     .tab-width{
          width: 400px !important;
          margin: auto;
      }
