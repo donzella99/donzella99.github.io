@@ -356,6 +356,8 @@ function send_ip(){
          contentType: 'application/json',
          url: '/search',
          success: function(data) {
+             console.log("CHECK");
+             console.log(this.url);
              if(data != "error"){
                 data = JSON.parse(data);
                 events_ticketmaster = data;
@@ -399,8 +401,8 @@ function display_error(){
 }
 
 function spotify(){
-        $('#map').addClass('hide-table');
-        $('.my-tab').hide();
+        delete_event_rows();
+        delete_event_details();
         if(available == 1){
             delete_event_details();
         }
@@ -415,9 +417,10 @@ function spotify(){
         number1.innerHTML = "Spotify is under maintanence... Try Again Later!";
         newrow1.style.backgroundColor = "gold";
         $('#table').removeClass('hide-table');
-        $('#nav-1').addClass("he");
+        $('#nav-2').removeClass("he");
+        $('#map').addClass('hide-table');
         $('tr').addClass('hide-table');
-
+        $('.my-tab').show();
         var table1 = document.getElementById('table');
         var tbody1 = table1.querySelector('tbody');
         tbody1.appendChild(newrow1);
@@ -430,6 +433,7 @@ function spotify(){
 
 $("#clear").on("click",function(){
     delete_event_rows();
+    $('tr').addClass('hide-table');
     document.getElementById("keyword").value = '';
     button_1 = 1;
     button_2 = 0;
@@ -591,7 +595,7 @@ function add_favorites(){
 
             number.innerHTML = ct;
             date.innerHTML = localStorage.getItem(i);
-            event_name.innerHTML = localStorage.getItem(i+1);
+            event_name.innerHTML = '<a href="#" onclick=add_event_row('+ i + '); return= false;> ' + localStorage.getItem(i+1) + ' </a>' ;
             category.innerHTML = localStorage.getItem(i+2);
             venue_info.innerHTML = localStorage.getItem(i+3);
             var z =i;
@@ -804,7 +808,6 @@ function fake(){
 }
 
 function add_venue_row(){
-    $('#map').removeClass('hide-table');
     the_curr = curr;
     initMap();
     var address = "";
@@ -813,7 +816,7 @@ function add_venue_row(){
     var open_hours = "";
     var general_rule = "";
     var child_rule = "";
-
+    delete_event_rows();
     delete_event_details();
 
     if(events_ticketmaster._embedded.events[curr]._embedded.venues[0].hasOwnProperty('address')){
@@ -883,6 +886,7 @@ function add_venue_row(){
     }
     $('#nav-2').removeClass("he");
     $('.my-tab').show();
+    $('#map').removeClass('hide-table');
 
 }
 
@@ -912,7 +916,6 @@ function add_event_row(i){
     var buy= "";
 
     delete_event_details();
-
     delete_event_rows();
     //TODO
 
@@ -1024,11 +1027,13 @@ function add_event_row(i){
     artist = createRowColumn(newrow7);
     artist_string = createRowColumn(newrow7);
     artist.innerHTML = "Seat Map";
-    if(events_ticketmaster._embedded.events[curr].hasOwnProperty('seatmap')){
-        var img = document.createElement('img');
-        img.src = events_ticketmaster._embedded.events[curr].seatmap.staticUrl;
-        artist_string.appendChild(img);
-    }
+    artist_string.innerHTML = '<a class="popup" onclick="myFunction()">View Seat Map Here <span class="popuptext" id="myPopup"><img src=" ' +events_ticketmaster._embedded.events[curr].seatmap.staticUrl +' " width="100%" height="100%" alt=""></span></a>';
+    artist_string.style.color = "#007BFF";
+    // if(events_ticketmaster._embedded.events[curr].hasOwnProperty('seatmap')){
+    //     var img = document.createElement('img');
+    //     img.src = events_ticketmaster._embedded.events[curr].seatmap.staticUrl;
+    //     artist_string.appendChild(img);
+    // }
     add_row(newrow7);
     if(search_favorites(events_ticketmaster._embedded.events[curr].name,events_ticketmaster._embedded.events[curr].dates.start.localDate)){
             $('#star').addClass('star-fill');
@@ -1042,6 +1047,12 @@ function add_event_row(i){
     $('.my-tab').show();
 }
 
+
+function myFunction() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+}
+
 function tweet(curr){
     var temp_event = events_ticketmaster._embedded.events[curr].name;
     var temp_venue = events_ticketmaster._embedded.events[curr]._embedded.venues[0].name;
@@ -1050,20 +1061,3 @@ function tweet(curr){
 }
 
 init();
-//search_favorites();
-// receive_events();
-
-// });
-
-// $("h1").removeClass("big-title");
-
-// document.getElementById("search").addEventListener('click',loadText);
-//
-// function loadText(){
-//     var xhr = new XMLHttpRequest();
-//     xhr.open('GET', '', true);
-//     xhr.onload = function(){
-//         console.log("HA");
-//     };
-//     xhr.send();
-// }

@@ -5,8 +5,11 @@ body {
  }
  p {font-size: 19px;}
  @media (max-width: 600px) {
+     .tle{
+         align-items: left;
+     }
      .back{
-         padding-left: 40px !important;
+         padding-left: 30px !important;
      }
      .top-form{
          display: inline-block;
@@ -38,8 +41,8 @@ body {
      #form-text{
          position: relative !important;
          left: 0px;
+     }
 
-}
       input[type=radio] {
          float: left;
          left: 0px;
@@ -56,8 +59,14 @@ body {
          font-size: 20px !important;
      }
      .table-form{
-         width: 300px !important;
+         width: 400px !important;
          margin: auto;
+     }
+     .map-form{
+         width: 400px !important;
+         margin: auto;
+         height: 200px !important;
+         padding-bottom: 100px !important;
      }
      .head-form{
          width: 250px !important;
@@ -69,7 +78,40 @@ body {
      }
 
  }
+ .popup .popuptext {
+   visibility: hidden;
+   width: 330px;
+   height: 330px;
+   background-color: #fff;
+   color: #fff;
+   text-align: center;
+   border-radius: 6px;
+   padding: 8px 0;
+   position: absolute;
+   z-index: 1;
+   bottom: 125%;
+   left: 50%;
+   margin-left: -80px;
+ }
  @media screen and (min-width: 650px) {
+     .tle{
+         align-items: center;
+     }
+     .popup .popuptext {
+       visibility: hidden;
+       width: 1000px;
+       height: 1000px;
+       background-color: #fff;
+       color: #fff;
+       text-align: center;
+       border-radius: 6px;
+       padding: 8px 0;
+       position: absolute;
+       z-index: 1;
+       bottom: 125%;
+       left: 50%;
+       margin-left: -80px;
+     }
      .table-form{
          width: 1500px !important;
          margin: auto;
@@ -187,3 +229,46 @@ a{
 .four{
     background-color: yellow;
 } */
+
+/* Popup container */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* The actual popup (appears on top) */
+
+/* Popup arrow */
+/* .popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+} */
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+.popup{
+    color: blue;
+}
