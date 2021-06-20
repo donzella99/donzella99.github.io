@@ -438,6 +438,7 @@ $("#clear").on("click",function(){
     button_1 = 1;
     button_2 = 0;
     document.getElementById("location").value = "";
+    document.getElementById("radius").value = "";
     document.getElementById("location").disabled = true;
     //document.getElementById("here_button").checked= true;
     $('#current-location').checked = true;
@@ -446,7 +447,7 @@ $("#clear").on("click",function(){
     // document.getElementById("radius-key").innerHTML = '';
     // document.getElementById("radius-key").value = '';
     document.getElementById("category").selectedIndex = "Default";
-    document.getElementById("category").selectedIndex = "Miles";
+    document.getElementById("units").selectedIndex = "Miles";
     $( "#current-location" ).click();
     $( "#Results" ).click();
 });
