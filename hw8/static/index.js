@@ -13,7 +13,7 @@ var dz = [{"Roberto" : "Big Baller"}];
 var universal;
 var count = 0;
 var click =0;
-const apiHost = "http://localhost:3001";
+const apiHost = "/";
 var events_ticketmaster = "none";
 var keyword_result;
 var curr = 0;
@@ -354,7 +354,7 @@ function send_ip(){
          type: 'GET',
          data: (total),
          contentType: 'application/json',
-         url: 'http://localhost:3001/search',
+         url: '/search',
          success: function(data) {
              if(data != "error"){
                 data = JSON.parse(data);
