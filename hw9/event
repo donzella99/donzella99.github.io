@@ -36,6 +36,13 @@ public class Event<final3> extends AppCompatActivity {
         setContentView(R.layout.activity_event);
 
         Intent i = getIntent();
+
+        Bundle b = this.getIntent().getExtras();
+        Log.d("cmonguy1234","nein");
+        if(b != null) {
+            name_fav = b.getStringArray("key");
+        }
+
         String event = i.getStringExtra("event");
         String venue = i.getStringExtra("venue");
         String date = i.getStringExtra("date");
@@ -185,9 +192,11 @@ public class Event<final3> extends AppCompatActivity {
             }
         });
     }
-    String[] name_fav = new String[]{"","","","","","","","","","","","","","","","","","","",""};
-    String[] names = new String[]{"","","","","","","","","","","","","","","","","","","",""};
     public void add_fav(String st) {
+
+        for(int x =0; x<name_fav.length; x++){
+            Log.d("cmonguy1111112",name_fav[x]);
+        }
         Log.d("cmonman44","thru");
         String id_title = "event" + st;
         String fav_img = "fav"+st;
@@ -200,24 +209,28 @@ public class Event<final3> extends AppCompatActivity {
         String current_name = names[Integer.parseInt(st)];
         Log.d("cmonmames1",current_name);
         for(int x =0; x<name_fav.length; x++) {
+            Log.d("cmonmames22",name_fav[x]);
             int the = search_fav(name_fav,current_name);
             if(the == 0){
-                Log.d("cmonmames2","why Georgia why");
-                if (name_fav[x] == "") {
+                Log.d("cmonmames12","why Georgia why");
+                Log.d("cmonguy1234",name_fav[x]);
+                Log.d("cmonmames12","why Cali why");
+                if(name_fav[x].length() == 0) {
                     name_fav[x] = current_name;
-                    ImageButton button1 = (ImageButton)findViewById(fav_id);
+                    ImageButton button1 = (ImageButton) findViewById(fav_id);
                     button1.setImageResource(R.drawable.heart_fill_red);
                 }
             }
-            else{
-                Log.d("cmonman123","already here man");
-            }
+//            else{
+//                Log.d("cmonman123","already here man");
+//            }
         }
-        for(int z=0; z<name_fav.length; z++){
-            Log.d("cmonmames45",name_fav[z]);
+        for(int x =0; x<name_fav.length; x++){
+            Log.d("cmonguy12",name_fav[x]);
         }
     }
     public int search_fav(String[] fav_name,String name){ //String[] fav_date, String name, String date){
+        Log.d("cmonmames123","day");
         int x = 0;
         for(int i =0; i<fav_name.length; i++) {
             if(name == fav_name[i]){ //date == fav_date[i]) {
@@ -307,6 +320,8 @@ public class Event<final3> extends AppCompatActivity {
 
 
     }
+    String[] name_fav = new String[]{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+    String[] names = new String[]{"","","","","","","","","","","","","","","","","","","",""};
 }
 
 
