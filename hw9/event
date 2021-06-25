@@ -1,0 +1,365 @@
+package com.example.hw9;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.media.Image;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+
+public class Event<final3> extends AppCompatActivity {
+    String events_ticketmaster = MainActivity.final3;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_event);
+
+        Intent i = getIntent();
+        String event = i.getStringExtra("event");
+        String venue = i.getStringExtra("venue");
+        String date = i.getStringExtra("date");
+        Log.d("cmonman123",events_ticketmaster);
+        Log.d("event",event);
+        Log.d("venue",venue);
+        Log.d("date",date);
+        if(events_ticketmaster != null){
+            Log.d("cmon",events_ticketmaster);
+        }
+        else{
+            Log.d("cmon","man");
+        }
+
+       update_table(events_ticketmaster);
+
+        View btn = findViewById(R.id.fav1);
+        btn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+                   add_fav("1");
+           }
+       });
+        btn = findViewById(R.id.fav2);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("2");
+            }
+        });
+        btn = findViewById(R.id.fav3);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("3");
+            }
+        });
+        btn = findViewById(R.id.fav4);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("4");
+            }
+        });btn = findViewById(R.id.fav5);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("5");
+            }
+        });btn = findViewById(R.id.fav6);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("6");
+            }
+        });btn = findViewById(R.id.fav7);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("7");
+            }
+        });btn = findViewById(R.id.fav8);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("8");
+            }
+        });btn = findViewById(R.id.fav9);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("9");
+            }
+        });btn = findViewById(R.id.fav10);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("10");
+            }
+        });
+        btn = findViewById(R.id.fav11);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("11");
+            }
+        });btn = findViewById(R.id.fav12);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("12");
+            }
+        });btn = findViewById(R.id.fav13);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("13");
+            }
+        });
+        btn = findViewById(R.id.fav14);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("14");
+            }
+        });
+        btn = findViewById(R.id.fav15);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("15");
+            }
+        });
+        btn = findViewById(R.id.fav16);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("16");
+            }
+        });
+        btn = findViewById(R.id.fav17);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("17");
+            }
+        });
+        btn = findViewById(R.id.fav18);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("18");
+            }
+        });
+        btn = findViewById(R.id.fav19);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("19");
+            }
+        });
+        btn = findViewById(R.id.fav20);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("20");
+            }
+        });
+    }
+    String[] name_fav = new String[]{"","","","","","","","","","","","","","","","","","","",""};
+    String[] names = new String[]{"","","","","","","","","","","","","","","","","","","",""};
+    public void add_fav(String st) {
+        Log.d("cmonman44","thru");
+        String id_title = "event" + st;
+        String fav_img = "fav"+st;
+        int fav_id = getResources().getIdentifier(fav_img, "id", getPackageName());
+        int text = getResources().getIdentifier(id_title, "id", getPackageName());
+        id_title = findViewById(text).toString();
+        Log.d("cmonman44","thru");
+//
+        //Log.d("cmonman23",y);
+        String current_name = names[Integer.parseInt(st)];
+        Log.d("cmonmames1",current_name);
+        for(int x =0; x<name_fav.length; x++) {
+            int the = search_fav(name_fav,current_name);
+            if(the == 0){
+                Log.d("cmonmames2","why Georgia why");
+                if (name_fav[x] == "") {
+                    name_fav[x] = current_name;
+                    ImageButton button1 = (ImageButton)findViewById(fav_id);
+                    button1.setImageResource(R.drawable.heart_fill_red);
+                }
+            }
+            else{
+                Log.d("cmonman123","already here man");
+            }
+        }
+        for(int z=0; z<name_fav.length; z++){
+            Log.d("cmonmames45",name_fav[z]);
+        }
+    }
+    public int search_fav(String[] fav_name,String name){ //String[] fav_date, String name, String date){
+        int x = 0;
+        for(int i =0; i<fav_name.length; i++) {
+            if(name == fav_name[i]){ //date == fav_date[i]) {
+                x=1;
+            }
+            if(x==1){
+                return 1;
+            }
+        }
+        return 0;
+    }
+       //((TextView)findViewById(R.id.event1)).setText(event + '\n' + venue + '\n' + date);
+    public void update_table(String obj){
+
+        String name = "";
+        String category_temp ="f";
+        String category = "Sports";
+//            category_temp = new_obj.getString("classification");
+
+           //        _embedded.events[0].classifications[0].segment.name
+        for(int i=1;i<20;i++){
+            String id_title = "event" + i;
+            String img = "img"+i;
+            String row = "tr"+i;
+            try {
+                JSONObject new_obj1 = new JSONObject(obj);
+                JSONObject new_obj = new_obj1.getJSONArray("events").getJSONObject(i);
+                name = new_obj.getString("name");
+                names[i] = name;
+               // Log.d("cmon123",name);
+                category_temp = new_obj.getJSONArray("classifications").getJSONObject(0).getJSONObject("segment").getString("name");
+             //   Log.d("cmonman", "sheesh");
+                Log.d("cmonman", category_temp);
+            } catch (JSONException e) {
+                Log.d("cmonman","no bueno");
+            }
+
+            // Log.d("cmonman",id_title);
+           // TextView button = (TextView) findViewById(resourceId);
+            int text = getResources().getIdentifier(id_title, "id", getPackageName());
+            int cat = getResources().getIdentifier(img, "id", getPackageName());
+            int trow = getResources().getIdentifier(row, "id", getPackageName());
+            ((TableRow)findViewById(R.id.tr1)).setVisibility(View.GONE);
+
+            if(((TextView)findViewById(text)) != null){
+                ((TextView)findViewById(text)).setText(name);
+                ImageButton btn = (ImageButton)findViewById(cat);
+                //Log.d("cmon22",category_temp.trim());
+                if("Sports".equals(category_temp)) {
+                    btn.setImageResource(R.drawable.ic_sport_icon);
+                }
+                else if("Music".equals(category_temp)){
+                    btn.setImageResource(R.drawable.music_icon);
+                }
+                else{
+                    btn.setImageResource(R.drawable.film_icon);
+                }
+            }
+            else{
+                Log.d("cmonman","cmonman");
+            }
+        }
+        for(int y = 0; y<names.length; y++){
+            Log.d("cmonnames","mad");
+            Log.d("cmonnames",names[y]);
+        }
+    }
+
+    public void detail(View v){
+        Intent i = new Intent(this,Favorites.class);
+
+        Bundle b = new Bundle();
+        b.putStringArray("key",name_fav);
+        i.putExtras(b);
+
+        i.putExtra("event","LAFC");
+        i.putExtra("venue","Banc of California");
+        i.putExtra("date","06/22/21");
+        startActivity(i);
+
+        // create a client
+    }
+
+    public void change_fav(View v, int i){
+        ImageButton btn = (ImageButton)findViewById(i);
+        btn.setImageResource(R.drawable.heart_fill_red);
+
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/*
+
+// String url = "https://hw8-csci571-316703.wl.r.appspot.com/search?Keyword=LAFC&geoPoint=34.0522%2C-118.2437&Category=&Radius=10";
+        String url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhKgPQynndjc1pcDNq0flHYCg2ltMF";
+        Log.d("info","confirm");
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest
+                jsonObjectRequest
+                = new JsonObjectRequest(Request.Method.GET,url,null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("info","actually-works");
+                        try {
+                            JSONObject res = response.getJSONObject("_embedded");
+                            JSONArray final1 = res.getJSONArray("events");
+                            final_obj = final1;
+                            String final2 = final1.getString(0);
+
+                            //    Toast.makeText(MainActivity.this, "Test: " + final2, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("info","no-works");
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        //Toast.makeText(MainActivity.this, "Check2", Toast.LENGTH_SHORT).show();
+                        Log.d("info","not-works");
+                    }
+                });
+        requestQueue.add(jsonObjectRequest);
+        try{
+            String event_number = final_obj.getString(0);
+            Log.d("not",event_number);
+        }
+        catch (JSONException e){
+            Log.d("info","not working :(");
+        }
+
+
+ */

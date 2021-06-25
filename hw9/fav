@@ -1,0 +1,119 @@
+package com.example.hw9;
+
+import android.content.Intent;
+import android.os.Bundle;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TableRow;
+import android.widget.TextView;
+
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
+import com.example.hw9.databinding.ActivityFavoritesBinding;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class Favorites extends AppCompatActivity {
+
+    private AppBarConfiguration appBarConfiguration;
+    private ActivityFavoritesBinding binding;
+    String[] names = new String[]{"","","","","","","","","","","","","","","","","","","",""};
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        binding = ActivityFavoritesBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+
+//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_favorites);
+//        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+        Bundle b = this.getIntent().getExtras();
+        names=b.getStringArray("key");
+        for(int x =0; x<names.length; x++){
+            Log.d("cmonguy1",names[x]);
+        }
+        update_table();
+    }
+
+//    @Override
+//    public boolean onSupportNavigateUp() {
+//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_favorites);
+//        return NavigationUI.navigateUp(navController, appBarConfiguration)
+//                || super.onSupportNavigateUp();
+//    }
+    public void detail(View v){
+        Intent i = new Intent(this,Event.class);
+
+
+
+        i.putExtra("event","LAFC");
+        i.putExtra("venue","Banc of California");
+        i.putExtra("date","06/22/21");
+        startActivity(i);
+
+        // create a client
+    }
+
+    public void update_table(){
+
+        String name = "";
+        String category_temp ="f";
+        String category = "Sports";
+//            category_temp = new_obj.getString("classification");
+
+        //        _embedded.events[0].classifications[0].segment.name
+        for(int i=0;i<20;i++){
+            String id_title = "event" + (i+1);
+            String img = "img"+(i+1);
+            String row = "tr"+(i+1);
+
+            int text = getResources().getIdentifier(id_title, "id", getPackageName());
+            int cat = getResources().getIdentifier(img, "id", getPackageName());
+            int trow = getResources().getIdentifier(row, "id", getPackageName());
+
+            if(names[i] != ""){
+                Log.d("cmonguy2",id_title);
+                Log.d("cmonguy4",img);
+
+                ((TextView)findViewById(text)).setText(names[i]);
+
+                ImageButton btn = (ImageButton)findViewById(cat);
+                //Log.d("cmon22",category_temp.trim());
+                if("Sports".equals(category_temp)) {
+                    btn.setImageResource(R.drawable.ic_sport_icon);
+                }
+                else if("Music".equals(category_temp)){
+                    btn.setImageResource(R.drawable.music_icon);
+                }
+                else{
+                    btn.setImageResource(R.drawable.film_icon);
+                }
+            }
+            else{
+                Log.d("cmonguy","cmon");
+                ((TableRow)findViewById(trow)).setVisibility(View.GONE);
+            }
+
+        }
+    }
+}
