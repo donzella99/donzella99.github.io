@@ -36,7 +36,7 @@ class OBJ {
 }
 
 public class MainActivity extends AppCompatActivity {
-
+    String[] name_fav = new String[]{"","","","","","","","","","","","","","","","","","","",""};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
                             final3 = final2.toString();
 //                            i.putExtra("please",final3);
 //                            Log.d("cmon",final3);
+                            Bundle b = new Bundle();
+                            b.putStringArray("key",name_fav);
+                            i.putExtras(b);
                             i.putExtra("event","LAFC");
                             i.putExtra("venue","Banc of California");
                             i.putExtra("date","06/22/21");

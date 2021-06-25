@@ -48,11 +48,145 @@ public class Favorites extends AppCompatActivity {
             }
         });
         Bundle b = this.getIntent().getExtras();
-        names=b.getStringArray("key");
+        if(b != null) {
+            names = b.getStringArray("key");
+        }
         for(int x =0; x<names.length; x++){
             Log.d("cmonguy1",names[x]);
         }
         update_table();
+        View btn = findViewById(R.id.fav1);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(1);
+            }
+        });
+        btn = findViewById(R.id.fav2);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(2);
+            }
+        });
+        btn = findViewById(R.id.fav3);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(3);
+            }
+        });
+        btn = findViewById(R.id.fav4);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(4);
+            }
+        });btn = findViewById(R.id.fav5);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(5);
+            }
+        });btn = findViewById(R.id.fav6);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(6);
+            }
+        });btn = findViewById(R.id.fav7);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(7);
+            }
+        });btn = findViewById(R.id.fav8);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(8);
+            }
+        });btn = findViewById(R.id.fav9);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(9);
+            }
+        });btn = findViewById(R.id.fav10);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(10);
+            }
+        });
+        btn = findViewById(R.id.fav11);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(11);
+            }
+        });btn = findViewById(R.id.fav12);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(12);
+            }
+        });btn = findViewById(R.id.fav13);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(13);
+            }
+        });
+        btn = findViewById(R.id.fav14);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(14);
+            }
+        });
+        btn = findViewById(R.id.fav15);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(15);
+            }
+        });
+        btn = findViewById(R.id.fav16);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(16);
+            }
+        });
+        btn = findViewById(R.id.fav17);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(17);
+            }
+        });
+        btn = findViewById(R.id.fav18);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(18);
+            }
+        });
+        btn = findViewById(R.id.fav19);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(19);
+            }
+        });
+        btn = findViewById(R.id.fav20);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_fav(20);
+            }
+        });
     }
 
 //    @Override
@@ -64,7 +198,9 @@ public class Favorites extends AppCompatActivity {
     public void detail(View v){
         Intent i = new Intent(this,Event.class);
 
-
+        Bundle b = new Bundle();
+        b.putStringArray("key",names);
+        i.putExtras(b);
 
         i.putExtra("event","LAFC");
         i.putExtra("venue","Banc of California");
@@ -83,6 +219,11 @@ public class Favorites extends AppCompatActivity {
 
         //        _embedded.events[0].classifications[0].segment.name
         for(int i=0;i<20;i++){
+            String fav_img = "fav"+(i+1);
+            int fav_id = getResources().getIdentifier(fav_img, "id", getPackageName());
+            ImageButton btn1 = (ImageButton)findViewById(fav_id);
+            btn1.setImageResource(R.drawable.heart_fill_red);
+
             String id_title = "event" + (i+1);
             String img = "img"+(i+1);
             String row = "tr"+(i+1);
@@ -113,7 +254,38 @@ public class Favorites extends AppCompatActivity {
                 Log.d("cmonguy","cmon");
                 ((TableRow)findViewById(trow)).setVisibility(View.GONE);
             }
-
+           // change_fav(i);
         }
+    }
+    public void change_fav(int i){
+        String fav_img = "fav"+i;
+        int fav_id = getResources().getIdentifier(fav_img, "id", getPackageName());
+        ImageButton btn = (ImageButton)findViewById(fav_id);
+        btn.setImageResource(R.drawable.heart_fill_red);
+        if(search_fav(names,names[i]) == 1){
+            remove_fav(names,names[i],i);
+        }
+    }
+    public void remove_fav(String[] fav_name, String name, int i){
+        String row = "tr"+i;
+        int trow = getResources().getIdentifier(row, "id", getPackageName());
+        for(int x =0; x<fav_name.length; x++) {
+            if (fav_name[x] == name) {
+                fav_name[x] = "";
+                ((TableRow)findViewById(trow)).setVisibility(View.GONE);
+            }
+        }
+    }
+    public int search_fav(String[] fav_name,String name){ //String[] fav_date, String name, String date){
+        int x = 0;
+        for(int i =0; i<fav_name.length; i++) {
+            if(name == fav_name[i]){ //date == fav_date[i]) {
+                x=1;
+            }
+            if(x==1){
+                return 1;
+            }
+        }
+        return 0;
     }
 }
