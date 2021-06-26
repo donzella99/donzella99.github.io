@@ -20,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -56,10 +57,18 @@ public class Event<final3> extends AppCompatActivity {
         else{
             Log.d("cmon","man");
         }
+        String geopoint = "no";
 
        update_table(events_ticketmaster);
 
-        View btn = findViewById(R.id.fav1);
+        View btn = findViewById(R.id.fav0);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_fav("0");
+            }
+        });
+        btn = findViewById(R.id.fav1);
         btn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -184,14 +193,9 @@ public class Event<final3> extends AppCompatActivity {
                 add_fav("19");
             }
         });
-        btn = findViewById(R.id.fav20);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("20");
-            }
-        });
     }
+
+
     public void add_fav(String st) {
 
         for(int x =0; x<name_fav.length; x++){
@@ -270,15 +274,16 @@ public class Event<final3> extends AppCompatActivity {
 //            category_temp = new_obj.getString("classification");
 
            //        _embedded.events[0].classifications[0].segment.name
-        for(int i=1;i<20;i++){
-            String id_title = "event" + i;
-            String img = "img"+i;
-            String row = "tr"+i;
+        for(int i=0;i<20;i++){
+            String id_title = "event" + (i);
+            String img = "img"+(i);
+            String row = "tr"+(i);
 
             try {
                 JSONObject new_obj1 = new JSONObject(obj);
                 JSONObject new_obj = new_obj1.getJSONArray("events").getJSONObject(i);
                 name = new_obj.getString("name");
+
                 names[i] = name;
                // Log.d("cmon123",name);
                 category_temp = new_obj.getJSONArray("classifications").getJSONObject(0).getJSONObject("segment").getString("name");
