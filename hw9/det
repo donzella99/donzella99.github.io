@@ -6,11 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.hw9.R;
-import com.example.hw9.ui.main.ui.main.Search;
 import com.example.hw9.ui.main.ui.main.SectionsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
-public class MainActivity extends AppCompatActivity {
+public class Detail extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
@@ -35,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void setupViewPager(ViewPager viewPager){
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Search(), "SEARCH");
-        adapter.addFragment(new detail2_fragment(), "FAVORITES");
+        adapter.addFragment(new detail1_fragment(), "EVENTS");
+        adapter.addFragment(new detail2_fragment(), "ARTIST(S)");
+        adapter.addFragment(new detail3_fragment(), "VENUE");
         viewPager.setAdapter(adapter);
     }
 }

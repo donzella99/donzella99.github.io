@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.main.MainActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+
+            app:toolbarId="@+id/toolbar">
+
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+
+
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.main.MainActivity">
+
+
+            <EditText
+                android:id="@+id/Distance"
+                android:layout_width="302dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="45dp"
+                android:ems="10"
+                android:hint="10"
+                android:inputType="number"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.458"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/keyword" />
+
+            <EditText
+                android:id="@+id/keyword"
+                android:layout_width="307dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="54dp"
+                android:layout_marginBottom="25dp"
+                android:ems="10"
+                android:hint="Enter Keyword"
+                android:inputType="textPersonName"
+                android:textColor="#000000"
+                app:layout_constraintBottom_toTopOf="@+id/Distance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+            <EditText
+                android:id="@+id/location"
+                android:layout_width="307dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="54dp"
+                android:layout_marginBottom="25dp"
+                android:ems="10"
+                android:hint="Type in the Location"
+                android:inputType="textPersonName"
+                android:textColor="#000000"
+                app:layout_constraintBottom_toTopOf="@+id/Distance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button2"
+                app:layout_constraintVertical_bias="0.185" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="208dp"
+                android:layout_height="49dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="104dp"
+                android:onClick="search"
+                android:text="SEARCH"
+                app:layout_constraintBottom_toTopOf="@+id/keyword"
+                app:layout_constraintEnd_toStartOf="@+id/clear"
+                app:layout_constraintHorizontal_bias="0.571"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/clear"
+                android:layout_width="208dp"
+                android:layout_height="49dp"
+                android:layout_marginBottom="124dp"
+                android:text="Clear"
+                app:layout_constraintBottom_toTopOf="@+id/keyword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/button2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="307dp"
+                android:layout_height="27dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="19dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="27dp"
+                app:layout_constraintBottom_toTopOf="@+id/Distance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.48"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/keyword"
+                app:layout_constraintVertical_bias="1.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_anchor="@+id/appbar"
+        app:layout_anchorGravity="center"
+        app:title="Event Search" />
+
+    <RadioButton
+        android:id="@+id/radioButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current"
+        android:onClick="bt1"
+        app:layout_anchor="@+id/nestedScrollView"
+        android:checked="true"
+        app:layout_anchorGravity="start|center" />
+
+    <RadioButton
+        android:id="@+id/radioButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="bt2"
+        android:text="Other. Specify Location"
+        app:layout_anchor="@+id/nestedScrollView"
+        app:layout_anchorGravity="end|center" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

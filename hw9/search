@@ -1,0 +1,270 @@
+package com.example.hw9.ui.main.ui.main;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.hw9.R;
+import com.example.hw9.ui.main.Event;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class Search extends Fragment {
+
+    private static final String TAG = "Search";
+    private SectionsPagerAdapter mSectionsPageAdapter;
+    private ViewPager mViewPager;
+    String[] name_fav = new String[]{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+    String[] bankNames={"All","Music","Sports","Arts & Theatre","Film","Miscellaneous"};
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_main, container, false);
+
+//        binding = ActivityDetailBinding.inflate(getLayoutInflater
+
+        //Getting the instance of Spinner and applying OnItemSelectedListener on it
+        Spinner spin = (Spinner) view.findViewById(R.id.spinner);
+        //Creating the ArrayAdapter instance having the bank name list
+//        ArrayAdapter aa = new ArrayAdapter(view,android.R.layout.simple_spinner_item,bankNames);
+//        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+//        spin.setAdapter(aa);
+        Button btn = view.findViewById(R.id.button2);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    find(view);
+                } catch (InterruptedException e) {
+                    Log.d("question","cmon man");
+                    e.printStackTrace();
+                }
+            }
+        });
+        return view;
+    }
+    private class GeoHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg){
+            Log.d("finally1",current_location);
+            String address;
+            switch (msg.what) {
+                case 1:
+                    Bundle bundle = msg.getData();
+                    address = bundle.getString("address");
+                    break;
+                default:
+                    address = null;
+            }
+            current_location = address;
+            //  Log.d("finally1",current_location);
+        }
+    }
+    String current_location = "no";
+    public void bt1(View v){
+        RadioButton radio1;
+        radio1 = (RadioButton) v.findViewById(R.id.radioButton1);
+        RadioButton radio2;
+        radio2 = (RadioButton) v.findViewById(R.id.radioButton2);
+
+        radio1.setChecked(true);
+        radio2.setChecked(false);
+    }
+    public void bt2(View v){
+        RadioButton radio1;
+        radio1 = (RadioButton) v.findViewById(R.id.radioButton1);
+        RadioButton radio2;
+        radio2 = (RadioButton) v.findViewById(R.id.radioButton2);
+
+        radio1.setChecked(false);
+        radio2.setChecked(true);
+    }
+
+
+    public static String[] date_fav = new String[100];
+    public static String final3;
+    public void find(View v) throws InterruptedException {
+        find_ip(v);
+        EditText key = (EditText) v.findViewById(R.id.keyword);
+        EditText dis = (EditText) v.findViewById(R.id.Distance);
+        EditText loc = (EditText) v.findViewById(R.id.location);
+
+        RadioButton rb1;
+        rb1 = (RadioButton) v.findViewById(R.id.radioButton1);
+        String address;
+        if (rb1.isChecked()) {
+            address = "Los Angeles";
+            Log.d("finally123", "1");
+        } else {
+            if(loc.getText().toString().isEmpty()){
+                address = "Miami";
+            }
+            else{
+                address = loc.getText().toString();
+            }
+            Log.d("finally123", "2");
+        }
+//        try {
+//            GeoLocation geoLocation = new GeoLocation();
+//            geoLocation.getAddress(address, getApplicationContext(), new GeoHandler());
+//          //  Log.d("finally2", current_location);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        //Log.d("finally3", current_location);
+          Intent i = new Intent(getActivity(), Event.class);
+
+        String distance;
+
+        if (key.getText().toString().isEmpty()) {
+            key.setError("Keyword Should not be blank");
+        }
+        else if(loc.getText().toString().isEmpty() && !rb1.isChecked()) {
+            loc.setError("Location Should not be blank");
+        }
+        else {
+            if (dis.getText().toString().isEmpty()) {
+                distance = "10";
+                Log.d("ipinfo1", "here");
+            } else {
+                distance = dis.getText().toString();
+                Log.d("ipinfo1", "gata");
+            }
+            String keyword = key.getText().toString();
+            if (current_location != "no") {
+                String url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhKgPQynndjc1pcDNq0flHYCg2ltMF" + "&keyword=" + keyword + "&geoPoint=" + current_location + "&radius=" + distance;
+                //"&geoPoint=" + current_location + "&radius="+ distance
+                Log.d("ipinfo", url);
+                RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                JsonObjectRequest
+                        jsonObjectRequest
+                        = new JsonObjectRequest(Request.Method.GET, url, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.d("info", "actually-works");
+                                try {
+                                    JSONObject final2 = response.getJSONObject("_embedded");
+                                    final3 = final2.toString();
+                                    Log.d("event",final3);
+                                    Bundle b = new Bundle();
+                                    b.putStringArray("key", name_fav);
+                                    i.putExtras(b);
+                                    i.putExtra("please", final3);
+                                    i.putExtra("event", "LAFC");
+                                    i.putExtra("venue", "Banc of California");
+                                    i.putExtra("date", "06/22/21");
+                                    Log.d("event","cmon man");
+                                    startActivity(i);
+                                    //    Toast.makeText(MainActivity.this, "Test: " + final2, Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Log.d("info", "no-works");
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                //Toast.makeText(MainActivity.this, "Check2", Toast.LENGTH_SHORT).show();
+                                Log.d("info", "not-works");
+                            }
+                        });
+                requestQueue.add(jsonObjectRequest);
+                current_location = "no";
+                //
+            }
+        }
+    }
+
+
+    public void find_ip(View v) {
+        final TextView textView = (TextView) v.findViewById(R.id.text);
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        String url = "https://ipinfo.io/?token=8a4d780dd347bb";
+        JsonObjectRequest
+                jsonObjectRequest
+                = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            current_location = response.getString("loc");
+                            Log.d("cmong", current_location);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                textView.setText("That didn't work!");
+            }
+        });
+
+// Add the request to the RequestQueue.
+        queue.add(jsonObjectRequest);
+    }
+}
+
+//    public void disable (View v){
+//        View myview = findViewById(R.id.button2);
+//        myview.setEnabled(false);
+//        Button button = (Button) myview;
+//        button.setText("HAHA");
+//    }
+//        //assign values
+//        button2 = findViewById(R.id.button2);
+////        clear = findViewById(R.id.clear);
+//
+//click listeners
+
+
+
+
+//    public void disable(View v){
+//        View myview = findViewById(R.id.button1);
+//        myview.setEnabled(false);
+//        Button button = (Button) myview;
+//        button.setText("HAHA");
+//    }
+
+//    public void disable(View v){
+//        ((Button)findViewById(R.id.button1)).setText("New");
+//    }
+
+//    public void handleText(View v){
+//        String input = ((TextView)findViewById(R.id.textView2)).getText().toString();
+//        Log.d("info",input);
+//        Toast.makeText(this,"Alert",Toast.LENGTH_LONG).show();
+//    }
+//
+//    public void search(View v){
+//        Intent i = new Intent(this,search.class);
+//        startActivity(i);
+//        // create a client
+//    }
+//
+//

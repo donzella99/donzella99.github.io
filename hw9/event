@@ -1,36 +1,41 @@
-package com.example.hw9;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.hw9.ui.main;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import org.json.JSONArray;
+import com.example.hw9.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 
 public class Event<final3> extends AppCompatActivity {
-    String events_ticketmaster = MainActivity.final3;
+    String events_ticketmaster;
+    String artist;
+    String venue;
+    String date;
+    String category;
+    String priceRange;
+    String ticketStatus;
+    String buyTicket;
+    String seatMap;
+    String city;
+    String phoneNumber;
+    String openHours;
+    String generalRule;
+    String childRule;
+    String name;
+    String address;
+    JSONObject new_obj1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,156 +48,413 @@ public class Event<final3> extends AppCompatActivity {
         if(b != null) {
             name_fav = b.getStringArray("key");
         }
-
+        events_ticketmaster = i.getStringExtra("please");
         String event = i.getStringExtra("event");
         String venue = i.getStringExtra("venue");
         String date = i.getStringExtra("date");
-        Log.d("cmonman123",events_ticketmaster);
+      //  Log.d("event",events_ticketmaster);
+        Log.d("event","GATA");
         Log.d("event",event);
         Log.d("venue",venue);
         Log.d("date",date);
-        if(events_ticketmaster != null){
-            Log.d("cmon",events_ticketmaster);
+        if(events_ticketmaster != null) {
+            String remove = "tr20";
+            int trow_remove = getResources().getIdentifier(remove, "id", getPackageName());
+            ((TableRow)findViewById(trow_remove)).setVisibility(View.GONE);
+            Log.d("cmon", "bruh");
+
+            String geopoint = "no";
+
+            update_table(events_ticketmaster);
+
+            View btn = findViewById(R.id.fav0);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("0");
+                }
+            });
+            View det = findViewById(R.id.tr0);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(0);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav1);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("1");
+                }
+            });
+            det = findViewById(R.id.tr1);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(1);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav2);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("2");
+                }
+            });
+            det = findViewById(R.id.tr2);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(2);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav3);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("3");
+                }
+            });
+            det = findViewById(R.id.tr3);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(3);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav4);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("4");
+                }
+            });
+            det = findViewById(R.id.tr4);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(4);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav5);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("5");
+                }
+            });
+            det = findViewById(R.id.tr5);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(5);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav6);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("6");
+                }
+            });
+            det = findViewById(R.id.tr6);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(6);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav7);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("7");
+                }
+            });
+            det = findViewById(R.id.tr7);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(7);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav8);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("8");
+                }
+            });
+            det = findViewById(R.id.tr8);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(8);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav9);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("9");
+                }
+            });
+            det = findViewById(R.id.tr9);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(9);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav10);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("10");
+                }
+            });
+            det = findViewById(R.id.tr10);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(10);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav11);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("11");
+                }
+            });
+            det = findViewById(R.id.tr11);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(11);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav12);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("12");
+                }
+            });
+            det = findViewById(R.id.tr12);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(12);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav13);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("13");
+                }
+            });
+            det = findViewById(R.id.tr13);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(13);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav14);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("14");
+                }
+            });
+            det = findViewById(R.id.tr14);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(14);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav15);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("15");
+                }
+            });
+            det = findViewById(R.id.tr15);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(15);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav16);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("16");
+                }
+            });
+            det = findViewById(R.id.tr16);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(16);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav17);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("17");
+                }
+            });
+            det = findViewById(R.id.tr17);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(17);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav18);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("18");
+                }
+            });
+            det = findViewById(R.id.tr18);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(18);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btn = findViewById(R.id.fav19);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    add_fav("19");
+                }
+            });
+            det = findViewById(R.id.tr19);
+            det.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        detail(19);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }
         else{
             Log.d("cmon","man");
+            for(int x =0; x<20; x++) {
+                String row = "tr"+x;
+                int trow = getResources().getIdentifier(row, "id", getPackageName());
+                ((TableRow)findViewById(trow)).setVisibility(View.GONE);
+            }
         }
-        String geopoint = "no";
-
-       update_table(events_ticketmaster);
-
-        View btn = findViewById(R.id.fav0);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("0");
-            }
-        });
-        btn = findViewById(R.id.fav1);
-        btn.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-                   add_fav("1");
-           }
-       });
-        btn = findViewById(R.id.fav2);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("2");
-            }
-        });
-        btn = findViewById(R.id.fav3);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("3");
-            }
-        });
-        btn = findViewById(R.id.fav4);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("4");
-            }
-        });btn = findViewById(R.id.fav5);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("5");
-            }
-        });btn = findViewById(R.id.fav6);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("6");
-            }
-        });btn = findViewById(R.id.fav7);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("7");
-            }
-        });btn = findViewById(R.id.fav8);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("8");
-            }
-        });btn = findViewById(R.id.fav9);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("9");
-            }
-        });btn = findViewById(R.id.fav10);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("10");
-            }
-        });
-        btn = findViewById(R.id.fav11);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("11");
-            }
-        });btn = findViewById(R.id.fav12);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("12");
-            }
-        });btn = findViewById(R.id.fav13);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("13");
-            }
-        });
-        btn = findViewById(R.id.fav14);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("14");
-            }
-        });
-        btn = findViewById(R.id.fav15);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("15");
-            }
-        });
-        btn = findViewById(R.id.fav16);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("16");
-            }
-        });
-        btn = findViewById(R.id.fav17);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("17");
-            }
-        });
-        btn = findViewById(R.id.fav18);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("18");
-            }
-        });
-        btn = findViewById(R.id.fav19);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_fav("19");
-            }
-        });
     }
 
 
@@ -211,15 +473,10 @@ public class Event<final3> extends AppCompatActivity {
 //
         //Log.d("cmonman23",y);
         String current_name = names[Integer.parseInt(st)];
-        Log.d("cmonmames1",current_name);
         int check = 0;
         for(int x =0; x<name_fav.length; x++) {
-            Log.d("cmonmames22",name_fav[x]);
             int the = search_fav(name_fav,current_name);
             if(the == 0){
-                Log.d("cmonmames12","why Georgia why");
-                Log.d("cmonguy1234",name_fav[x]);
-                Log.d("cmonmames12","why Cali why");
                 if(name_fav[x].length() == 0 && check == 0) {
                     name_fav[x] = current_name;
                     ImageButton button1 = (ImageButton) findViewById(fav_id);
@@ -228,10 +485,8 @@ public class Event<final3> extends AppCompatActivity {
                 }
             }
             else if(check == 0 && the!=0){
-                Log.d("check11",current_name);
                 remove_fav(name_fav, current_name);
                 for(int y =0; y<name_fav.length; y++){
-                    Log.d("check1112",name_fav[y]);
                 }
                 ImageButton button2 = (ImageButton) findViewById(fav_id);
                 button2.setImageResource(R.drawable.heart_outline_black);
@@ -244,12 +499,10 @@ public class Event<final3> extends AppCompatActivity {
 
     }
     public int search_fav(String[] fav_name,String name){ //String[] fav_date, String name, String date){
-        Log.d("cmonmames123","day");
         int x = 0;
         for(int i =0; i<fav_name.length; i++) {
             if(name == fav_name[i]){ //date == fav_date[i]) {
                 x=1;
-                Log.d("check123",fav_name[i]);
             }
             if(x==1){
                 return 1;
@@ -271,16 +524,13 @@ public class Event<final3> extends AppCompatActivity {
         String name = "";
         String category_temp ="f";
         String category = "Sports";
-//            category_temp = new_obj.getString("classification");
-
-           //        _embedded.events[0].classifications[0].segment.name
         for(int i=0;i<20;i++){
             String id_title = "event" + (i);
             String img = "img"+(i);
             String row = "tr"+(i);
 
             try {
-                JSONObject new_obj1 = new JSONObject(obj);
+                new_obj1 = new JSONObject(obj);
                 JSONObject new_obj = new_obj1.getJSONArray("events").getJSONObject(i);
                 name = new_obj.getString("name");
 
@@ -324,19 +574,59 @@ public class Event<final3> extends AppCompatActivity {
         }
     }
 
-    public void detail(View v){
-        Intent i = new Intent(this,Favorites.class);
+    public void detail(int x) throws JSONException {
 
-        Bundle b = new Bundle();
-        b.putStringArray("key",name_fav);
-        i.putExtras(b);
+        JSONObject new_obj = new_obj1.getJSONArray("events").getJSONObject(x);
 
-        i.putExtra("event","LAFC");
-        i.putExtra("venue","Banc of California");
-        i.putExtra("date","06/22/21");
+        name = new_obj.getString("name");
+        artist = new_obj.getJSONObject("_embedded").getJSONArray("attractions").getJSONObject(0).getString("name");
+        venue = new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getString("name");
+        date = new_obj.getJSONObject("dates").getJSONObject("start").getString("localDate");
+        String min = new_obj.getJSONArray("priceRanges").getJSONObject(0).getString("min");
+        String max= new_obj.getJSONArray("priceRanges").getJSONObject(0).getString("min");
+        String type = new_obj.getJSONArray("priceRanges").getJSONObject(0).getString("currency");
+        priceRange = min + "-" + max + " " + type;
+        ticketStatus = new_obj.getJSONObject("dates").getJSONObject("status").getString("code");
+        buyTicket = new_obj.getJSONArray("products").getJSONObject(0).getString("url");
+        seatMap = new_obj.getJSONObject("seatmap").getString("staticUrl");
+        address = new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("address").getString("line1");
+        city = new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("city").getString("name");
+        phoneNumber = new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("boxOfficeInfo").getString("phoneNumberDetail");
+        openHours = new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("boxOfficeInfo").getString("openHoursDetail");
+        generalRule =  new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("generalInfo").getString("generalRule");
+        childRule =  new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("generalInfo").getString("childRule");
+
+        Log.d("stuff",artist);
+
+        detail1_fragment detail1 = new detail1_fragment();
+
+//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//        Bundle data = new Bundle();
+//        data.putString("data", "Hello");
+//        detail1.setArguments(data);
+//        fragmentTransaction.replace(R.id.f1Fragment, detail1).commit();
+
+
+        Intent i = new Intent(this,Detail.class);
+//        Bundle b = new Bundle();
+//        b.putStringArray("key",name_fav);
+//        i.putExtras(b);
+          i.putExtra("name",name);
+          i.putExtra("artist", artist);
+          i.putExtra("venue", venue);
+          i.putExtra("date", date);
+          i.putExtra("category", category);
+          i.putExtra("priceRange", priceRange);
+          i.putExtra("ticketStatus", ticketStatus);
+          i.putExtra("buyTicket", buyTicket);
+          i.putExtra("seatMap", seatMap);
+          i.putExtra("city", "city");
+          i.putExtra("phoneNumber", "phoneNumber");
+          i.putExtra("openHours", "openHours");
+          i.putExtra("generalRule", "generalRule");
+          i.putExtra("childRule", "childRule");
+
         startActivity(i);
-
-        // create a client
     }
 
     public void change_fav(View v, int i){
