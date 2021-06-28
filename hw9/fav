@@ -1,6 +1,7 @@
 package com.example.hw9.ui.main.ui.main;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,7 +42,7 @@ public class Fav extends Fragment {
     JSONObject new_obj1;
     private AppBarConfiguration appBarConfiguration;
     String[] names = new String[]{"","","","","","","","","","","","","","","","","","","",""};
-    String[] dates = new String[]{"r","","","","","","","","","","","","","","","","","","",""};
+    String[] dates = new String[]{"","","","","","","","","","","","","","","","","","","",""};
     String[] obj1 = new String[]{"","","","","","","","","","","","","","","","","","","",""};
     private static final String TAG = "Fav";
 //    private SectionsPagerAdapter mSectionsPageAdapter;
@@ -53,6 +54,8 @@ public class Fav extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fav, container, false);
         //super.onCreate(savedInstanceState);
+
+
 
            // Intent i = getActivity().getIntent();
 
@@ -66,16 +69,45 @@ public class Fav extends Fragment {
 //        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        Bundle b = getActivity().getIntent().getExtras();
-        if(b != null) {
-            names = b.getStringArray("key");
+        Log.d("arrived","here1");
+
+//        SharedPreferences prefs = getActivity().getSharedPreferences("preferencename", 0);
+//        int size = prefs.getInt("GATA" +"_size",0);
+//        String array[] = new String[size];
+//        for(int i=0;i<size;i++) {
+//            array[i] = prefs.getString("Rev" + "_" + i, null);
+//            Log.d("RECEIVED123", array[i]);
+//        }
+
+
+        SharedPreferences name1 =  getActivity().getSharedPreferences("names", 0);
+        int size1 = name1.getInt("Name" +"_size",0);
+        for(int i=0;i<size1;i++) {
+            names[i] = name1.getString("Name" + "_" + i, null);
+            Log.d("Rev",names[i]);
         }
-        if(b != null){
-            dates = b.getStringArray("keyDate");
+
+        SharedPreferences date1 =  getActivity().getSharedPreferences("dates", 0);
+        int size = date1.getInt("Date" +"_size",0);
+        for(int i=0;i<size;i++) {
+            dates[i] = date1.getString("Date" + "_" + i, null);
+            Log.d("Rev",dates[i]);
         }
-        if(b != null){
-            obj1 = b.getStringArray("keyObj");
-        }
+
+//        SharedPreferences dates = getSharedPreferences("dates", 0);
+//        SharedPreferences.Editor editor1 = names.edit();
+//        editor.putInt("Date" +"_size", date_fav.length);
+//        for(int i=0;i<date_fav.length;i++) {
+//            editor1.putString("Date" + "_" + i, date_fav[i]);
+//            Log.d("Sending",date_fav[i]);
+//        }
+
+//        date1.edit().clear().apply();
+//        name1.edit().clear().apply();
+
+
+
+
         for(int x =0; x<names.length; x++){
             Log.d("cmonguy1",names[x]);
         }
@@ -302,45 +334,44 @@ public class Fav extends Fragment {
         Log.d("gata","4life");
         //        _embedded.events[0].classifications[0].segment.name
         for(int i=0;i<20;i++){
-            String fav_img = "fav"+(i);
-            int fav_id = getResources().getIdentifier(fav_img, "id", getActivity().getPackageName());
-            ImageButton btn1 = (ImageButton)v.findViewById(fav_id);
-            btn1.setImageResource(R.drawable.heart_fill_red);
 
-            String id_title = "event" + (i);
-            String img = "img"+(i);
-            String row = "tr"+(i);
+                String fav_img = "fav" + (i);
+                int fav_id = getResources().getIdentifier(fav_img, "id", getActivity().getPackageName());
+                ImageButton btn1 = (ImageButton) v.findViewById(fav_id);
+                btn1.setImageResource(R.drawable.heart_fill_red);
 
-            int text = getResources().getIdentifier(id_title, "id", getActivity().getPackageName());
-            int cat = getResources().getIdentifier(img, "id", getActivity().getPackageName());
-            int trow = getResources().getIdentifier(row, "id", getActivity().getPackageName());
+                String id_title = "event" + (i);
+                String img = "img" + (i);
+                String row = "tr" + (i);
 
-            if(names[i] != ""){
-                Log.d("cmonguy2",id_title);
-                Log.d("cmonguy4",img);
+                int text = getResources().getIdentifier(id_title, "id", getActivity().getPackageName());
+                int cat = getResources().getIdentifier(img, "id", getActivity().getPackageName());
+                int trow = getResources().getIdentifier(row, "id", getActivity().getPackageName());
 
-                ((TextView)v.findViewById(text)).setText(names[i]);
+                if (names[i] != "") {
+                    Log.d("cmonguy2", id_title);
+                    Log.d("cmonguy4", img);
 
-                ImageButton btn = (ImageButton)v.findViewById(cat);
-                //Log.d("cmon22",category_temp.trim());
-                if("Sports".equals(category_temp)) {
-                    btn.setImageResource(R.drawable.ic_sport_icon);
-                    cnt++;
+                    ((TextView) v.findViewById(text)).setText(names[i]);
+
+                    ImageButton btn = (ImageButton) v.findViewById(cat);
+                    //Log.d("cmon22",category_temp.trim());
+                    if ("Sports".equals(category_temp)) {
+                        btn.setImageResource(R.drawable.ic_sport_icon);
+                        cnt++;
+                    } else if ("Music".equals(category_temp)) {
+                        btn.setImageResource(R.drawable.music_icon);
+                        cnt++;
+                    } else {
+                        btn.setImageResource(R.drawable.film_icon);
+                        cnt++;
+                    }
+                } else {
+                    Log.d("cmonguy", "cmon");
+                    ((TableRow) v.findViewById(trow)).setVisibility(View.GONE);
                 }
-                else if("Music".equals(category_temp)){
-                    btn.setImageResource(R.drawable.music_icon);
-                    cnt++;
-                }
-                else{
-                    btn.setImageResource(R.drawable.film_icon);
-                    cnt++;
-                }
-            }
-            else{
-                Log.d("cmonguy","cmon");
-                ((TableRow)v.findViewById(trow)).setVisibility(View.GONE);
-            }
-            // change_fav(i);
+                // change_fav(i);
+
         }
         if(cnt !=0){
             String row1 = "tr20";
@@ -356,22 +387,40 @@ public class Fav extends Fragment {
         for(int x =0; x<names.length; x++) {
             Log.d("here", names[x]);
         }for(int x =0; x<dates.length; x++){
-            Log.d("here",dates[x]);
+            Log.d("here1",dates[x]);
         }
         if(search_fav(names,names[i],dates,dates[i]) == 1){
             remove_fav(names,names[i],dates,dates[i],i,v);
         }
+
     }
     public void remove_fav(String[] fav_name, String name, String[] fav_dates, String date, int i, View v){
         String row = "tr"+i;
         int trow = getResources().getIdentifier(row, "id", getActivity().getPackageName());
         for(int x =0; x<fav_name.length; x++) {
-            if (fav_name[x] == name && fav_dates[x] == date) {
-                fav_name[x] = "";
-                fav_dates[x] = "";
+            if (names[x] == name && dates[x] == date) {
+                names[x] = "";
+                dates[x] = "";
                 ((TableRow)getActivity().findViewById(trow)).setVisibility(View.GONE);
             }
         }
+        SharedPreferences name1 = getActivity().getSharedPreferences("names", 0);
+        SharedPreferences.Editor editor = name1.edit();
+        editor.putInt("names" +"_size", names.length);
+        Log.d("send","about");
+        for(int y=0;y<names.length;y++) {
+            editor.putString("names" + "_" + y, names[y]);
+            Log.d("send",names[y]);
+        }
+        editor.commit();
+
+        SharedPreferences date1 = getActivity().getSharedPreferences("dates", 0);
+        SharedPreferences.Editor editor1 = date1.edit();
+        editor1.putInt("dates" +"_size", dates.length);
+        for(int y=0;y<dates.length;y++) {
+            editor1.putString("dates" + "_" + y, dates[y]);
+        }
+        editor1.commit();
     }
     public int search_fav(String[] fav_name,String name, String[] fav_dates, String date){ //String[] fav_date, String name, String date){
         int x = 0;

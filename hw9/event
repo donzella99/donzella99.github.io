@@ -1,6 +1,7 @@
 package com.example.hw9.ui.main;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,11 +13,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.hw9.R;
 
@@ -49,7 +47,17 @@ public class Event<final3> extends AppCompatActivity {
         setContentView(R.layout.activity_event);
       //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+        String s1 = sh.getString("name", "");
+    Log.d("received",s1);
 
+//        SharedPreferences prefs = getSharedPreferences("preferencename", 0);
+//        int size = prefs.getInt("GATA" +"_size",0);
+//        String array[] = new String[size];
+//        for(int i=0;i<size;i++) {
+//            array[i] = prefs.getString("Rev" + "_" + i, null);
+//            Log.d("RECEIVED", array[i]);
+//        }
 
 
 //
@@ -67,23 +75,29 @@ public class Event<final3> extends AppCompatActivity {
 
 
         Intent i = getIntent();
-
-        Bundle b = this.getIntent().getExtras();
-        Bundle b1 = this.getIntent().getExtras();
-        Log.d("cmonguy1234","nein");
-        if(b != null) {
-            name_fav = b.getStringArray("key");
+    Log.d("RECEIVED3","go");
+        SharedPreferences name =  getSharedPreferences("names", 0);
+        int size1 = name.getInt("names" +"_size",0);
+        for(int x=0;x<size1;x++) {
+            name_fav[x] = name.getString("names" + "_" + x, null);
+            Log.d("RECEIVED3", name_fav[x]);
+        }
+        SharedPreferences date =  getSharedPreferences("dates", 0);
+        int size = date.getInt("dates" +"_size",0);
+        for(int x=0;x<size;x++) {
+            date_fav[x] = date.getString("dates" + "_" + x, null);
+            Log.d("RECEIVED4", date_fav[x]);
         }
 
         events_ticketmaster = i.getStringExtra("please");
         String event = i.getStringExtra("event");
         Log.d("event",event);
         String venue = i.getStringExtra("venue");
-        String date = i.getStringExtra("date");
+       // String date = i.getStringExtra("date");
       //  Log.d("event",events_ticketmaster);
         Log.d("event",event);
         Log.d("venue",venue);
-        Log.d("date",date);
+      //  Log.d("date",date);
         if(events_ticketmaster != null) {
             String remove = "tr20";
             int trow_remove = getResources().getIdentifier(remove, "id", getPackageName());
@@ -505,15 +519,36 @@ public class Event<final3> extends AppCompatActivity {
     }
 
     public void goBack(){
-        Intent i = new Intent(this,MainActivity.class);
-        Bundle b = new Bundle();
-        b.putStringArray("key",name_fav);
-        b.putStringArray("keyDate",date_fav);
-        b.putStringArray("keyObj",related_obj);
+        Intent x = new Intent(this,MainActivity.class);
+
+//        SharedPreferences name1 = this.getSharedPreferences("names1", 0);
+//        SharedPreferences.Editor editor = name1.edit();
+//        editor.putInt("Name1" +"_size", names.length);
+//        Log.d("send","about");
+//        for(int y=0;y<names.length;y++) {
+//            editor.putString("Name1" + "_" + y, names[y]);
+//            Log.d("send",names[y]);
+//        }
+//        editor.commit();
+        SharedPreferences date1 = this.getSharedPreferences("dates", 0);
+        SharedPreferences.Editor editor1 = date1.edit();
+        editor1.putInt("Date" +"_size", date_fav.length);
+        for(int y=0;y<date_fav.length;y++) {
+            editor1.putString("Date" + "_" + y, date_fav[y]);
+        }
+        editor1.commit();
+
+        SharedPreferences name1 = getSharedPreferences("names", 0);
+        SharedPreferences.Editor editor = name1.edit();
+        editor.putInt("Name" +"_size", name_fav.length);
+        for(int i=0;i<name_fav.length;i++) {
+            editor.putString("Name" + "_" + i, name_fav[i]);
+        }
+        editor.commit();
+
         Log.d("before",related_obj[0]);
-        i.putExtras(b);
-        i.putExtra("venue", "venue");
-        startActivity(i);
+        x.putExtra("venue", "venue");
+        startActivity(x);
     }
 
     public void add_fav(String st) {
@@ -535,6 +570,8 @@ public class Event<final3> extends AppCompatActivity {
             int the = search_fav(name_fav, date_fav, current_name, current_date);
             if(the == 0){
                 if(name_fav[x].length() == 0 && check == 0) {
+                    Log.d("found",current_name);
+                    Log.d("found",current_date);
                     name_fav[x] = current_name;
                     date_fav[x] = current_date;
                     related_obj[x] = current_obj;
@@ -545,6 +582,7 @@ public class Event<final3> extends AppCompatActivity {
                 }
             }
             else if(check == 0 && the!=0){
+                Log.d("found","why");
                 remove_fav(name_fav, date_fav, current_name,current_date);
                 ImageButton button2 = (ImageButton) findViewById(fav_id);
                 button2.setImageResource(R.drawable.heart_outline_black);
@@ -604,20 +642,32 @@ public class Event<final3> extends AppCompatActivity {
             String id_title = "event" + (i);
             String img = "img"+(i);
             String row = "tr"+(i);
+            String fav_img1 = "fav"+i;
+
+            int fav_id1 = getResources().getIdentifier(fav_img1, "id", getPackageName());
+
+        for(int z =0; z<name_fav.length; z++){
+
+        }
+            Log.d("How",name_fav[i]);
+            Log.d("How",date_fav[i]);
+            if(search_fav(name_fav, date_fav, name_fav[i], date_fav[i]) == 1){
+                ImageButton button1 = (ImageButton) findViewById(fav_id1);
+                button1.setImageResource(R.drawable.heart_fill_red);
+            }
+
 
             try {
 
                 JSONObject new_obj = new_obj1.getJSONArray("events").getJSONObject(i);
+                JSONObject new_obj3 = new_obj1.getJSONArray("events").getJSONObject(i).getJSONObject("dates").getJSONObject("start");
+
+
                 String new_obj_str = new_obj1.getJSONArray("events").getString(i);
                 obj1[i] = new_obj_str;
 
                 name = new_obj.getString("name");
-                if(new_obj.has(date)){
-                    date = new_obj.getString("date");
-                }
-                else{
-                    date = "N/A";
-                }
+                date = new_obj3.getString("localDate");
 
                 names[i] = name;
                 Log.d("ha123",name);
