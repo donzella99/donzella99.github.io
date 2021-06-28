@@ -1,21 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ui.main.Event">
+    tools:context="ui.main.ui.main.Fav">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+
+            app:toolbarId="@+id/toolbar">
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+
+
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-        <include layout="@layout/toolbar"
-            android:id="@+id/eventTool" />
+        tools:context=".ui.main.Fav">
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -32,22 +54,23 @@
                     android:padding="25sp"
                     android:paddingTop="5sp"
                     android:paddingBottom="5sp">
+
                     <TextView
                         android:id="@+id/event20"
                         android:layout_width="235dp"
-                        android:layout_height="750dp"
-                        android:text="Event not found..."
+                        android:layout_height="550dp"
                         android:layout_column="1"
                         android:gravity="center"
                         android:padding="10dp"
+                        android:text="Favorites List Empty!"
                         android:textSize="16sp" />
+
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/tr0"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:onClick="detail"
                     android:padding="25sp"
                     android:paddingTop="5sp"
                     android:paddingBottom="5sp">
@@ -80,9 +103,9 @@
                     android:id="@+id/tr1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:onClick="detail"
+                    android:onClick="detail1"
                     android:padding="25sp"
-                    android:paddingTop="5sp"
+                    android:paddingTop="25sp"
                     android:paddingBottom="5sp">
 
                     <ImageButton
@@ -90,8 +113,8 @@
                         style="@style/Widget.AppCompat.ImageButton"
                         android:layout_width="55dp"
                         android:layout_height="65dp"
-                        android:src="@drawable/film_icon"
-                        android:scaleType="fitCenter"/>
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/film_icon" />
 
                     <TextView
                         android:id="@+id/event1"
@@ -108,13 +131,14 @@
                         android:layout_height="65dp"
                         android:src="@drawable/heart_outline_black" />
 
+
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/tr2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:onClick="detail"
+                    android:onClick="detail1"
                     android:padding="25sp"
                     android:paddingTop="5sp"
                     android:paddingBottom="5sp">
@@ -142,6 +166,7 @@
                         android:layout_width="55dp"
                         android:layout_height="65dp"
                         tools:srcCompat="@tools:sample/avatars" />
+
                 </TableRow>
 
                 <TableRow
@@ -708,7 +733,18 @@
                 </TableRow>
 
             </TableLayout>
+
         </ScrollView>
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?attr/actionBarSize"-->
+<!--        app:layout_anchor="@+id/appbar"-->
+<!--        app:layout_anchorGravity="center"-->
+<!--        app:title="Event Search"-->
+<!--        tools:ignore="NotSibling" />-->
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

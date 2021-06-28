@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.hw9.R;
+import com.example.hw9.ui.main.ui.main.Fav;
 import com.example.hw9.ui.main.ui.main.Search;
 import com.example.hw9.ui.main.ui.main.SectionsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -30,13 +31,16 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        getSupportFragmentManager().beginTransaction().commit();
     }
 
 
     public void setupViewPager(ViewPager viewPager){
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
+     //  TabsPagerAdapter Adapter = new TabsPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new Search(), "SEARCH");
-        adapter.addFragment(new detail2_fragment(), "FAVORITES");
+        adapter.addFragment(new Fav(), "FAVORITES");
         viewPager.setAdapter(adapter);
     }
 }

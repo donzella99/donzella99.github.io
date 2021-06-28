@@ -36,15 +36,12 @@ public class Search extends Fragment {
     private SectionsPagerAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
     String[] name_fav = new String[]{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+    String[] date_fav = new String[]{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
     String[] bankNames={"All","Music","Sports","Arts & Theatre","Film","Miscellaneous"};
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main, container, false);
-
-//        binding = ActivityDetailBinding.inflate(getLayoutInflater
-
-        //Getting the instance of Spinner and applying OnItemSelectedListener on it
         Spinner spin = (Spinner) view.findViewById(R.id.spinner);
         //Creating the ArrayAdapter instance having the bank name list
 //        ArrayAdapter aa = new ArrayAdapter(view,android.R.layout.simple_spinner_item,bankNames);
@@ -63,6 +60,24 @@ public class Search extends Fragment {
                 }
             }
         });
+
+        RadioButton btn1 = view.findViewById(R.id.radioButton1);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    bt1(view);
+            }
+        });
+
+        RadioButton btn2 = view.findViewById(R.id.radioButton2);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bt2(view);
+            }
+        });
+
+
         return view;
     }
     private class GeoHandler extends Handler {
@@ -83,7 +98,7 @@ public class Search extends Fragment {
         }
     }
     String current_location = "no";
-    public void bt1(View v){
+    public static void bt1(View v){
         RadioButton radio1;
         radio1 = (RadioButton) v.findViewById(R.id.radioButton1);
         RadioButton radio2;
@@ -92,7 +107,7 @@ public class Search extends Fragment {
         radio1.setChecked(true);
         radio2.setChecked(false);
     }
-    public void bt2(View v){
+    public static void bt2(View v){
         RadioButton radio1;
         radio1 = (RadioButton) v.findViewById(R.id.radioButton1);
         RadioButton radio2;
@@ -102,8 +117,6 @@ public class Search extends Fragment {
         radio2.setChecked(true);
     }
 
-
-    public static String[] date_fav = new String[100];
     public static String final3;
     public void find(View v) throws InterruptedException {
         find_ip(v);
@@ -172,6 +185,9 @@ public class Search extends Fragment {
                                     Bundle b = new Bundle();
                                     b.putStringArray("key", name_fav);
                                     i.putExtras(b);
+                                    Bundle b1 = new Bundle();
+                                    b1.putStringArray("keyDate", date_fav);
+                                    i.putExtras(b1);
                                     i.putExtra("please", final3);
                                     i.putExtra("event", "LAFC");
                                     i.putExtra("venue", "Banc of California");

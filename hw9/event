@@ -3,10 +3,16 @@ package com.example.hw9.ui.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -14,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.hw9.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,20 +47,40 @@ public class Event<final3> extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
+
+//
+        Toolbar my_toolbar = (Toolbar) findViewById(R.id.eventTool);
+        setSupportActionBar(my_toolbar);
+//        getSupportActionBar().setIcon(getDrawable(R.drawable.ic_twitter_ic__2_));
+        getSupportActionBar().setTitle("Events");
+//        getSupportActionBar().setIcon(getDrawable(R.drawable.arrow));
+
+//        my_too
+//
+//        lbar.setNavigationOnClickListener();
+
+
+
 
         Intent i = getIntent();
 
         Bundle b = this.getIntent().getExtras();
+        Bundle b1 = this.getIntent().getExtras();
         Log.d("cmonguy1234","nein");
         if(b != null) {
             name_fav = b.getStringArray("key");
         }
+
         events_ticketmaster = i.getStringExtra("please");
         String event = i.getStringExtra("event");
+        Log.d("event",event);
         String venue = i.getStringExtra("venue");
         String date = i.getStringExtra("date");
       //  Log.d("event",events_ticketmaster);
-        Log.d("event","GATA");
         Log.d("event",event);
         Log.d("venue",venue);
         Log.d("date",date);
@@ -65,8 +92,12 @@ public class Event<final3> extends AppCompatActivity {
 
             String geopoint = "no";
 
-            update_table(events_ticketmaster);
-
+            try {
+                update_table(events_ticketmaster);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("cmon","after");
             View btn = findViewById(R.id.fav0);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -456,14 +487,36 @@ public class Event<final3> extends AppCompatActivity {
             }
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.menu,menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        String msg= " ";
+        switch(item.getItemId()){
+            case R.id.back:
+                goBack();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void goBack(){
+        Intent i = new Intent(this,MainActivity.class);
+        Bundle b = new Bundle();
+        b.putStringArray("key",name_fav);
+        b.putStringArray("keyDate",date_fav);
+        b.putStringArray("keyObj",related_obj);
+        Log.d("before",related_obj[0]);
+        i.putExtras(b);
+        i.putExtra("venue", "venue");
+        startActivity(i);
+    }
 
     public void add_fav(String st) {
-
-        for(int x =0; x<name_fav.length; x++){
-            Log.d("cmonguy1111112",name_fav[x]);
-        }
-        Log.d("cmonman44","thru");
         String id_title = "event" + st;
         String fav_img = "fav"+st;
         int fav_id = getResources().getIdentifier(fav_img, "id", getPackageName());
@@ -473,21 +526,26 @@ public class Event<final3> extends AppCompatActivity {
 //
         //Log.d("cmonman23",y);
         String current_name = names[Integer.parseInt(st)];
+        String current_obj = obj1[Integer.parseInt(st)];
+        Log.d("cmonman23","he");
+        Log.d("cmonman23",current_name);
+        String current_date = dates[Integer.parseInt(st)];
         int check = 0;
         for(int x =0; x<name_fav.length; x++) {
-            int the = search_fav(name_fav,current_name);
+            int the = search_fav(name_fav, date_fav, current_name, current_date);
             if(the == 0){
                 if(name_fav[x].length() == 0 && check == 0) {
                     name_fav[x] = current_name;
+                    date_fav[x] = current_date;
+                    related_obj[x] = current_obj;
                     ImageButton button1 = (ImageButton) findViewById(fav_id);
                     button1.setImageResource(R.drawable.heart_fill_red);
                     check=1;
+                    Log.d("check","here");
                 }
             }
             else if(check == 0 && the!=0){
-                remove_fav(name_fav, current_name);
-                for(int y =0; y<name_fav.length; y++){
-                }
+                remove_fav(name_fav, date_fav, current_name,current_date);
                 ImageButton button2 = (ImageButton) findViewById(fav_id);
                 button2.setImageResource(R.drawable.heart_outline_black);
                 check = 1;
@@ -498,11 +556,13 @@ public class Event<final3> extends AppCompatActivity {
         }
 
     }
-    public int search_fav(String[] fav_name,String name){ //String[] fav_date, String name, String date){
-        int x = 0;
+    public int search_fav(String[] fav_name, String[] fav_date, String name, String date){ //String[] fav_date, String name, String date){
+     //   Log.d("check","not");
         for(int i =0; i<fav_name.length; i++) {
+            int x = 0;
             if(name == fav_name[i]){ //date == fav_date[i]) {
                 x=1;
+                Log.d("check","");
             }
             if(x==1){
                 return 1;
@@ -511,36 +571,64 @@ public class Event<final3> extends AppCompatActivity {
         return 0;
     }
 
-    public void remove_fav(String[] fav_name, String name){
+    public void remove_fav(String[] fav_name, String[] fav_date, String name, String date){
         for(int i =0; i<fav_name.length; i++) {
-            if (fav_name[i] == name) {
+            if (fav_name[i] == name && fav_date[i] == date) {
                 fav_name[i] = "";
+                fav_date[i] = "";
             }
         }
     }
        //((TextView)findViewById(R.id.event1)).setText(event + '\n' + venue + '\n' + date);
-    public void update_table(String obj){
+    public void update_table(String obj) throws JSONException {
 
         String name = "";
+        String date = "";
         String category_temp ="f";
         String category = "Sports";
-        for(int i=0;i<20;i++){
+        new_obj1 = new JSONObject(obj);
+        JSONArray new_obj12 = new_obj1.getJSONArray("events");
+        int tot = new_obj12.length();
+        if(tot>20){
+            tot = 20;
+        }
+        else if(tot<20){
+            for(int x =tot-1; x<20; x++) {
+                String row = "tr"+x;
+                int trow = getResources().getIdentifier(row, "id", getPackageName());
+                ((TableRow)findViewById(trow)).setVisibility(View.GONE);
+            }
+        }
+
+        for(int i=0;i<tot;i++){
             String id_title = "event" + (i);
             String img = "img"+(i);
             String row = "tr"+(i);
 
             try {
-                new_obj1 = new JSONObject(obj);
+
                 JSONObject new_obj = new_obj1.getJSONArray("events").getJSONObject(i);
+                String new_obj_str = new_obj1.getJSONArray("events").getString(i);
+                obj1[i] = new_obj_str;
+
                 name = new_obj.getString("name");
+                if(new_obj.has(date)){
+                    date = new_obj.getString("date");
+                }
+                else{
+                    date = "N/A";
+                }
 
                 names[i] = name;
-               // Log.d("cmon123",name);
+                Log.d("ha123",name);
+                dates[i] = date;
+
+                Log.d("checkname",name);
+                Log.d("checkname", "passed");
                 category_temp = new_obj.getJSONArray("classifications").getJSONObject(0).getJSONObject("segment").getString("name");
-             //   Log.d("cmonman", "sheesh");
                 Log.d("cmonman", category_temp);
             } catch (JSONException e) {
-                Log.d("cmonman","no bueno");
+                Log.d("cmonman",e.toString());
             }
 
             // Log.d("cmonman",id_title);
@@ -568,14 +656,10 @@ public class Event<final3> extends AppCompatActivity {
                 Log.d("cmonman","cmonman");
             }
         }
-        for(int y = 0; y<names.length; y++){
-            Log.d("cmonnames","mad");
-            Log.d("cmonnames",names[y]);
-        }
+
     }
 
     public void detail(int x) throws JSONException {
-
         JSONObject new_obj = new_obj1.getJSONArray("events").getJSONObject(x);
 
         name = new_obj.getString("name");
@@ -606,7 +690,6 @@ public class Event<final3> extends AppCompatActivity {
 //        detail1.setArguments(data);
 //        fragmentTransaction.replace(R.id.f1Fragment, detail1).commit();
 
-
         Intent i = new Intent(this,Detail.class);
 //        Bundle b = new Bundle();
 //        b.putStringArray("key",name_fav);
@@ -635,8 +718,14 @@ public class Event<final3> extends AppCompatActivity {
 
 
     }
+
+
     String[] name_fav = new String[]{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+    String[] date_fav = new String[]{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+    String[] related_obj = new String[]{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
     String[] names = new String[]{"","","","","","","","","","","","","","","","","","","",""};
+    String[] dates = new String[]{"","","","","","","","","","","","","","","","","","","",""};
+    String[] obj1 =  new String[]{"","","","","","","","","","","","","","","","","","","",""};
 }
 
 
