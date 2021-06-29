@@ -1,13 +1,14 @@
 package com.example.hw9.ui.main.ui.main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -43,11 +44,31 @@ public class Search extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main, container, false);
         Spinner spin = (Spinner) view.findViewById(R.id.spinner);
+
+
+            String[] array = new String[]{"A", "B"};
+            SharedPreferences prefs = getActivity().getSharedPreferences("preferencename", 0);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("GATA" +"_size", array.length);
+            for(int i=0;i<array.length;i++) {
+                editor.putString("Rev" + "_" + i, array[i]);
+            }
+            editor.commit();
+
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        myEdit.putString("name", "received?");
+
+// Once the changes have been made,
+// we need to commit to apply those changes made,
+// otherwise, it will throw an error
+        myEdit.commit();
         //Creating the ArrayAdapter instance having the bank name list
-//        ArrayAdapter aa = new ArrayAdapter(view,android.R.layout.simple_spinner_item,bankNames);
-//        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,bankNames);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
-//        spin.setAdapter(aa);
+        spin.setAdapter(aa);
         Button btn = view.findViewById(R.id.button2);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,23 +101,24 @@ public class Search extends Fragment {
 
         return view;
     }
-    private class GeoHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg){
-            Log.d("finally1",current_location);
-            String address;
-            switch (msg.what) {
-                case 1:
-                    Bundle bundle = msg.getData();
-                    address = bundle.getString("address");
-                    break;
-                default:
-                    address = null;
-            }
-            current_location = address;
-            //  Log.d("finally1",current_location);
-        }
-    }
+
+//    private class GeoHandler extends Handler {
+//        @Override
+//        public void handleMessage(Message msg){
+//            Log.d("finally1",current_location);
+//            String address = "Los Angeles";
+//            switch (msg.what) {
+//                case 1:
+//                    Bundle bundle = msg.getData();
+//                    address = bundle.getString("address");
+//                    break;
+//                default:
+//                    address = null;
+//            }
+//            current_location = address;
+//            //  Log.d("finally1",current_location);
+//        }
+//    }
     String current_location = "no";
     public static void bt1(View v){
         RadioButton radio1;
@@ -118,8 +140,8 @@ public class Search extends Fragment {
     }
 
     public static String final3;
+
     public void find(View v) throws InterruptedException {
-        find_ip(v);
         EditText key = (EditText) v.findViewById(R.id.keyword);
         EditText dis = (EditText) v.findViewById(R.id.Distance);
         EditText loc = (EditText) v.findViewById(R.id.location);
@@ -141,13 +163,13 @@ public class Search extends Fragment {
         }
 //        try {
 //            GeoLocation geoLocation = new GeoLocation();
-//            geoLocation.getAddress(address, getApplicationContext(), new GeoHandler());
-//          //  Log.d("finally2", current_location);
+//            geoLocation.getAddress("Los Angeles", getActivity().getApplicationContext(), new GeoHandler());
 //        } catch (Exception e) {
-//            e.printStackTrace();
+//            Log.d("jaja","here");
 //        }
         //Log.d("finally3", current_location);
-          Intent i = new Intent(getActivity(), Event.class);
+        find_ip(v);
+        Intent i = new Intent(getActivity(), Event.class);
 
         String distance;
 
@@ -165,7 +187,9 @@ public class Search extends Fragment {
                 distance = dis.getText().toString();
                 Log.d("ipinfo1", "gata");
             }
+            Log.d("what","here");
             String keyword = key.getText().toString();
+            Log.d("curr",current_location);
             if (current_location != "no") {
                 String url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=qcOhKgPQynndjc1pcDNq0flHYCg2ltMF" + "&keyword=" + keyword + "&geoPoint=" + current_location + "&radius=" + distance;
                 //"&geoPoint=" + current_location + "&radius="+ distance
@@ -220,6 +244,7 @@ public class Search extends Fragment {
         final TextView textView = (TextView) v.findViewById(R.id.text);
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         String url = "https://ipinfo.io/?token=8a4d780dd347bb";
+        Log.d("url","here");
         JsonObjectRequest
                 jsonObjectRequest
                 = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -227,16 +252,17 @@ public class Search extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            Log.d("what","here");
                             current_location = response.getString("loc");
                             Log.d("cmong", current_location);
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Log.d("do",e.toString());
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                textView.setText("That didn't work!");
+//                textView.setText("That didn't work!");
             }
         });
 
@@ -252,8 +278,7 @@ public class Search extends Fragment {
 //        button.setText("HAHA");
 //    }
 //        //assign values
-//        button2 = findViewById(R.id.button2);
-////        clear = findViewById(R.id.clear);
+
 //
 //click listeners
 

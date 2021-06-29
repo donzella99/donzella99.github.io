@@ -1,18 +1,15 @@
 package com.example.hw9.ui.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -63,10 +60,19 @@ public class Event<final3> extends AppCompatActivity {
 //
         Toolbar my_toolbar = (Toolbar) findViewById(R.id.eventTool);
         setSupportActionBar(my_toolbar);
+        setSupportActionBar(my_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       // getSupportActionBar().setDisplayShowHomeEnabled(true);
 //        getSupportActionBar().setIcon(getDrawable(R.drawable.ic_twitter_ic__2_));
         getSupportActionBar().setTitle("Events");
 //        getSupportActionBar().setIcon(getDrawable(R.drawable.arrow));
-
+        my_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+                finish();
+            }
+        });
 //        my_too
 //
 //        lbar.setNavigationOnClickListener();
@@ -88,6 +94,12 @@ public class Event<final3> extends AppCompatActivity {
             date_fav[x] = date.getString("dates" + "_" + x, null);
             Log.d("RECEIVED4", date_fav[x]);
         }
+        SharedPreferences obj1 =  getSharedPreferences("obj", 0);
+        int size2 = obj1.getInt("obj" +"_size",0);
+        for(int x=0;x<size2;x++) {
+            related_obj[x] = obj1.getString("obj" + "_" + x, null);
+            Log.d("RECEIVED5", date_fav[x]);
+        }
 
         events_ticketmaster = i.getStringExtra("please");
         String event = i.getStringExtra("event");
@@ -107,7 +119,7 @@ public class Event<final3> extends AppCompatActivity {
             String geopoint = "no";
 
             try {
-                update_table(events_ticketmaster);
+                update_table(events_ticketmaster,name_fav,date_fav);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -501,22 +513,7 @@ public class Event<final3> extends AppCompatActivity {
             }
         }
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.menu,menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        String msg= " ";
-        switch(item.getItemId()){
-            case R.id.back:
-                goBack();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public void goBack(){
         Intent x = new Intent(this,MainActivity.class);
@@ -535,6 +532,7 @@ public class Event<final3> extends AppCompatActivity {
         editor1.putInt("Date" +"_size", date_fav.length);
         for(int y=0;y<date_fav.length;y++) {
             editor1.putString("Date" + "_" + y, date_fav[y]);
+            Log.d("sending",date_fav[y]);
         }
         editor1.commit();
 
@@ -543,10 +541,22 @@ public class Event<final3> extends AppCompatActivity {
         editor.putInt("Name" +"_size", name_fav.length);
         for(int i=0;i<name_fav.length;i++) {
             editor.putString("Name" + "_" + i, name_fav[i]);
+            Log.d("sending",name_fav[i]);
         }
         editor.commit();
 
-        Log.d("before",related_obj[0]);
+        SharedPreferences obj2 = getSharedPreferences("obj", 0);
+        SharedPreferences.Editor editor2 = obj2.edit();
+        editor2.putInt("obj" +"_size", related_obj.length);
+        for(int i=0;i<related_obj.length;i++) {
+            editor2.putString("obj" + "_" + i, related_obj[i]);
+            if(related_obj[i] != null){
+                Log.d("sending",related_obj[i]);
+            }
+        }
+        editor2.commit();
+
+        //Log.d("before",related_obj[0]);
         x.putExtra("venue", "venue");
         startActivity(x);
     }
@@ -562,8 +572,7 @@ public class Event<final3> extends AppCompatActivity {
         //Log.d("cmonman23",y);
         String current_name = names[Integer.parseInt(st)];
         String current_obj = obj1[Integer.parseInt(st)];
-        Log.d("cmonman23","he");
-        Log.d("cmonman23",current_name);
+
         String current_date = dates[Integer.parseInt(st)];
         int check = 0;
         for(int x =0; x<name_fav.length; x++) {
@@ -574,6 +583,8 @@ public class Event<final3> extends AppCompatActivity {
                     Log.d("found",current_date);
                     name_fav[x] = current_name;
                     date_fav[x] = current_date;
+                    Log.d("cmonman23","1");
+                    Log.d("cmonman23",current_obj);
                     related_obj[x] = current_obj;
                     ImageButton button1 = (ImageButton) findViewById(fav_id);
                     button1.setImageResource(R.drawable.heart_fill_red);
@@ -595,12 +606,16 @@ public class Event<final3> extends AppCompatActivity {
 
     }
     public int search_fav(String[] fav_name, String[] fav_date, String name, String date){ //String[] fav_date, String name, String date){
-     //   Log.d("check","not");
+
         for(int i =0; i<fav_name.length; i++) {
             int x = 0;
-            if(name == fav_name[i]){ //date == fav_date[i]) {
+            Log.d("hello2",name);
+            Log.d("hello21",fav_name[i]);
+            Log.d("hello23",date);
+            Log.d("hello21",fav_date[i]);
+            if(name.equals(fav_name[i]) && date.equals(fav_date[i])){ //date == fav_date[i]) {
+                Log.d("hello24",fav_date[i]);
                 x=1;
-                Log.d("check","");
             }
             if(x==1){
                 return 1;
@@ -611,15 +626,16 @@ public class Event<final3> extends AppCompatActivity {
 
     public void remove_fav(String[] fav_name, String[] fav_date, String name, String date){
         for(int i =0; i<fav_name.length; i++) {
-            if (fav_name[i] == name && fav_date[i] == date) {
-                fav_name[i] = "";
-                fav_date[i] = "";
+            if (name.equals(fav_name[i]) && date.equals(fav_date[i])) {
+                Log.d("sending",name_fav[i]);
+                date_fav[i] = "";
+                name_fav[i] = "";
+                related_obj[i] = "";
             }
         }
     }
        //((TextView)findViewById(R.id.event1)).setText(event + '\n' + venue + '\n' + date);
-    public void update_table(String obj) throws JSONException {
-
+    public void update_table(String obj, String[] name_fav, String[] date_fav) throws JSONException {
         String name = "";
         String date = "";
         String category_temp ="f";
@@ -643,19 +659,9 @@ public class Event<final3> extends AppCompatActivity {
             String img = "img"+(i);
             String row = "tr"+(i);
             String fav_img1 = "fav"+i;
+            Log.d("hello","check");
 
             int fav_id1 = getResources().getIdentifier(fav_img1, "id", getPackageName());
-
-        for(int z =0; z<name_fav.length; z++){
-
-        }
-            Log.d("How",name_fav[i]);
-            Log.d("How",date_fav[i]);
-            if(search_fav(name_fav, date_fav, name_fav[i], date_fav[i]) == 1){
-                ImageButton button1 = (ImageButton) findViewById(fav_id1);
-                button1.setImageResource(R.drawable.heart_fill_red);
-            }
-
 
             try {
 
@@ -664,14 +670,19 @@ public class Event<final3> extends AppCompatActivity {
 
 
                 String new_obj_str = new_obj1.getJSONArray("events").getString(i);
-                obj1[i] = new_obj_str;
 
                 name = new_obj.getString("name");
                 date = new_obj3.getString("localDate");
 
                 names[i] = name;
-                Log.d("ha123",name);
                 dates[i] = date;
+                obj1[i] = new_obj_str;
+
+                if(search_fav(name_fav, date_fav, names[i], dates[i]) == 1){
+                    Log.d("hello","check");
+                    ImageButton button1 = (ImageButton) findViewById(fav_id1);
+                    button1.setImageResource(R.drawable.heart_fill_red);
+                }
 
                 Log.d("checkname",name);
                 Log.d("checkname", "passed");
@@ -708,58 +719,69 @@ public class Event<final3> extends AppCompatActivity {
         }
 
     }
+    public int searchForI(String[] fav_name, String[] fav_date, String name, String date){ //String[] fav_date, String name, String date){
+
+        for(int i =0; i<fav_name.length; i++) {
+            int x = 0;
+            Log.d("hello2",name);
+            Log.d("hello21",fav_name[i]);
+            Log.d("hello23",date);
+            Log.d("hello21",fav_date[i]);
+            if(name.equals(fav_name[i]) && date.equals(fav_date[i])){ //date == fav_date[i]) {
+                Log.d("hello24",fav_date[i]);
+                x=1;
+            }
+            if(x==1){
+                return i;
+            }
+        }
+        return 100;
+    }
 
     public void detail(int x) throws JSONException {
         JSONObject new_obj = new_obj1.getJSONArray("events").getJSONObject(x);
-
         name = new_obj.getString("name");
-        artist = new_obj.getJSONObject("_embedded").getJSONArray("attractions").getJSONObject(0).getString("name");
-        venue = new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getString("name");
         date = new_obj.getJSONObject("dates").getJSONObject("start").getString("localDate");
-        String min = new_obj.getJSONArray("priceRanges").getJSONObject(0).getString("min");
-        String max= new_obj.getJSONArray("priceRanges").getJSONObject(0).getString("min");
-        String type = new_obj.getJSONArray("priceRanges").getJSONObject(0).getString("currency");
-        priceRange = min + "-" + max + " " + type;
-        ticketStatus = new_obj.getJSONObject("dates").getJSONObject("status").getString("code");
-        buyTicket = new_obj.getJSONArray("products").getJSONObject(0).getString("url");
-        seatMap = new_obj.getJSONObject("seatmap").getString("staticUrl");
-        address = new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("address").getString("line1");
-        city = new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("city").getString("name");
-        phoneNumber = new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("boxOfficeInfo").getString("phoneNumberDetail");
-        openHours = new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("boxOfficeInfo").getString("openHoursDetail");
-        generalRule =  new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("generalInfo").getString("generalRule");
-        childRule =  new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("generalInfo").getString("childRule");
+        int num = searchForI(name_fav, date_fav,name, date);
 
-        Log.d("stuff",artist);
-
-        detail1_fragment detail1 = new detail1_fragment();
-
-//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        Bundle data = new Bundle();
-//        data.putString("data", "Hello");
-//        detail1.setArguments(data);
-//        fragmentTransaction.replace(R.id.f1Fragment, detail1).commit();
+        SharedPreferences sharedPreferences = getSharedPreferences("num", Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        Log.d("gata1",related_obj[num]);
+        myEdit.putString("num", related_obj[num]);
+        myEdit.commit();
 
         Intent i = new Intent(this,Detail.class);
-//        Bundle b = new Bundle();
-//        b.putStringArray("key",name_fav);
-//        i.putExtras(b);
-          i.putExtra("name",name);
-          i.putExtra("artist", artist);
-          i.putExtra("venue", venue);
-          i.putExtra("date", date);
-          i.putExtra("category", category);
-          i.putExtra("priceRange", priceRange);
-          i.putExtra("ticketStatus", ticketStatus);
-          i.putExtra("buyTicket", buyTicket);
-          i.putExtra("seatMap", seatMap);
-          i.putExtra("city", "city");
-          i.putExtra("phoneNumber", "phoneNumber");
-          i.putExtra("openHours", "openHours");
-          i.putExtra("generalRule", "generalRule");
-          i.putExtra("childRule", "childRule");
-
         startActivity(i);
+//
+//        detail1_fragment detail1 = new detail1_fragment();
+//
+////        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+////        Bundle data = new Bundle();
+////        data.putString("data", "Hello");
+////        detail1.setArguments(data);
+////        fragmentTransaction.replace(R.id.f1Fragment, detail1).commit();
+//
+//        Intent i = new Intent(this,Detail.class);
+////        Bundle b = new Bundle();
+////        b.putStringArray("key",name_fav);
+////        i.putExtras(b);
+//          i.putExtra("name",name);
+//          i.putExtra("artist", artist);
+//          i.putExtra("venue", venue);
+//          i.putExtra("date", date);
+//          i.putExtra("category", category);
+//          i.putExtra("priceRange", priceRange);
+//          i.putExtra("ticketStatus", ticketStatus);
+//          i.putExtra("buyTicket", buyTicket);
+//          i.putExtra("seatMap", seatMap);
+//          i.putExtra("city", city);
+//          i.putExtra("phoneNumber", phoneNumber);
+//          i.putExtra("openHours", openHours);
+//          i.putExtra("generalRule", generalRule);
+//          i.putExtra("childRule", childRule);
+//          i.putExtra("address", address);
+//
+//        startActivity(i);
     }
 
     public void change_fav(View v, int i){

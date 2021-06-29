@@ -1,7 +1,13 @@
 package com.example.hw9.ui.main;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +15,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.hw9.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class detail1_fragment extends Fragment {
@@ -19,22 +29,66 @@ public class detail1_fragment extends Fragment {
 
     private Button btnTEST;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab1_detail, container, false);
         btnTEST = (Button) view.findViewById(R.id.btnTEST);
 
-        Intent i = getActivity().getIntent();
-        String name = i.getStringExtra("name");
-        String artist = i.getStringExtra("artist");
-        String venue = i.getStringExtra("venue");
-        String date = i.getStringExtra("date");
-        String category = i.getStringExtra("category");
-        String  priceRange = i.getStringExtra("priceRange");
-        String  ticketStatus =  i.getStringExtra("ticketStatus");
-        String buyTicket = i.getStringExtra("buyTicket");
-        String seatMap = i.getStringExtra("seatMap");
+        @SuppressLint("WrongConstant") SharedPreferences number = getActivity().getSharedPreferences("num", Context.MODE_APPEND);
+        String s1 = number.getString("num", "");
+        Log.d("gata123",s1);
+        JSONObject new_obj = null;
+        try {
+            new_obj = new JSONObject(s1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("details", Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEdit1 = sharedPreferences.edit();
+        myEdit1.putString("details", s1);
+        myEdit1.commit();
+
+        String events_ticketmaster;
+        String artist = "";
+        String venue= "";
+        String date= "";
+        String category= "";
+        String priceRange= "";
+        String ticketStatus= "";
+        String buyTicket= "";
+        String seatMap= "";
+        String city= "";
+        String phoneNumber= "";
+        String openHours= "";
+        String generalRule= "";
+        String childRule= "";
+        String name= "";
+        String address= "";
+        try {
+            name = new_obj.getString("name");
+            artist = new_obj.getJSONObject("_embedded").getJSONArray("attractions").getJSONObject(0).getString("name");
+            venue = new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getString("name");
+            date = new_obj.getJSONObject("dates").getJSONObject("start").getString("localDate");
+            String min = new_obj.getJSONArray("priceRanges").getJSONObject(0).getString("min");
+            String max= new_obj.getJSONArray("priceRanges").getJSONObject(0).getString("min");
+            String type = new_obj.getJSONArray("priceRanges").getJSONObject(0).getString("currency");
+            priceRange = min + "-" + max + " " + type;
+            ticketStatus = new_obj.getJSONObject("dates").getJSONObject("status").getString("code");
+            buyTicket = new_obj.getString("url");
+            seatMap = new_obj.getJSONObject("seatmap").getString("staticUrl");
+            address = new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("address").getString("line1");
+            city = new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("city").getString("name");
+            phoneNumber = new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("boxOfficeInfo").getString("phoneNumberDetail");
+            openHours = new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("boxOfficeInfo").getString("openHoursDetail");
+            generalRule =  new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("generalInfo").getString("generalRule");
+            childRule =  new_obj.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("generalInfo").getString("childRule");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         TextView txt1 = (TextView) view.findViewById(R.id.text1);
         txt1.setText(artist);
@@ -55,11 +109,21 @@ public class detail1_fragment extends Fragment {
         txt6.setText(ticketStatus);
 
         TextView txt7 = (TextView) view.findViewById(R.id.text7);
-        txt7.setText("Ticketmaster");
+        String text = "<a href='"+ buyTicket  + "'>" +  "Ticketmaster" + "</a>";
+        Log.d("buy","buyTicket");
+        txt7.setClickable(true);
+        txt7.setMovementMethod(LinkMovementMethod.getInstance());
+        txt7.setText(text);
+        txt7.setText(Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT));
 
         TextView txt8 = (TextView) view.findViewById(R.id.text8);
-        txt8.setText("View Seat Map Here");
+        String text1 = "<a href='"+ seatMap  + "'>" +  "View Seat Map Here" + "</a>";
+        txt8.setClickable(true);
+        txt8.setMovementMethod(LinkMovementMethod.getInstance());
+        txt8.setText(text1);
+        txt8.setText(Html.fromHtml(text1, Html.FROM_HTML_MODE_COMPACT));
 
         return view;
     }
+
 }
